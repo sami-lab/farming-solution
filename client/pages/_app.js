@@ -93,7 +93,7 @@ export default function MyApp(props) {
       setLoadingAuth(true);
       let Token = null;
       try {
-        Token = await localStorage.getItem('userToken');
+        Token = await localStorage.getItem('farmingToken');
       } catch (e) {
         console.log('Error Fetching Token');
         setLoadingAuth(false);

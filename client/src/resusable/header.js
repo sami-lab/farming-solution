@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar(props) {
   const logoutHandler = async () => {
     try {
       router.push('/login');
-      await localStorage.removeItem('userToken');
+      await localStorage.removeItem('farmingToken');
       props.setUserToken(null);
       props.setUser(null);
       setProfileMenu(null);

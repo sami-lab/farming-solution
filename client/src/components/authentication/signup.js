@@ -155,7 +155,7 @@ export default function Signup(props) {
       const result = await response.json();
       if (result.status === 'success') {
         console.log(result.data.user, result.token);
-        localStorage.setItem('userToken', result.token);
+        localStorage.setItem('farmingToken', result.token);
         props.setUser(result.data.user);
         props.setUserToken(result.token);
         router.push('/');

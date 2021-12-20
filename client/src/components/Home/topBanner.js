@@ -88,16 +88,18 @@ export default function TopBanner(props) {
           {/* For text  */}
           <Grid item>
             <Typography variant="h1" align={matchesSM ? 'center' : 'left'}>
-              {t['Join forces with']}{' '}
-              <span className={classes.brush}>{t['talented designers']}</span>{' '}
-              {t['around the world.']}
+              {t['Bring your farm-fresh']}{' '}
+              <span className={classes.brush}>
+                {t["goodness to our customer's kitchen"]}
+              </span>{' '}
+              {t['around the country.']}
             </Typography>
           </Grid>
           <Grid item>
             <Typography variant="h2" align={matchesSM ? 'center' : 'left'}>
               {
                 t[
-                  'Accelerate your projects with millions of ready-to-use products.'
+                  'Maintaining the freshness and quality you deserve to your doorstep.'
                 ]
               }
             </Typography>
@@ -111,7 +113,7 @@ export default function TopBanner(props) {
           {/* for Image */}
           <Grid item style={{ marginTop: '20px' }}>
             <img
-              src="/dev/home_banner.webp"
+              src="/dev/home_banner.jpg"
               alt="login"
               style={{ width: '100%', height: '100%' }}
             />
@@ -119,8 +121,12 @@ export default function TopBanner(props) {
           {/* For text  */}
           <Grid item>
             <label className={classes.label}>
-              {t['Explore hundreds of ready-to-use designs in']}{' '}
-              <a
+              {
+                t[
+                  'Empowering Growers and AgriFood Value Chain with Real-Time Insights.'
+                ]
+              }{' '}
+              {/* <a
                 href="#"
                 style={{
                   textDecoration: 'none',
@@ -129,7 +135,7 @@ export default function TopBanner(props) {
               >
                 {' '}
                 {t['our Canva Finds »']}
-              </a>
+              </a> */}
             </label>
           </Grid>
           {matchesSM && trending}

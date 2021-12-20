@@ -96,7 +96,7 @@ export default function Login(props) {
       const response = await login(user.userName.value, user.password.value);
       const result = await response.json();
       if (result.status === 'success') {
-        localStorage.setItem('userToken', result.token);
+        localStorage.setItem('farmingToken', result.token);
         props.setUser(result.data.user);
         props.setUserToken(result.token);
         router.push('/');

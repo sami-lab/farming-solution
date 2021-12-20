@@ -54,12 +54,7 @@ export default function Home(props) {
       >
         <TopBanner languageJson={props.languageJson} />
       </Grid>
-      <Grid item style={{ marginTop: '5em' }} className={classes.root}>
-        <StaffPicks
-          languageJson={props.languageJson}
-          products={props.products}
-        />
-      </Grid>
+
       <Grid item style={{ marginTop: '5em' }} className={classes.root}>
         <PopularProducts
           languageJson={props.languageJson}
