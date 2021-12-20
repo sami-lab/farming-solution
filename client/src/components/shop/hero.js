@@ -18,7 +18,7 @@ export default function Hero(props) {
       <Grid item>
         <img
           src="/dev/heroShop.png"
-          style={{ width: '30em', height: '10em' }}
+          style={{ width: '25em', height: '15em' }}
         />
       </Grid>
       <Grid item>
@@ -45,7 +45,7 @@ export default function Hero(props) {
         >
           {
             t[
-              'Welcome to the marketplace built to support amazing creative content producers like you.'
+              'Welcome to the marketplace built to support amazing Farm to Home producers like you.'
             ]
           }
         </Typography>

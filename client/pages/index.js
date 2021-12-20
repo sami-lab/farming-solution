@@ -11,12 +11,11 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import TopBanner from '../src/components/Home/topBanner';
-import StaffPicks from '../src/components/Home/staffPicks';
 import PopularProducts from '../src/components/Home/popularProducts';
 import TrendingCategories from '../src/components/Home/trendingCategories';
 import Footer from '../src/resusable/footer';
 import Header from '../src/resusable/header';
-
+import OpenShop from '../src/components/Home/openShop';
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: '10em',
@@ -68,7 +67,10 @@ export default function Home(props) {
           languageJson={props.languageJson}
         />
       </Grid>
-      <Grid item style={{ marginTop: '2em' }}>
+      <Grid item direction="column" container style={{ marginTop: '2em' }}>
+        <OpenShop languageJson={props.languageJson} />
+      </Grid>
+      <Grid item>
         <Footer languageJson={props.languageJson} />
       </Grid>
     </Grid>

@@ -85,6 +85,7 @@ export const getMyShop = async (token) => {
   return response;
 };
 export const getShopById = async (id) => {
+  console.log(id);
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 

@@ -114,7 +114,7 @@ exports.createOne = catchAsync(async (req, res, next) => {
 });
 
 exports.getOne = catchAsync(async (req, res, next) => {
-  let doc = await Shop.find({
+  let doc = await Shop.findOne({
     $and: [{ _id: req.params.id }, { shopStatus: { $ne: false } }],
   })
     .populate('managerId', 'name email')

@@ -211,9 +211,9 @@ export default function CreateShop(props) {
       )}
       <Grid
         item
-        style={{ marginTop: matchesSM ? '2em' : '5em', alignSelf: 'center' }}
+        style={{ alignSelf: 'center' }}
         className={classes.root}
-        md={8}
+        md={12}
         sm={10}
         xs={12}
       >
@@ -282,7 +282,7 @@ export default function CreateShop(props) {
               align="center"
               style={{ fontWeight: '500' }}
             >
-              {t['Designer Stories']}
+              {t['Producers Stories']}
             </Typography>
           </Grid>
           <Grid item>
@@ -293,7 +293,7 @@ export default function CreateShop(props) {
             >
               {
                 t[
-                  'Our community of creators share their stories about how Creative Market helps them spend more time doing what they love.'
+                  'Our community of producers share their stories about how Creative Market helps them spend more time doing what they love.'
                 ]
               }
             </Typography>

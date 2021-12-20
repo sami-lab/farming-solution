@@ -10,12 +10,12 @@ export default function CheckAuth(props) {
   useEffect(() => {
     if (props.user === null && props.userToken === null) router.push('/login');
     if (props.managerOnly) {
-      if (!props.user.roles.some((item) => item.name === 'Manager')) {
+      if (!props.user?.roles.some((item) => item.name === 'Manager')) {
         setNotFound(true);
       }
     }
     if (props.adminOnly) {
-      if (!props.user.roles.some((item) => item.name === 'Admin')) {
+      if (!props.user?.roles.some((item) => item.name === 'Admin')) {
         setNotFound(true);
       }
     }

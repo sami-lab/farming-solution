@@ -169,7 +169,7 @@ export default function PrimarySearchAppBar(props) {
           </a>
         </Link>{' '}
       </MenuItem>
-      {props.user && props.user.roles.every((x) => x.name !== 'Manager') && (
+      {props.user && props.user?.roles.every((x) => x.name !== 'Manager') && (
         <MenuItem onClick={() => setProfileMenu(null)}>
           {' '}
           <Link href="/partner">
@@ -179,7 +179,7 @@ export default function PrimarySearchAppBar(props) {
           </Link>{' '}
         </MenuItem>
       )}
-      {props.user && props.user.roles.some((x) => x.name === 'Manager') && (
+      {props.user && props.user.roles?.some((x) => x.name === 'Manager') && (
         <>
           <MenuItem onClick={() => setProfileMenu(null)}>
             {' '}
