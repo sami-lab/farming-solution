@@ -1,0 +1,188 @@
+import React, { useState } from 'react';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
+import Link from 'next/link';
+import {
+  Button,
+  Grid,
+  Typography,
+  useTheme,
+  TextField,
+  MenuItem,
+  IconButton,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingLeft: '2em',
+    paddingRight: '2em',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '1em',
+      paddingRight: '1em',
+    },
+  },
+  alert: {
+    padding: '4px 16px',
+  },
+  label: {
+    ...theme.typography.label,
+  },
+  input: {
+    ...theme.typography.input,
+    borderRadius: '3px',
+    background: '#fbfbfd',
+    boxShadow: 'none',
+    marginTop: '3px',
+    '&::placeholder': {
+      fontFamily: 'Averta',
+      fontWeight: 400,
+      fontSize: '1.1rem',
+    },
+  },
+  inputOutline: {
+    border: '1px solid #899298',
+  },
+}));
+
+export default function Orders(props) {
+  const t = props.languageJson;
+  const theme = useTheme();
+  const classes = useStyles();
+  const [purchasing, setPurchasing] = useState(props.purchasings);
+
+  return (
+    <Grid container direction="column">
+      {/* heading Your product*/}
+      <Grid
+        item
+        container
+        style={{ marginTop: '2em' }}
+        className={classes.root}
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography variant="subtitle1">{t['Your Products']}</Typography>
+        </Grid>
+      </Grid>
+      {/* products Items */}
+
+      <Grid
+        container
+        direction="column"
+        style={{ borderTop: '1px solid #d5d5d8' }}
+        className={classes.root}
+        spacing={2}
+      >
+        {purchasing.length > 0 &&
+          purchasing.map((item) => (
+            <Grid
+              item
+              style={{
+                borderBottom: '1px solid #d5d5d8',
+                padding: '24px 0',
+              }}
+            >
+              <Grid container alignItems="center">
+                {/* for image */}
+                <Grid item>
+                  <img
+                    src={
+                      publicRuntimeConfig.backend +
+                      '/files/' +
+                      item.productId.images[0]
+                    }
+                    style={{
+                      width: '125px',
+                      height: '76px',
+                      marginRight: '0.4em',
+                    }}
+                  />
+                </Grid>
+                {/* For details */}
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  style={{
+                    flex: 1,
+                    marginLeft: '0.5em',
+                    alignSelf: 'flex-start',
+                  }}
+                >
+                  {/* for title */}
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      <span style={{ color: theme.palette.common.primary }}>
+                        {' '}
+                        {item.productId.title}
+                      </span>
+                    </Typography>
+                  </Grid>
+                  {/* for description */}
+                  <Grid item style={{ marginTop: '0.3em' }}>
+                    <Typography variant="subtitle2">
+                      {item.productId.description}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  style={{
+                    flex: 1,
+                    marginLeft: '0.5em',
+                    alignSelf: 'flex-start',
+                  }}
+                >
+                  {/* for title */}
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      Date
+                      <span style={{ color: theme.palette.common.primary }}>
+                        {' '}
+                        {new Date(item.Date).toDateString()}
+                      </span>
+                    </Typography>
+                  </Grid>
+                  {/* for description */}
+                  <Grid item style={{ marginTop: '0.3em' }}>
+                    Quantity :
+                    <Typography component="span" variant="subtitle2">
+                      {item.quantity}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                {/* for Price */}
+                <Grid item>
+                  <Typography variant="h6" align="right">
+                    ${item.productId[item.license] * item.quantity}
+                  </Typography>
+
+                  <span
+                    variant="text"
+                    className={classes.label}
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      textAlign: 'right',
+                      color: theme.palette.common.primary,
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                    }}
+                    onClick={() => props.downloadFile(item.productId._id)}
+                  >
+                    Download{' '}
+                  </span>
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+      </Grid>
+    </Grid>
+  );
+}
