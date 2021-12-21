@@ -69,10 +69,10 @@ export default function ResetPassword(props) {
       message: '',
     });
 
-    if (user.password.value == '') {
+    if (user.password.value === '') {
       setUser({
         ...user,
-        userName: {
+        password: {
           value: user.password.value,
           error: true,
           errorMessage: t['Password cannot be empty'],
@@ -80,18 +80,18 @@ export default function ResetPassword(props) {
       });
       return;
     }
-    if (user.confirmPassword.value == '') {
+    if (user.confirmPassword.value === '') {
       setUser({
         ...user,
-        userName: {
-          value: user.password.value,
+        confirmPassword: {
+          value: user.confirmPassword.value,
           error: true,
-          errorMessage: t['Confirm Password cannot be empty'],
+          errorMessage: t['Password cannot be empty'],
         },
       });
       return;
     }
-    if (newPassword !== confirmNewPassword) {
+    if (user.password.value !== user.confirmPassword.value) {
       setError({
         active: true,
         message: t['Password and confirm Password doesnot match'],
@@ -101,8 +101,8 @@ export default function ResetPassword(props) {
     try {
       setLoading(true);
       const response = await resetPassword(
-        user.userName.value,
         user.password.value,
+        user.confirmPassword.value,
         router.query.token
       );
       const result = await response.json();
@@ -137,6 +137,7 @@ export default function ResetPassword(props) {
         </Grid>
 
         <TextField
+          placeholder="New Password"
           variant="outlined"
           fullWidth
           size="small"
@@ -178,6 +179,7 @@ export default function ResetPassword(props) {
         </Grid>
 
         <TextField
+          placeholder="Confirm new Password"
           variant="outlined"
           fullWidth
           size="small"

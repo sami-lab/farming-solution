@@ -84,8 +84,12 @@ exports.validateUser = catchAsync(async (req, res, next) => {
   });
 });
 exports.forgotPassword = catchAsync(async (req, res, next) => {
+  let { email } = req.body;
   //Get User Based on Email
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({
+    $or: [{ email: email }, { userName: email }],
+  });
+
   if (!user) {
     return next(new AppError('There is No User with These Email', 404));
   }
@@ -97,10 +101,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false }); //Saving only 2 Fields
 
   //Sending Email
-  const resettoken = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-  const homepage = `${req.protocol}://${req.get('host')}/`;
+  const resettoken = `${process.env.APP_URL}/resetPassword/${resetToken}`;
+  const homepage = `${process.env.APP_URL}`;
   try {
     await new Email(user, resettoken, homepage).sendPasswordReset();
     res.status(200).json({
@@ -108,6 +110,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token Sent to Email',
     });
   } catch (err) {
+    console.log(err);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
@@ -117,6 +120,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  console.log('--', req.params.token);
   //Comparing Token
   const hashToken = crypto
     .createHash('sha256')
@@ -137,7 +141,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   this.changedPasswordAt = Date.now() - 1000;
-  await user.save();
+  await user.save({ validateBeforeSave: false });
   //update passwordChangedAt property
   //Login To the User
   res.status(200).json({

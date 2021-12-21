@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Link from 'next/link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -158,11 +158,13 @@ export default function Login(props) {
             </label>
           </Grid>
           <Grid item>
-            <label
-              className={[classes.label, classes.forgetPassword].join(' ')}
-            >
-              {t['Forget Password?']}
-            </label>
+            <Link href="/forgetPassword" style={{ textDecoration: 'none' }}>
+              <label
+                className={[classes.label, classes.forgetPassword].join(' ')}
+              >
+                {t['Forget Password?']}
+              </label>
+            </Link>
           </Grid>
         </Grid>
 

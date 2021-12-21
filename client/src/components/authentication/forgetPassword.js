@@ -4,11 +4,11 @@ import {
   Grid,
   Button,
   TextField,
-  Alert,
   CircularProgress,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert } from '@material-ui/lab';
 
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 

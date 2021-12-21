@@ -73,7 +73,7 @@ export const resetPassword = async (password, confirmPassword, token) => {
   });
 
   var requestOptions = {
-    method: 'POST',
+    method: 'post',
     headers: myHeaders,
     body: raw,
     redirect: 'follow',

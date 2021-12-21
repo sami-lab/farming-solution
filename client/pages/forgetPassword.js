@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import LoginForm from '../src/components/authentication/login';
+import ForgetPasswordForm from '../src/components/authentication/forgetPassword';
 import AuthHeader from '../src/resusable/authHeader';
 import AuthFooter from '../src/resusable/authFooter';
 
@@ -88,7 +88,7 @@ export default function ForgetPassword(props) {
             {/* for form */}
             <Grid item>
               {' '}
-              <ForgetPassword {...props} languageJson={t} />
+              <ForgetPasswordForm {...props} languageJson={t} />
             </Grid>
             {/* for Line */}
             <Grid item style={{ marginTop: '2.5em' }}>
