@@ -57,14 +57,18 @@ export default function Login(props) {
             <Grid container direction="column" spacing={2}>
               {/* For text  */}
               <Grid item>
-                <Typography variant="h1">
-                  {t['Welcome back to the world’s marketplace for design']}
+                <Typography variant="h4">
+                  {
+                    t[
+                      'Welcome to the marketplace built to support amazing Farm to Home producers like you.'
+                    ]
+                  }
                 </Typography>
               </Grid>
               {/* for Image */}
               <Grid item>
                 <img
-                  src="/dev/login.webp"
+                  src="/dev/login.png"
                   alt="login"
                   style={{ width: '100%', height: '100%' }}
                 />

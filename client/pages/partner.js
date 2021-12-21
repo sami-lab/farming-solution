@@ -19,7 +19,7 @@ import Categories from '../src/components/shop/categories';
 import OpenShop from '../src/components/shop/openShopDialog';
 import Footer from '../src/resusable/footer';
 import Loading from '../src/resusable/spinner';
-
+import CheckAuth from '../src/resusable/checkAuth';
 import { getMyShop } from '../api/shop/shop';
 
 const sample = [
@@ -137,205 +137,209 @@ export default function CreateShop(props) {
   }, []);
 
   return (
-    <Grid container direction="column">
-      <Grid item>
-        <OpenShop
-          open={openShopModal}
-          onClose={() => setOpenShop(false)}
-          token={props.userToken}
-          shopApproved={shopSubmitted}
-          languageJson={t}
-        />
-        <Header {...props} languageJson={t} />
-      </Grid>
-      {shopPending && (
-        <Grid
-          item
-          style={{ marginTop: '2em', marginBottom: '2m' }}
-          className={classes.root}
-        >
-          <Alert
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#DCEEFC',
-            }}
-            classes={{
-              root: classes.alert,
-            }}
-            icon={
-              <img
-                src="/dev/annoucement.svg"
-                style={{ width: '1em', height: '1em' }}
-              />
-            }
-          >
-            {' '}
-            <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-              {' '}
-              {t['Your Shop Status is Pending for approval by admin']}
-            </Typography>
-          </Alert>
-        </Grid>
-      )}
-      {shopApproved && (
-        <Grid
-          item
-          style={{ marginTop: '2em', marginBottom: '2m' }}
-          className={classes.root}
-        >
-          <Alert
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#DCEEFC',
-            }}
-            classes={{
-              root: classes.alert,
-            }}
-            icon={
-              <img
-                src="/dev/annoucement.svg"
-                style={{ width: '1em', height: '1em' }}
-              />
-            }
-          >
-            {' '}
-            <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-              {' '}
-              {t['Your Shop is approved']}{' '}
-              <Link href="/shop/myShop">{t['Visit now']} </Link>
-            </Typography>
-          </Alert>
-        </Grid>
-      )}
-      <Grid
-        item
-        style={{ alignSelf: 'center' }}
-        className={classes.root}
-        md={12}
-        sm={10}
-        xs={12}
-      >
-        {loading ? (
-          <Loading />
-        ) : (
-          <Hero
-            openModal={() => setOpenShop(true)}
-            shopPending={shopPending}
-            shopApproved={shopApproved}
+    <CheckAuth>
+      <Grid container direction="column">
+        <Grid item>
+          <OpenShop
+            open={openShopModal}
+            onClose={() => setOpenShop(false)}
+            token={props.userToken}
+            shopApproved={shopSubmitted}
             languageJson={t}
           />
+          <Header {...props} languageJson={t} />
+        </Grid>
+        {shopPending && (
+          <Grid
+            item
+            style={{ marginTop: '2em', marginBottom: '2m' }}
+            className={classes.root}
+          >
+            <Alert
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#DCEEFC',
+              }}
+              classes={{
+                root: classes.alert,
+              }}
+              icon={
+                <img
+                  src="/dev/annoucement.svg"
+                  style={{ width: '1em', height: '1em' }}
+                />
+              }
+            >
+              {' '}
+              <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
+                {' '}
+                {t['Your Shop Status is Pending for approval by admin']}
+              </Typography>
+            </Alert>
+          </Grid>
         )}
-      </Grid>
-      <Grid
-        md={7}
-        sm={10}
-        item
-        style={{ marginTop: matchesSM ? '2em' : '4em', alignSelf: 'center' }}
-      >
-        <ShopPerks languageJson={t} />
-      </Grid>
-      <Grid
-        item
-        container
-        justify="center"
-        style={{
-          backgroundColor: '#F4F8FB',
-          marginBottom: 0,
-          marginTop: '2.5em',
-        }}
-      >
+        {shopApproved && (
+          <Grid
+            item
+            style={{ marginTop: '2em', marginBottom: '2m' }}
+            className={classes.root}
+          >
+            <Alert
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#DCEEFC',
+              }}
+              classes={{
+                root: classes.alert,
+              }}
+              icon={
+                <img
+                  src="/dev/annoucement.svg"
+                  style={{ width: '1em', height: '1em' }}
+                />
+              }
+            >
+              {' '}
+              <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
+                {' '}
+                {t['Your Shop is approved']}{' '}
+                <Link href="/shop/myShop">{t['Visit now']} </Link>
+              </Typography>
+            </Alert>
+          </Grid>
+        )}
         <Grid
           item
+          style={{ alignSelf: 'center' }}
+          className={classes.root}
+          md={12}
+          sm={10}
+          xs={12}
+        >
+          {loading ? (
+            <Loading />
+          ) : (
+            <Hero
+              openModal={() => setOpenShop(true)}
+              shopPending={shopPending}
+              shopApproved={shopApproved}
+              languageJson={t}
+            />
+          )}
+        </Grid>
+        <Grid
           md={7}
           sm={10}
-          style={{ marginTop: '2em', marginBottom: '2em' }}
+          item
+          style={{ marginTop: matchesSM ? '2em' : '4em', alignSelf: 'center' }}
         >
-          <p
-            style={{
-              textAlign: 'center',
-              fontFamily: 'Averta',
-              marginBottom: '2em',
-            }}
+          <ShopPerks languageJson={t} />
+        </Grid>
+        <Grid
+          item
+          container
+          justify="center"
+          style={{
+            backgroundColor: '#F4F8FB',
+            marginBottom: 0,
+            marginTop: '2.5em',
+          }}
+        >
+          <Grid
+            item
+            md={7}
+            sm={10}
+            style={{ marginTop: '2em', marginBottom: '2em' }}
           >
-            {t['Find your niche within our categories']}
-          </p>
-          <Categories categories={sample} languageJson={t} />
-        </Grid>
-      </Grid>
-
-      <Grid
-        md={7}
-        sm={10}
-        item
-        style={{
-          marginTop: matchesSM ? '2em' : '4em',
-
-          alignSelf: 'center',
-        }}
-      >
-        <Grid container direction="column" alignItems="center">
-          <Grid item>
-            <Typography
-              variant="h1"
-              align="center"
-              style={{ fontWeight: '500' }}
-            >
-              {t['Producers Stories']}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h2"
-              align="center"
-              style={{ fontWeight: '300' }}
-            >
-              {
-                t[
-                  'Our community of producers share their stories about how Creative Market helps them spend more time doing what they love.'
-                ]
-              }
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
-            <p style={{ textAlign: 'center', fontFamily: 'Averta' }}>
-              {t['Sound good? Join our community of shop owners today']}
-            </p>
-          </Grid>
-
-          <Grid item>
-            <Button
-              variant="contained"
+            <p
               style={{
-                background: shopPending ? 'gray' : theme.palette.common.primary,
-                padding: '7px 20px',
-                opacity: shopPending ? 0.7 : 1,
+                textAlign: 'center',
+                fontFamily: 'Averta',
+                marginBottom: '2em',
               }}
-              onClick={() =>
-                shopApproved ? router.push('/shop/myShop') : setOpenShop(true)
-              }
-              disabled={shopPending}
             >
-              <Typography
-                variant="h6"
-                style={{ color: shopPending ? '#000' : '#fff' }}
-                //onClick={props.openModal}
-              >
-                {shopApproved
-                  ? t['Visit Shop']
-                  : shopPending
-                  ? t['Shop is Pending']
-                  : t['Open a Shop']}
-              </Typography>
-            </Button>
+              {t['Find your niche within our categories']}
+            </p>
+            <Categories categories={sample} languageJson={t} />
           </Grid>
         </Grid>
+
+        <Grid
+          md={7}
+          sm={10}
+          item
+          style={{
+            marginTop: matchesSM ? '2em' : '4em',
+
+            alignSelf: 'center',
+          }}
+        >
+          <Grid container direction="column" alignItems="center">
+            <Grid item>
+              <Typography
+                variant="h1"
+                align="center"
+                style={{ fontWeight: '500' }}
+              >
+                {t['Producers Stories']}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="h2"
+                align="center"
+                style={{ fontWeight: '300' }}
+              >
+                {
+                  t[
+                    'Our community of producers share their stories about how Creative Market helps them spend more time doing what they love.'
+                  ]
+                }
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
+              <p style={{ textAlign: 'center', fontFamily: 'Averta' }}>
+                {t['Sound good? Join our community of shop owners today']}
+              </p>
+            </Grid>
+
+            <Grid item>
+              <Button
+                variant="contained"
+                style={{
+                  background: shopPending
+                    ? 'gray'
+                    : theme.palette.common.primary,
+                  padding: '7px 20px',
+                  opacity: shopPending ? 0.7 : 1,
+                }}
+                onClick={() =>
+                  shopApproved ? router.push('/shop/myShop') : setOpenShop(true)
+                }
+                disabled={shopPending}
+              >
+                <Typography
+                  variant="h6"
+                  style={{ color: shopPending ? '#000' : '#fff' }}
+                  //onClick={props.openModal}
+                >
+                  {shopApproved
+                    ? t['Visit Shop']
+                    : shopPending
+                    ? t['Shop is Pending']
+                    : t['Open a Shop']}
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item style={{ marginTop: '3em' }}>
+          <Footer languageJson={t} />
+        </Grid>
       </Grid>
-      <Grid item style={{ marginTop: '3em' }}>
-        <Footer languageJson={t} />
-      </Grid>
-    </Grid>
+    </CheckAuth>
   );
 }

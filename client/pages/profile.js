@@ -247,6 +247,7 @@ export default function Profile(props) {
                   {pageTab === 'profile' && (
                     <UserProfile
                       user={props.user}
+                      setUser={props.setUser}
                       userToken={props.userToken}
                       languageJson={t}
                     />

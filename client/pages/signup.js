@@ -59,20 +59,20 @@ export default function SignUp(props) {
             <Grid container direction="column" spacing={2}>
               {/* For text  */}
               <Grid item>
-                <Typography variant="h1">
+                <Typography variant="h4">
                   {
                     t[
-                      'Discover digital assets created by talented artists around the world.'
+                      'Discover fresh and affordable produce and food products created by talented producers around the country.'
                     ]
                   }
                 </Typography>
               </Grid>
               {/* for Image */}
-              <Grid item>
+              <Grid item style={{ display: 'flex', justifyContent: 'center' }}>
                 <img
-                  src="/dev/login.webp"
+                  src="/dev/signup.png"
                   alt="login"
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ width: '60%', height: '50%' }}
                 />
               </Grid>
             </Grid>

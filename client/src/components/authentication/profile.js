@@ -47,15 +47,11 @@ export default function Profile(props) {
     image: props.user.image ? props.user.image : '',
     email: props.user.email ? props.user.email : '',
     userName: props.user.userName ? props.user.userName : '',
-    website: props.user.website ? props.user.website : '',
-    bio: props.user.bio ? props.user.bio : '',
+    zipCode: props.user.zipCode ? props.user.zipCode : '',
+    address: props.user.address ? props.user.address : '',
     twitter: props.user.twitter ? props.user.twitter : '',
-    pinterest: props.user.pinterest ? props.user.pinterest : '',
     instagram: props.user.instagram ? props.user.instagram : '',
-    dribbble: props.user.dribbble ? props.user.dribbble : '',
-    behance: props.user.behance ? props.user.behance : '',
-    linkedin: props.user.linkedin ? props.user.linkedin : '',
-    github: props.user.github ? props.user.github : '',
+    facebook: props.user.facebook ? props.user.facebook : '',
   });
   const [file, setFile] = useState(null);
 
@@ -86,9 +82,16 @@ export default function Profile(props) {
         active: true,
         action: 'submit',
       });
-      const response = await updateProfile(props.userToken, { ...user, file });
+      let o = {
+        ...user,
+      };
+      if (file !== null) {
+        o.image = file;
+      }
+      const response = await updateProfile(props.userToken, o);
       const result = response.data;
       if (result.status === 'success') {
+        props.setUser(result.data.updatedUser);
         setShowToast({
           active: true,
           message: t['Profile Updated Successfully'],
@@ -245,7 +248,7 @@ export default function Profile(props) {
                 {/* Lastname */}
                 <Grid item xs={6}>
                   <label htmlFor="lastname" className={classes.label}>
-                    {t['Last Name*']}
+                    {t['Last Name']}
                   </label>
                   <TextField
                     id="lastname"
@@ -323,14 +326,14 @@ export default function Profile(props) {
                 }
               />
             </Grid>
-            {/* Website url */}
+            {/* zip code */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Website URL']}
+                {t['Zip Code']}
               </label>
 
               <TextField
-                id="Website URL"
+                placeholder="Zip Code"
                 variant="outlined"
                 fullWidth
                 size="small"
@@ -340,29 +343,29 @@ export default function Profile(props) {
                     notchedOutline: classes.inputOutline,
                   },
                 }}
-                value={user.website}
+                value={user.zipCode}
                 onChange={(e) =>
                   setUser({
                     ...user,
-                    website: e.target.value,
+                    zipCode: e.target.value,
                   })
                 }
               />
             </Grid>
-            {/* bui */}
+            {/* adress */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Bio']}
+                {t['Address']}
               </label>
               <textarea
                 className={classes.input}
                 style={{ width: '100%' }}
                 rows={3}
-                value={user.bio}
+                value={user.address}
                 onChange={(e) =>
                   setUser({
                     ...user,
-                    bio: e.target.value,
+                    address: e.target.value,
                   })
                 }
               />
@@ -376,6 +379,30 @@ export default function Profile(props) {
               <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
                 {t['Social Profiles (Optional)']}
               </Typography>
+            </Grid>
+            {/* facebook */}
+            <Grid item>
+              <label htmlFor="Pinterest" className={classes.label}>
+                {t['Facebook']}
+              </label>
+              <TextField
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                value={user.facebook}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    facebook: e.target.value,
+                  })
+                }
+              />
             </Grid>
             {/* Twiiter */}
             <Grid item>
@@ -402,31 +429,6 @@ export default function Profile(props) {
                 }
               />
             </Grid>{' '}
-            {/* Pinterest */}
-            <Grid item>
-              <label htmlFor="Pinterest" className={classes.label}>
-                {t['Pinterest']}
-              </label>
-              <TextField
-                id="Pinterest"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                value={user.twitter}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    twitter: e.target.value,
-                  })
-                }
-              />
-            </Grid>
             {/* Instagram */}
             <Grid item>
               <label htmlFor="Instagram" className={classes.label}>
@@ -448,106 +450,6 @@ export default function Profile(props) {
                   setUser({
                     ...user,
                     instagram: e.target.value,
-                  })
-                }
-              />
-            </Grid>
-            {/* Dribbble */}
-            <Grid item>
-              <label htmlFor="Dribbble" className={classes.label}>
-                {t['Dribbble']}
-              </label>
-              <TextField
-                id="Dribbble"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                value={user.dribbble}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    dribbble: e.target.value,
-                  })
-                }
-              />
-            </Grid>
-            {/* behance */}
-            <Grid item>
-              <label htmlFor="behance" className={classes.label}>
-                {t['Behance']}
-              </label>
-              <TextField
-                id="behance"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                value={user.behance}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    behance: e.target.value,
-                  })
-                }
-              />
-            </Grid>
-            {/* LinkedIn */}
-            <Grid item>
-              <label htmlFor="LinkedIn" className={classes.label}>
-                {t['LinkedIn']}
-              </label>
-              <TextField
-                id="LinkedIn"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                value={user.linkedin}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    linkedin: e.target.value,
-                  })
-                }
-              />
-            </Grid>
-            {/* Github */}
-            <Grid item>
-              <label htmlFor="Github" className={classes.label}>
-                {t['Github']}
-              </label>
-              <TextField
-                id="Github"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                value={user.github}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    github: e.target.value,
                   })
                 }
               />

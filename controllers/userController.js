@@ -18,8 +18,6 @@ exports.getMe = catchAsync(async (req, res, next) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.body, req.file);
-
   //1) Create error if user Post Password
   if (req.body.password || req.body.confirmPassword) {
     return next(new AppError('This route is not for Updating Password', 400));
@@ -31,15 +29,11 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'lastName',
     'email',
     'userName',
-    'website',
-    'bio',
+    'zipCode',
+    'address',
     'twitter',
-    'pinterest',
-    'instagram',
-    'dribbble',
-    'behance',
-    'linkedin',
-    'github'
+    'facebook',
+    'instagram'
   ); //filtering unwanted Field
   if (req.file) filterBody.image = req.file.filename;
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filterBody, {

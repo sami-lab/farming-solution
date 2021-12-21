@@ -8,7 +8,12 @@ export default function CheckAuth(props) {
   const [showAuth, setShowAuth] = useState(true);
   const [notFound, setNotFound] = useState(false);
   useEffect(() => {
-    if (props.user === null && props.userToken === null) router.push('/login');
+    console.log(props.user);
+    if (
+      (!props.user && !props.userToken) ||
+      (props.user === null && props.userToken === null)
+    )
+      router.push('/login');
     if (props.managerOnly) {
       if (!props.user?.roles.some((item) => item.name === 'Manager')) {
         setNotFound(true);

@@ -13,7 +13,6 @@ var UserSchema = mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: [true, 'A User must have a last Name'],
       trim: true,
     },
     image: {
@@ -30,11 +29,11 @@ var UserSchema = mongoose.Schema(
       type: String,
       required: [true, 'A User must have a username'],
     },
-    website: {
+    zipCode: {
       type: String,
       validate: [validator.isURL, 'Please Provide a Valid Website URL'],
     },
-    bio: {
+    address: {
       type: String,
       trim: true,
     },
@@ -42,31 +41,15 @@ var UserSchema = mongoose.Schema(
       type: String,
       //validate: [validator.isURL, 'Please Provide a Valid Twitter URL'],
     },
-    pinterest: {
+    facebook: {
       type: String,
-      //validate: [validator.isURL, 'Please Provide a Valid Pinterest URL'],
+      //validate: [validator.isURL, 'Please Provide a Valid Twitter URL'],
     },
     instagram: {
       type: String,
       //validate: [validator.isURL, 'Please Provide a Valid Instagram URL'],
     },
-    dribbble: {
-      type: String,
-      //validate: [validator.isURL, 'Please Provide a Valid Behance URL'],
-    },
-    behance: {
-      type: String,
-      //validate: [validator.isURL, 'Please Provide a Valid Website URL'],
-    },
-    linkedin: {
-      type: String,
-      //validate: [validator.isURL, 'Please Provide a Valid LinkedIn URL'],
-    },
-    github: {
-      type: String,
-      require: false,
-      //validate: [validator.isURL, 'Please Provide a Valid Github URL'],
-    },
+
     password: {
       type: String,
       required: [true, 'A User must have a Password'],
