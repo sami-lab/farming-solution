@@ -43,6 +43,49 @@ export const login = async (email, password) => {
   return response;
 };
 
+export const forgetPassword = async (email) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  var raw = JSON.stringify({
+    email,
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  const response = await fetch(
+    `${publicRuntimeConfig.backend}/api/users/forgetpassword`,
+    requestOptions
+  );
+
+  return response;
+};
+export const resetPassword = async (password, confirmPassword, token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  var raw = JSON.stringify({
+    password,
+    confirmPassword,
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  const response = await fetch(
+    `${publicRuntimeConfig.backend}/api/users/resetPassword/${token}`,
+    requestOptions
+  );
+
+  return response;
+};
 export const signUp = async (
   firstName,
   lastName,
