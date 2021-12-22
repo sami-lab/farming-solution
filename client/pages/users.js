@@ -204,7 +204,7 @@ export default function users(props) {
               {users.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">
-                    {row.lastName
+                    {row.firstName
                       ? row.firstName + ' ' + row.lastName
                       : row.name}
                   </TableCell>
@@ -220,7 +220,10 @@ export default function users(props) {
                           backgroundColor: 'red',
                           width: '110px',
                         }}
-                        disabled={loading && loading.action === 'block'}
+                        disabled={
+                          (loading && loading.action === 'block') ||
+                          row.roles.some((x) => x.name === 'Admin')
+                        }
                       >
                         Block
                       </Button>
