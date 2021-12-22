@@ -35,8 +35,8 @@ import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '10em',
-    paddingRight: '10em',
+    paddingLeft: '2em',
+    paddingRight: '2em',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '3em',
       paddingRight: '3em',
@@ -391,7 +391,7 @@ export default function PrimarySearchAppBar(props) {
         }}
         className={classes.root}
       >
-        <Grid container alignItems="center">
+        <Grid container alignItems="center" justifyContent="space-between">
           {!matchesSM && (
             <Grid item xs={2}>
               {logoContainer}
@@ -404,7 +404,12 @@ export default function PrimarySearchAppBar(props) {
                   {logoContainer}
                 </Grid>
               )}
-              {!matchesSM && searchInput}
+              {/* {!matchesSM && searchInput} */}
+              {!matchesSM && (
+                <Grid item xs={9}>
+                  {desktopList}
+                </Grid>
+              )}
               <Grid item md={3} xs={6}>
                 <Grid
                   container
@@ -556,8 +561,8 @@ export default function PrimarySearchAppBar(props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container>{matchesSM && searchInput}</Grid>
-            <Grid container>{!matchesSM && desktopList}</Grid>
+            {/* <Grid container>{matchesSM && searchInput}</Grid>
+            <Grid container>{!matchesSM && desktopList}</Grid> */}
           </Grid>
         </Grid>
       </AppBar>

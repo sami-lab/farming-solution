@@ -191,23 +191,23 @@ export default function Admin(props) {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell>Shop name</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell align="right">Shop URL</TableCell>
-                <TableCell align="right">Design Portfolio</TableCell>
-                <TableCell align="right">Why Creative Market</TableCell>
-                <TableCell align="right">Action</TableCell>
+                <TableCell align="center">Shop Description</TableCell>
+                <TableCell align="center">Food Types</TableCell>
+                <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {shops.map((row) => (
                 <TableRow key={row.id}>
+                  <TableCell>{row.shopName}</TableCell>
                   <TableCell component="th" scope="row">
-                    {row.managerId.email}
+                    {row.managerId?.email}
                   </TableCell>
-                  <TableCell align="right">{row.productUrl}</TableCell>
-                  <TableCell align="right">{row.portfolioUrl}</TableCell>
-                  <TableCell align="right">{row.whyChooseUs}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">{row.shopDescription}</TableCell>
+                  <TableCell align="center">{row.what}</TableCell>
+                  <TableCell align="center">
                     {row.shopStatus ? (
                       new Date(row.createdAt).toDateString()
                     ) : (

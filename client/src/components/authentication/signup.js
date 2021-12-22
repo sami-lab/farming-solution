@@ -99,17 +99,7 @@ export default function Signup(props) {
       });
       return;
     }
-    if (user.lastName.value == '') {
-      setUser({
-        ...user,
-        userName: {
-          value: user.lastName.value,
-          error: true,
-          errorMessage: t['Last name cannot be empty'],
-        },
-      });
-      return;
-    }
+
     if (user.email.value == '') {
       setUser({
         ...user,
@@ -218,7 +208,7 @@ export default function Signup(props) {
           {/* Lastname */}
           <Grid item xs={6}>
             <label htmlFor="lastname" className={classes.label}>
-              {t['Last Name*']}
+              {t['Last Name']}
             </label>
             <TextField
               id="lastname"

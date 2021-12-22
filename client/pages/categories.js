@@ -137,6 +137,13 @@ export default function Categories(props) {
           message: 'Category Added Successfully',
           severity: 'success',
         });
+        setCategory({
+          name: '',
+          title: '',
+          heading: '',
+          details: '',
+          image: null,
+        });
       }
       setCreateCategoryModal(false);
       setLoading({
@@ -342,6 +349,7 @@ export default function Categories(props) {
               <textarea
                 className={classes.input}
                 rows={2}
+                style={{ resize: 'vertical' }}
                 value={category.details}
                 onChange={(e) =>
                   setCategory({

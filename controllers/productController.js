@@ -254,6 +254,7 @@ exports.recentproducts = catchAsync(async (req, res, next) => {
 exports.recentproduct = catchAsync(async (req, res, next) => {
   const doc = await Product.aggregate([
     { $sort: { date: -1 } },
+
     {
       $replaceRoot: {
         newRoot: {
@@ -291,7 +292,7 @@ exports.recentproduct = catchAsync(async (req, res, next) => {
     },
   ]);
   //await Shop.populate(doc, { path: 'shopId' });
-
+  console.log(doc);
   res.status(200).json({
     status: 'success',
     result: doc.length,
