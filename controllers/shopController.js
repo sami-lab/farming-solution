@@ -91,12 +91,12 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   });
 });
 exports.createOne = catchAsync(async (req, res, next) => {
-  const { productUrl, portfolioUrl, whyChooseUs } = req.body;
-  if (!productUrl || !portfolioUrl || !whyChooseUs)
+  const { what, where, whyChooseUs } = req.body;
+  if (!what || !where || !whyChooseUs)
     return next(new AppError('Could not be able to add this shop', 400));
   let doc = new Shop({
-    productUrl,
-    portfolioUrl,
+    what,
+    where,
     managerId: req.user.id,
     whyChooseUs,
   });

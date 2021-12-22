@@ -20,22 +20,22 @@ var ShopSchema = mongoose.Schema(
       type: String,
       required: [true, 'A Shop must have Cover photo'],
     },
-    // phone: {
-    //     type: String,
-    //     required: [true, 'A Shop must have hepline number'],
-    // },
+    phone: {
+      type: String,
+      required: [true, 'A Shop must have hepline number'],
+    },
     shopStatus: {
       type: Boolean,
       default: false,
       //select: false,
     },
-    productUrl: {
+    where: {
       type: String,
-      required: [true, 'A Shop must have Product Url'],
+      required: [true, 'A Shop must have its food description'],
     },
-    portfolioUrl: {
+    what: {
       type: String,
-      required: [true, 'A Shop must have Portfolio Url'],
+      required: [true, 'A Shop must have its food description'],
     },
     whyChooseUs: {
       type: String,
@@ -51,11 +51,6 @@ var ShopSchema = mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-    // shopCategory:{
-    //     type: mongoose.Schema.ObjectId,
-    //     ref:'Category',
-    //     require: [true,'Shop must have a Category!']
-    // },
   },
   {
     toJSON: { virtuals: true },

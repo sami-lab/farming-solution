@@ -63,8 +63,8 @@ export default function OpenShopDialog(props) {
 
   const theme = useTheme();
   const classes = useStyles();
-  const [productUrl, setProductUrl] = useState('');
-  const [portfolioUrl, setportfolioUrl] = useState('');
+  const [what, setWhat] = useState('');
+  const [where, setWhere] = useState('');
   const [whyChooseUs, setWhyChooseUs] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -77,7 +77,7 @@ export default function OpenShopDialog(props) {
       status: false,
       message: '',
     });
-    if (productUrl === '' || whyChooseUs === '' || portfolioUrl === '') {
+    if (what === '' || whyChooseUs === '' || where === '') {
       setError({
         status: true,
         message: t['Please fill All fields to continue'],
@@ -87,8 +87,8 @@ export default function OpenShopDialog(props) {
     try {
       setLoading(true);
       const response = await createShop(props.token, {
-        productUrl,
-        portfolioUrl,
+        what,
+        where,
         whyChooseUs,
       });
       const result = await response.json();
@@ -145,24 +145,24 @@ export default function OpenShopDialog(props) {
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t['Link(s) to products or Shops where you sell now']}
+              {t['What type of food you will Sell?']}
             </label>
             <textarea
               className={classes.input}
               rows={2}
-              value={productUrl}
-              onChange={(e) => setProductUrl(e.target.value)}
+              value={what}
+              onChange={(e) => setWhat(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t['Link(s) to your Design Portfolio']}
+              {t['Where does your food come from?']}
             </label>
             <textarea
               className={classes.input}
               rows={2}
-              value={portfolioUrl}
-              onChange={(e) => setportfolioUrl(e.target.value)}
+              value={where}
+              onChange={(e) => setWhere(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} container direction="column">
@@ -180,9 +180,7 @@ export default function OpenShopDialog(props) {
             <Button
               variant="contained"
               disabled={
-                productUrl.length <= 0 ||
-                portfolioUrl.length <= 0 ||
-                whyChooseUs.length <= 0
+                what.length <= 0 || where.length <= 0 || whyChooseUs.length <= 0
               }
               className={classes.button}
               onClick={submitFormHandler}
