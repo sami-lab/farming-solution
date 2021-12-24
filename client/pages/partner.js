@@ -137,7 +137,7 @@ export default function CreateShop(props) {
   }, []);
 
   return (
-    <CheckAuth>
+    <CheckAuth {...props}>
       <Grid container direction="column">
         <Grid item>
           <OpenShop
@@ -222,7 +222,7 @@ export default function CreateShop(props) {
             <Loading />
           ) : (
             <Hero
-              openModal={() => setOpenShop(true)}
+              setOpenShop={setOpenShop}
               shopPending={shopPending}
               shopApproved={shopApproved}
               languageJson={t}

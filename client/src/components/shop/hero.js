@@ -61,9 +61,10 @@ export default function Hero(props) {
             opacity: props.shopPending ? 0.7 : 1,
           }}
           disabled={props.shopPending}
-          onClick={() =>
-            props.shopApproved ? router.push('/shop/myShop') : props.openModal
-          }
+          onClick={() => {
+            if (props.shopApproved) router.push('/shop/myShop');
+            else props.setOpenShop(true);
+          }}
         >
           <Typography
             variant="h6"

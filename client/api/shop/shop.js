@@ -6,8 +6,8 @@ export const createShop = async (token, data) => {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('authorization', 'Bearer ' + token);
   var raw = JSON.stringify({
-    productUrl: data.productUrl,
-    portfolioUrl: data.portfolioUrl,
+    what: data.what,
+    where: data.where,
     whyChooseUs: data.whyChooseUs,
   });
 

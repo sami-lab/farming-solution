@@ -18,11 +18,6 @@ var ProductSchema = mongoose.Schema({
     ref: 'Shop',
     require: [true, 'Product must have a Shop!'],
   },
-  videoUrl: {
-    type: String,
-    require: false,
-    //validate: [validator.isURL, 'Please Provide a Valid Video URL'],
-  },
   images: [String],
   description: {
     type: String,
@@ -31,42 +26,23 @@ var ProductSchema = mongoose.Schema({
   details: {
     type: String,
   },
-  file: {
+
+  price: {
+    type: Number,
+    require: [true, 'Product must have a price!'],
+    min: [0, 'Price must be above 0'],
+  },
+  unit: {
     type: String,
-    require: [true, 'file cannot be null!'],
-    select: false,
   },
-  personalLicence: {
+  delieveryPrice: {
     type: Number,
-    require: [true, 'Product must have  a personal Licence price!'],
-    min: [0, 'Price must be above 0'],
-  },
-  commercialLicence: {
-    type: Number,
-    require: [true, 'Product must have  a commercial Licence price!'],
-    min: [0, 'Price must be above 0'],
-  },
-  extendedCommercialLicence: {
-    type: Number,
-    require: [true, 'Product must have  a extended  Licence price!'],
+    require: [true, 'Delievery Product must have a price!'],
     min: [0, 'Price must be above 0'],
   },
   date: {
     type: Date,
     default: Date.now(),
-  },
-  compatibleWith: [String],
-  layered: {
-    type: Boolean,
-    default: false,
-  },
-  tileable: {
-    type: Boolean,
-    default: false,
-  },
-  vector: {
-    type: Boolean,
-    default: false,
   },
   tags: [String],
 });

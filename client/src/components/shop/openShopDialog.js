@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#fbfbfd',
     boxShadow: 'none',
     marginTop: '3px',
+    resize:"vertical",
     '&:hover': {
       border: '1px solid #899298',
     },
