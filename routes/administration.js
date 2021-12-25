@@ -13,6 +13,12 @@ router.get(
   restrictTo(['Manager']),
   administrationController.getShopDashboardData
 );
+router.get(
+  '/shopProducts/',
+  restrictTo(['Manager']),
+  productController.getAllProductofShopManager,
+  productController.getAllProductofShop
+);
 router.use(restrictTo(['Admin']));
 
 router.get('/pendingShops', administrationController.pendingShop);

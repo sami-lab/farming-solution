@@ -444,9 +444,18 @@ export default function Manager(props) {
           xs={12}
           style={{ marginTop: '2em' }}
           container
+          justifyContent="space-between"
           className={classes.root}
         >
           <Typography variant="h4">Recent Sales</Typography>
+          <Link href="/shopOrders">
+            <Typography
+              variant="h4"
+              style={{ cursor: 'pointer', color: theme.palette.common.primary }}
+            >
+              All Orders
+            </Typography>
+          </Link>
         </Grid>
         {/* for sales tables */}
         <Grid
@@ -520,10 +529,19 @@ export default function Manager(props) {
           item
           style={{ marginTop: '2em' }}
           container
+          justifyContent="space-between"
           xs={12}
           className={classes.root}
         >
           <Typography variant="h4">Recent Products</Typography>
+          <Link href="/shopProducts">
+            <Typography
+              variant="h4"
+              style={{ cursor: 'pointer', color: theme.palette.common.primary }}
+            >
+              All Products
+            </Typography>
+          </Link>
         </Grid>
         {/* for Products */}
         <Grid

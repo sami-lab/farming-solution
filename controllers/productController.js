@@ -204,7 +204,7 @@ exports.getMyProducts = catchAsync(async (req, res, next) => {
   next();
 });
 exports.getAllProductofShopManager = catchAsync(async (req, res, next) => {
-  req.params.shop = req.params.managerId;
+  req.params.shopId = req.user.shop._id;
 
   next();
 });

@@ -138,3 +138,42 @@ export const getShopDashboardData = async (token) => {
 
   return response;
 };
+
+export const getAllShopProduct = async (token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('authorization', 'Bearer ' + token);
+
+  var requestOptions = {
+    method: 'get',
+    headers: myHeaders,
+    body: null,
+    redirect: 'follow',
+  };
+
+  const response = await fetch(
+    `${publicRuntimeConfig.backend}/api/administration/shopProducts`,
+    requestOptions
+  );
+
+  return response;
+};
+export const getAllShopOrder = async (token) => {
+  var myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('authorization', 'Bearer ' + token);
+
+  var requestOptions = {
+    method: 'get',
+    headers: myHeaders,
+    body: null,
+    redirect: 'follow',
+  };
+
+  const response = await fetch(
+    `${publicRuntimeConfig.backend}/api/order/shopOrders`,
+    requestOptions
+  );
+
+  return response;
+};

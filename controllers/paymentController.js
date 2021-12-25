@@ -102,6 +102,25 @@ exports.userOrders = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllOrderofShopManager = catchAsync(async (req, res, next) => {
+  req.params.shopId = req.user.shop._id;
+
+  next();
+});
+//Get All orders of particular shop
+exports.getAllOrderofShop = catchAsync(async (req, res, next) => {
+  //All Products with
+  const doc = await Order.find({
+    shopId: req.params.shopId,
+  }).populate('shopId');
+
+  res.status(200).json({
+    status: 'success',
+    result: doc.length,
+    data: { doc },
+  });
+});
+
 exports.checkout = catchAsync(async (req, res, next) => {
   const { cartItems, stripeToken } = req.body;
 
