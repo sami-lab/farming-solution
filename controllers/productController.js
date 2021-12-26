@@ -196,7 +196,7 @@ exports.getAllProductofShop = catchAsync(async (req, res, next) => {
   });
 });
 //Get recent Products
-exports.recentproducts = catchAsync(async (req, res, next) => {
+exports.recentproduct = catchAsync(async (req, res, next) => {
   const Graphics = await Product.find({
     productCategory: 'Graphics',
   })
@@ -225,51 +225,63 @@ exports.recentproducts = catchAsync(async (req, res, next) => {
   });
 });
 //Get recent Products
-exports.recentproduct = catchAsync(async (req, res, next) => {
+exports.recentproducts = catchAsync(async (req, res, next) => {
+  const categories = await Category.find();
   const doc = await Product.aggregate([
     { $sort: { date: -1 } },
-
-    {
-      $replaceRoot: {
-        newRoot: {
-          $mergeObjects: [{ $arrayElemAt: ['$products', 0] }, '$$ROOT'],
-        },
-      },
-    },
     {
       $group: {
-        // '_id':'{$toUpper : $difficulty'},
-        // _id:'$ratingAverage',
         _id: '$productCategory',
         products: { $push: '$$ROOT' },
       },
     },
-
     {
       $project: {
-        // pagination for products
-        products: {
-          $slice: ['$products', 4],
-        },
-        _id: 1,
-        catName: 1,
-        catDescription: 1,
+        products: { $slice: ['$products', 4] },
       },
     },
     {
       $lookup: {
         from: 'Shop',
-        localField: 'shopId',
+        localField: 'products.shopId',
         foreignField: '_id',
         as: 'shop',
       },
     },
+    {
+      $project: {
+        products: {
+          $map: {
+            input: '$products',
+            in: {
+              $mergeObjects: [
+                '$$this',
+                {
+                  shop: {
+                    $arrayElemAt: [
+                      {
+                        $filter: {
+                          input: '$shop',
+                          as: 's',
+                          cond: { $eq: ['$$s._id', '$$this.shopId'] },
+                        },
+                      },
+                      0,
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
   ]);
   //await Shop.populate(doc, { path: 'shopId' });
-  console.log(doc);
+
   res.status(200).json({
     status: 'success',
-    result: doc.length,
-    data: { doc },
+
+    data: { products: doc, categories: categories },
   });
 });

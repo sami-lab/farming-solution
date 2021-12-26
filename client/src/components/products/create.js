@@ -177,250 +177,235 @@ export default function Create(props) {
   });
 
   return (
-    <Grid container spacing={4}>
-      <Grid item md={8} xs={12}>
-        <Grid container direction="column" spacing={1}>
-          {/* title */}
-          <Grid item>
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              placeholder={t['Add Product Title For Creative Market']}
-              required
-              value={product.title}
-              onChange={(e) =>
-                setProduct((pro) => {
-                  return {
-                    ...pro,
-                    title: e.target.value,
-                  };
-                })
-              }
-            />
-          </Grid>
-          {/* Shopname */}
-          <Grid item>
-            <Typography variant="h6">
-              {t['by']}{' '}
-              <span style={{ color: theme.palette.common.primary }}>
-                {shop?.shopName}
-              </span>{' '}
-            </Typography>
-          </Grid>
+    <>
+      <Grid container spacing={4}>
+        <Grid item md={8} xs={12}>
+          <Grid container direction="column" spacing={1}>
+            {/* title */}
+            <Grid item>
+              <TextField
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                placeholder={t['Add Product Title For Creative Market']}
+                required
+                value={product.title}
+                onChange={(e) =>
+                  setProduct((pro) => {
+                    return {
+                      ...pro,
+                      title: e.target.value,
+                    };
+                  })
+                }
+              />
+            </Grid>
+            {/* Shopname */}
+            <Grid item>
+              <Typography variant="h6">
+                {t['by']}{' '}
+                <span style={{ color: theme.palette.common.primary }}>
+                  {shop?.shopName}
+                </span>{' '}
+              </Typography>
+            </Grid>
 
-          {/* images */}
-          <Grid item>
-            <Grid container spacing={1}>
-              {/* For input image */}
-              <Grid item md={10} xs={12} style={{ height: '100%' }}>
-                {product.images[0] ? (
-                  <img
-                    src={URL.createObjectURL(product.images[0])}
-                    style={{ width: '100%', height: '400px' }}
-                  />
-                ) : (
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    direction="column"
-                    spacing={1}
-                    style={{
-                      padding: '2em',
-                      border: '4px dashed rgba(0, 0, 0, 0.12)',
-                      borderRadius: '4px',
-                      height: '400px',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {
-                      const dropzone = document.getElementById('dropzone');
-                      if (dropzone) {
-                        dropzone.click();
-                      }
-                    }}
-                  >
-                    <Grid item>
-                      <WallpaperIcon
-                        style={{
-                          fontSize: '6rem',
-                          fill: theme.palette.common.darkBlack,
-                          opacity: 0.8,
-                        }}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="h6" align="center">
-                        {t['Drag and drop here to upload your screenshot(s)']}
-                      </Typography>
-                      <Typography
-                        align="center"
-                        paragraph
-                        style={{ fontWeight: 300, fontSize: '0.8rem' }}
-                      >
-                        {t['1820 x 1214px ideal for hi-res']}
-                      </Typography>
-                    </Grid>
-
-                    <Grid item>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        style={{
-                          backgroundColor: 'transparent',
-                          padding: '5px 30px',
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
+            {/* images */}
+            <Grid item>
+              <Grid container spacing={1}>
+                {/* For input image */}
+                <Grid item md={10} xs={12} style={{ height: '100%' }}>
+                  {product.images[0] ? (
+                    <img
+                      src={URL.createObjectURL(product.images[0])}
+                      style={{ width: '100%', height: '400px' }}
+                    />
+                  ) : (
+                    <Grid
+                      container
+                      justify="center"
+                      alignItems="center"
+                      direction="column"
+                      spacing={1}
+                      style={{
+                        padding: '2em',
+                        border: '4px dashed rgba(0, 0, 0, 0.12)',
+                        borderRadius: '4px',
+                        height: '400px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => {
+                        const dropzone = document.getElementById('dropzone');
+                        if (dropzone) {
+                          dropzone.click();
+                        }
+                      }}
+                    >
+                      <Grid item>
+                        <WallpaperIcon
                           style={{
-                            color: theme.palette.common.primary,
-                            borderColor: theme.palette.common.primary,
+                            fontSize: '6rem',
+                            fill: theme.palette.common.darkBlack,
+                            opacity: 0.8,
+                          }}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="h6" align="center">
+                          {t['Drag and drop here to upload your screenshot(s)']}
+                        </Typography>
+                        <Typography
+                          align="center"
+                          paragraph
+                          style={{ fontWeight: 300, fontSize: '0.8rem' }}
+                        >
+                          {t['1820 x 1214px ideal for hi-res']}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item>
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          style={{
+                            backgroundColor: 'transparent',
+                            padding: '5px 30px',
                           }}
                         >
-                          {t['or Select files']}
-                        </Typography>
-                      </Button>
+                          <Typography
+                            variant="h6"
+                            style={{
+                              color: theme.palette.common.primary,
+                              borderColor: theme.palette.common.primary,
+                            }}
+                          >
+                            {t['or Select files']}
+                          </Typography>
+                        </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                )}
-
-                <div style={{ marginTop: '1em' }}>
-                  {' '}
-                  <SunEditor
-                    placeholder={t['Please Enter Product Details...']}
-                    setContents={product.details}
-                    onChange={(content) =>
-                      setProduct((pro) => {
-                        return {
-                          ...pro,
-                          details: content,
-                        };
-                      })
-                    }
-                  />
-                </div>
-              </Grid>
-              {/* For preview  */}
-              <Grid item md={2} xs={12}>
-                <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
-                  spacing={1}
-                >
-                  {/* DropZone items */}
-                  <Grid item style={{ width: '100%' }}>
-                    <DropzoneArea
-                      classes={{
-                        icon: classes.hide,
-                        root: classes.dropzoneRoot,
-                        text: classes.dropZoneTextContainer,
-                      }}
-                      inputProps={{
-                        id: 'dropzone',
-                      }}
-                      id="dropzone"
-                      showAlerts={false}
-                      filesLimit={8}
-                      showPreviewsInDropzone={false}
-                      //acceptedFiles={['image/*']}
-                      dropzoneText={
-                        <Grid
-                          container
-                          justify="center"
-                          alignItems="center"
-                          direction="column"
-                          style={{ padding: '0.3em' }}
-                        >
-                          <Grid item>
-                            <BackupIcon
-                              style={{
-                                fontSize: '2rem',
-                                fill: theme.palette.common.darkBlack,
-                                opacity: 0.8,
-                              }}
-                            />
+                  )}
+                </Grid>
+                {/* For preview  */}
+                <Grid item md={2} xs={12}>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    spacing={1}
+                  >
+                    {/* DropZone items */}
+                    <Grid item style={{ width: '100%' }}>
+                      <DropzoneArea
+                        classes={{
+                          icon: classes.hide,
+                          root: classes.dropzoneRoot,
+                          text: classes.dropZoneTextContainer,
+                        }}
+                        inputProps={{
+                          id: 'dropzone',
+                        }}
+                        id="dropzone"
+                        showAlerts={false}
+                        filesLimit={8}
+                        showPreviewsInDropzone={false}
+                        //acceptedFiles={['image/*']}
+                        dropzoneText={
+                          <Grid
+                            container
+                            justify="center"
+                            alignItems="center"
+                            direction="column"
+                            style={{ padding: '0.3em' }}
+                          >
+                            <Grid item>
+                              <BackupIcon
+                                style={{
+                                  fontSize: '2rem',
+                                  fill: theme.palette.common.darkBlack,
+                                  opacity: 0.8,
+                                }}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <Typography className={classes.label}>
+                                {t['Drag or click to upload product']}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <Typography className={classes.label}>
-                              {t['Drag or click to upload product']}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      }
-                      onChange={(files) => productImagesHandler(files)}
-                    />
-                  </Grid>
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="characters">
-                      {(provided, snapshot) => (
-                        <div
-                          className="characters"
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          // style={{ width: '100%' }}
-                        >
-                          {product.images.map((item, i) => (
-                            <Draggable key={i} draggableId={i + ''} index={i}>
-                              {(provided, snapshot) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={getItemStyle(
-                                    snapshot.isDragging,
-                                    provided.draggableProps.style
-                                  )}
-                                >
-                                  <Grid
-                                    item
-                                    key={i}
-                                    xs={12}
-                                    style={{
-                                      width: '100%',
-                                      position: 'relative',
-                                    }}
+                        }
+                        onChange={(files) => productImagesHandler(files)}
+                      />
+                    </Grid>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                      <Droppable droppableId="characters">
+                        {(provided, snapshot) => (
+                          <div
+                            className="characters"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            // style={{ width: '100%' }}
+                          >
+                            {product.images.map((item, i) => (
+                              <Draggable key={i} draggableId={i + ''} index={i}>
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={getItemStyle(
+                                      snapshot.isDragging,
+                                      provided.draggableProps.style
+                                    )}
                                   >
-                                    <img
-                                      src={URL.createObjectURL(item)}
+                                    <Grid
+                                      item
+                                      key={i}
+                                      xs={12}
                                       style={{
                                         width: '100%',
-                                        height: '90px',
-                                      }}
-                                    />
-                                    <IconButton
-                                      size="small"
-                                      onClick={() =>
-                                        handleImageDeleteHandler(i)
-                                      }
-                                      style={{
-                                        position: 'absolute',
-                                        top: -8,
-                                        right: -8,
-                                        backgroundColor: '#fff',
-                                        color: theme.palette.common.primary,
+                                        position: 'relative',
                                       }}
                                     >
-                                      <DeleteIcon size="small" />
-                                    </IconButton>
-                                  </Grid>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
-                  {/* {product.imagesData.map((item, i) => (
+                                      <img
+                                        src={URL.createObjectURL(item)}
+                                        style={{
+                                          width: '100%',
+                                          height: '90px',
+                                        }}
+                                      />
+                                      <IconButton
+                                        size="small"
+                                        onClick={() =>
+                                          handleImageDeleteHandler(i)
+                                        }
+                                        style={{
+                                          position: 'absolute',
+                                          top: -8,
+                                          right: -8,
+                                          backgroundColor: '#fff',
+                                          color: theme.palette.common.primary,
+                                        }}
+                                      >
+                                        <DeleteIcon size="small" />
+                                      </IconButton>
+                                    </Grid>
+                                  </div>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                    </DragDropContext>
+                    {/* {product.imagesData.map((item, i) => (
                     <Grid
                       item
                       key={i}
@@ -446,261 +431,200 @@ export default function Create(props) {
                       </IconButton>
                     </Grid>
                   ))} */}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-
-          {/* Divider */}
-          <Grid item style={{ marginTop: '1em' }}>
-            <Divider />
-          </Grid>
-          {/* SEO card */}
-          <Grid item style={{ marginTop: '1em' }}>
-            <Typography variant="h2">
-              {t['Customize Your Search Engine Listing']}
-            </Typography>
-            <Paper elevation={4} style={{ padding: '1em' }}>
-              <Typography
-                className={classes.label}
-                style={{ color: theme.palette.common.primary }}
-              >
-                {product.title.length > 0
-                  ? product.title
-                  : t['Your Product Name']}{' '}
-                | {t['Creative Market']}
-              </Typography>
-              <Typography className={classes.label}>
-                https://creativemarket.com/{shop.shopName}/
-                {product.title.length > 0
-                  ? product.title
-                  : t['your-product-name']}
-              </Typography>
-              <Typography variant="subtitle2">
-                {product.description > 0
-                  ? product.description
-                  : t['Search engine autoomatically generate a description.']}
-              </Typography>
-            </Paper>
-          </Grid>
         </Grid>
-      </Grid>
-      <Grid item md={4} xs={12}>
-        <Grid container direction="column">
-          {/* Description  */}
-          <Grid item>
-            <TextField
-              variant="outlined"
-              multiline
-              minRows={8}
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              placeholder={t['Add Product Description For Creative Market']}
-              required
-              value={product.description}
-              onChange={(e) =>
-                setProduct((pro) => {
-                  return {
-                    ...pro,
-                    description: e.target.value,
-                  };
-                })
-              }
-            />
-          </Grid>
-          {/*  Price */}
-          <Grid
-            item
-            style={{
-              marginTop: '1em',
-            }}
-          >
+        <Grid item md={4} xs={12}>
+          <Grid container direction="column">
+            {/* Description  */}
+            <Grid item>
+              <TextField
+                variant="outlined"
+                multiline
+                minRows={6}
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                placeholder={t['Add Product Description For Creative Market']}
+                required
+                value={product.description}
+                onChange={(e) =>
+                  setProduct((pro) => {
+                    return {
+                      ...pro,
+                      description: e.target.value,
+                    };
+                  })
+                }
+              />
+            </Grid>
+            {/*  Price */}
             <Grid
-              container
-              direction="column"
+              item
               style={{
-                padding: '1em',
-                border: `1px solid rgb(0 0 0 / 12%)`,
-                borderRadius: '4px',
-                borderTop: `4px solid ${theme.palette.common.primary}`,
+                marginTop: '1em',
               }}
-              component={Card}
             >
-              <Grid item container justify="space-between">
-                <Typography variant="h6" style={{ fontWeight: '700' }}>
-                  {t['Price']}
-                </Typography>
-              </Grid>
-              {/* Product Price */}
               <Grid
-                item
                 container
-                justify="space-between"
-                alignItems="flex-end"
-                wrap="nowrap"
+                direction="column"
+                style={{
+                  padding: '1em',
+                  border: `1px solid rgb(0 0 0 / 12%)`,
+                  borderRadius: '4px',
+                  borderTop: `4px solid ${theme.palette.common.primary}`,
+                }}
+                component={Card}
               >
-                <Typography className={classes.label}>
-                  {t['Product Price']}
-                </Typography>
-                <TextField
-                  InputProps={{
-                    classes: {
-                      input: classes.label,
-                    },
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Typography className={classes.label}>$</Typography>
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={classes.label}
-                  required
-                  value={product.Price}
-                  onChange={(e) =>
-                    setProduct((pro) => {
-                      return {
-                        ...product,
-                        price: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </Grid>
-              {/* Delivery Charges */}
-              <Grid
-                item
-                container
-                justify="space-between"
-                alignItems="flex-end"
-                wrap="nowrap"
-              >
-                <Typography className={classes.label}>
-                  {t['Delivery Charges']}
-                </Typography>
-                <TextField
-                  InputProps={{
-                    classes: {
-                      input: classes.label,
-                    },
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Typography className={classes.label}>$</Typography>
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={classes.label}
-                  required
-                  value={product.deliveryPrice}
-                  onChange={(e) =>
-                    setProduct((pro) => {
-                      return {
-                        ...product,
-                        deliveryPrice: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </Grid>
-              {/* unit */}
-              <Grid
-                item
-                container
-                justify="space-between"
-                alignItems="flex-end"
-                wrap="nowrap"
-              >
-                <Typography className={classes.label}>
-                  {t['Unit(if any)']}
-                </Typography>
-                <TextField
-                  InputProps={{
-                    classes: {
-                      input: classes.label,
-                    },
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Typography
-                          style={{ visibility: 'hidden' }}
-                          className={classes.label}
-                        >
-                          $
-                        </Typography>
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={classes.label}
-                  required
-                  value={product.unit}
-                  onChange={(e) =>
-                    setProduct((pro) => {
-                      return {
-                        ...pro,
-                        unit: e.target.value,
-                      };
-                    })
-                  }
-                />
+                <Grid item container justify="space-between">
+                  <Typography variant="h6" style={{ fontWeight: '700' }}>
+                    {t['Price']}
+                  </Typography>
+                </Grid>
+                {/* Product Price */}
+                <Grid
+                  item
+                  container
+                  justify="space-between"
+                  alignItems="flex-end"
+                  wrap="nowrap"
+                >
+                  <Typography className={classes.label}>
+                    {t['Product Price']}
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      classes: {
+                        input: classes.label,
+                      },
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Typography className={classes.label}>$</Typography>
+                        </InputAdornment>
+                      ),
+                    }}
+                    className={classes.label}
+                    required
+                    value={product.Price}
+                    onChange={(e) =>
+                      setProduct((pro) => {
+                        return {
+                          ...product,
+                          price: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </Grid>
+                {/* Delivery Charges */}
+                <Grid
+                  item
+                  container
+                  justify="space-between"
+                  alignItems="flex-end"
+                  wrap="nowrap"
+                >
+                  <Typography className={classes.label}>
+                    {t['Delivery Charges']}
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      classes: {
+                        input: classes.label,
+                      },
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Typography className={classes.label}>$</Typography>
+                        </InputAdornment>
+                      ),
+                    }}
+                    className={classes.label}
+                    required
+                    value={product.deliveryPrice}
+                    onChange={(e) =>
+                      setProduct((pro) => {
+                        return {
+                          ...product,
+                          deliveryPrice: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </Grid>
+                {/* unit */}
+                <Grid
+                  item
+                  container
+                  justify="space-between"
+                  alignItems="flex-end"
+                  wrap="nowrap"
+                >
+                  <Typography className={classes.label}>
+                    {t['Unit(if any)']}
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      classes: {
+                        input: classes.label,
+                      },
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Typography
+                            style={{ visibility: 'hidden' }}
+                            className={classes.label}
+                          >
+                            $
+                          </Typography>
+                        </InputAdornment>
+                      ),
+                    }}
+                    className={classes.label}
+                    required
+                    value={product.unit}
+                    onChange={(e) =>
+                      setProduct((pro) => {
+                        return {
+                          ...pro,
+                          unit: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          {/* Category  */}
-          <Grid
-            item
-            style={{
-              marginTop: '1em',
-            }}
-          >
+            {/* Category  */}
             <Grid
-              container
-              direction="column"
+              item
               style={{
-                border: `1px solid ${theme.palette.common.darkBlack}`,
-                borderRadius: '4px',
+                marginTop: '1em',
               }}
-              component={Card}
             >
-              {/* For date */}
               <Grid
-                item
                 container
-                justify="space-between"
-                alignItems="center"
-                style={{ padding: '1em' }}
+                direction="column"
+                style={{
+                  border: `1px solid ${theme.palette.common.darkBlack}`,
+                  borderRadius: '4px',
+                }}
+                component={Card}
               >
-                <Typography
-                  variant="h6"
-                  style={{
-                    fontWeight: '400',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
+                {/* For date */}
+                <Grid
+                  item
+                  container
+                  justify="space-between"
+                  alignItems="center"
+                  style={{ padding: '1em' }}
                 >
-                  <CalendarTodayIcon
-                    fontSize="small"
-                    style={{ marginRight: '6px' }}
-                  />{' '}
-                  {t['Date']}
-                </Typography>
-                <Typography variant="h6" style={{ fontWeight: '400' }}>
-                  {new Date().toDateString()}
-                </Typography>
-              </Grid>
-              <Divider />
-              {/* category  */}
-              <Grid
-                item
-                container
-                justify="space-between"
-                alignItems="center"
-                style={{ padding: '1em 1em 1em 1em' }}
-              >
-                <div onClick={() => categoryRef.current.focus()}>
                   <Typography
                     variant="h6"
                     style={{
@@ -709,135 +633,253 @@ export default function Create(props) {
                       alignItems: 'center',
                     }}
                   >
-                    <EventNoteIcon
+                    <CalendarTodayIcon
                       fontSize="small"
                       style={{ marginRight: '6px' }}
                     />{' '}
-                    {t['Choose Category']}
+                    {t['Date']}
                   </Typography>
-                </div>
-
-                <Typography variant="h6" style={{ fontWeight: '400' }}>
-                  <TextField
-                    select
-                    className={classes.select}
-                    value={product.productCategory}
-                    onChange={(e) =>
-                      setProduct((pro) => {
-                        return {
-                          ...pro,
-                          productCategory: e.target.value,
-                        };
-                      })
-                    }
-                    SelectProps={{
-                      renderValue: () => (
-                        <Typography className={classes.label}> </Typography>
-                      ),
-
-                      IconComponent: (props) => (
-                        <div style={{ marginRight: '0.5em' }}>
-                          {' '}
-                          <KeyboardArrowDownIcon {...props} />
-                        </div>
-                      ),
-                      MenuProps: {
-                        anchorOrigin: {
-                          vertical: 'bottom',
-                          horizontal: 'left',
-                        },
-                        getContentAnchorEl: null,
-                      },
-                    }}
-                    InputProps={{
-                      disableUnderline: true,
-
-                      inputRef: categoryRef,
-                      classes: {
-                        input: classes.inputRoot,
-                      },
-                    }}
-                  >
-                    {' '}
-                    <MenuItem value="" className={classes.label}>
-                      {t['Choose Category']}
-                    </MenuItem>
-                    {categories.map((item, i) => (
-                      <MenuItem
-                        key={item.name}
-                        value={item.name}
-                        className={classes.label}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Typography>
-              </Grid>
-              {/* productCategory item  */}
-              {product.productCategory !== '' && (
+                  <Typography variant="h6" style={{ fontWeight: '400' }}>
+                    {new Date().toDateString()}
+                  </Typography>
+                </Grid>
+                <Divider />
+                {/* category  */}
                 <Grid
                   item
                   container
-                  spacing={1}
+                  justify="space-between"
                   alignItems="center"
-                  style={{ padding: '0.5em 1em' }}
+                  style={{ padding: '1em 1em 1em 1em' }}
                 >
-                  <Grid item>
-                    <Chip
-                      label={product.productCategory}
-                      onDelete={() =>
+                  <div onClick={() => categoryRef.current.focus()}>
+                    <Typography
+                      variant="h6"
+                      style={{
+                        fontWeight: '400',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <EventNoteIcon
+                        fontSize="small"
+                        style={{ marginRight: '6px' }}
+                      />{' '}
+                      {t['Choose Category']}
+                    </Typography>
+                  </div>
+
+                  <Typography variant="h6" style={{ fontWeight: '400' }}>
+                    <TextField
+                      select
+                      className={classes.select}
+                      value={product.productCategory}
+                      onChange={(e) =>
                         setProduct((pro) => {
                           return {
                             ...pro,
-                            productCategory: '',
+                            productCategory: e.target.value,
                           };
                         })
                       }
-                    />
-                  </Grid>
+                      SelectProps={{
+                        renderValue: () => (
+                          <Typography className={classes.label}> </Typography>
+                        ),
+
+                        IconComponent: (props) => (
+                          <div style={{ marginRight: '0.5em' }}>
+                            {' '}
+                            <KeyboardArrowDownIcon {...props} />
+                          </div>
+                        ),
+                        MenuProps: {
+                          anchorOrigin: {
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                          },
+                          getContentAnchorEl: null,
+                        },
+                      }}
+                      InputProps={{
+                        disableUnderline: true,
+
+                        inputRef: categoryRef,
+                        classes: {
+                          input: classes.inputRoot,
+                        },
+                      }}
+                    >
+                      {' '}
+                      <MenuItem value="" className={classes.label}>
+                        {t['Choose Category']}
+                      </MenuItem>
+                      {categories.map((item, i) => (
+                        <MenuItem
+                          key={item.name}
+                          value={item.name}
+                          className={classes.label}
+                        >
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Typography>
                 </Grid>
-              )}
-            </Grid>
-          </Grid>
-          {/* tags */}
-          <Grid
-            item
-            style={{
-              marginTop: '1em',
-            }}
-          >
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
-                  }}
-                  placeholder={t['Type a tag and press enter..']}
-                  value={tag}
-                  onChange={(e) => setTag(e.target.value)}
-                  onKeyDown={setProductTags}
-                />
-              </Grid>
-              <Grid item>
-                <Grid container spacing={1}>
-                  {product.tags.map((t, i) => (
-                    <Grid item key={i}>
-                      <Chip label={t} onDelete={() => handleTagDelete(i)} />
+                {/* productCategory item  */}
+                {product.productCategory !== '' && (
+                  <Grid
+                    item
+                    container
+                    spacing={1}
+                    alignItems="center"
+                    style={{ padding: '0.5em 1em' }}
+                  >
+                    <Grid item>
+                      <Chip
+                        label={product.productCategory}
+                        onDelete={() =>
+                          setProduct((pro) => {
+                            return {
+                              ...pro,
+                              productCategory: '',
+                            };
+                          })
+                        }
+                      />
                     </Grid>
-                  ))}
+                  </Grid>
+                )}
+              </Grid>
+            </Grid>
+            {/* tags */}
+            <Grid
+              item
+              style={{
+                marginTop: '1em',
+              }}
+            >
+              <Grid container direction="column" spacing={2}>
+                <Grid item>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    InputProps={{
+                      classes: {
+                        root: classes.input,
+                        notchedOutline: classes.inputOutline,
+                      },
+                    }}
+                    placeholder={t['Type a tag and press enter..']}
+                    value={tag}
+                    onChange={(e) => setTag(e.target.value)}
+                    onKeyDown={setProductTags}
+                  />
+                </Grid>
+                <Grid item>
+                  <Grid container spacing={1}>
+                    {product.tags.map((t, i) => (
+                      <Grid item key={i}>
+                        <Chip label={t} onDelete={() => handleTagDelete(i)} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+      <Grid container direction="column">
+        {/* Divider */}
+        <Grid item style={{ marginTop: '1em' }}>
+          <Divider />
+        </Grid>
+        {/* for sun editor */}
+        <Grid item style={{ marginTop: '1em' }}>
+          {' '}
+          <SunEditor
+            mode="classic"
+            setOptions={{
+              katex: 'window.katex',
+              buttonList: [
+                [
+                  'undo',
+                  'redo',
+                  'font',
+                  'fontSize',
+                  'formatBlock',
+                  'paragraphStyle',
+                  'blockquote',
+                  'bold',
+                  'underline',
+                  'italic',
+                  'strike',
+                  'subscript',
+                  'superscript',
+                  'fontColor',
+                  'hiliteColor',
+                  'textStyle',
+                  'removeFormat',
+                  'outdent',
+                  'indent',
+                  'align',
+                  'horizontalRule',
+                  'list',
+                  'lineHeight',
+                  'table',
+                  'link',
+                  'image',
+                  'video',
+                  'math',
+                  'imageGallery',
+                  'fullScreen',
+                  'codeView',
+                ],
+              ],
+            }}
+            placeholder={t['Please Enter Product Details...']}
+            setContents={product.details}
+            onChange={(content) =>
+              setProduct((pro) => {
+                return {
+                  ...pro,
+                  details: content,
+                };
+              })
+            }
+          />
+        </Grid>
+        {/* SEO card */}
+        <Grid item style={{ marginTop: '1em' }}>
+          <Typography variant="h2">
+            {t['Customize Your Search Engine Listing']}
+          </Typography>
+          <Paper elevation={4} style={{ padding: '1em' }}>
+            <Typography
+              className={classes.label}
+              style={{ color: theme.palette.common.primary }}
+            >
+              {product.title.length > 0
+                ? product.title
+                : t['Your Product Name']}{' '}
+              | {t['Creative Market']}
+            </Typography>
+            <Typography className={classes.label}>
+              https://creativemarket.com/{shop.shopName.replace(' ', '-')}/
+              {product.title.length > 0
+                ? product.title
+                : t['your-product-name']}
+            </Typography>
+            <Typography variant="subtitle2">
+              {product.description > 0
+                ? product.description
+                : t['Search engine autoomatically generate a description.']}
+            </Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+    </>
   );
 }

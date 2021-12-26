@@ -79,8 +79,6 @@ export default function MyApp(props) {
   const [user, setUser] = useState(null);
   const [userToken, setUserToken] = useState(null);
   const [products, setProducts] = useState([]);
-  const [graphics, setGraphics] = useState([]);
-  const [fonts, setFonts] = useState([]);
 
   const [categories, setCategories] = useState([]);
   React.useEffect(() => {
@@ -132,10 +130,6 @@ export default function MyApp(props) {
             return c;
           })
         );
-        setFonts(result.data.Fonts.length > 0 ? result.data.Fonts : []);
-        setGraphics(
-          result.data.Graphics.length > 0 ? result.data.Graphics : []
-        );
         setProducts(result.data.products);
       }
     } catch (e) {
@@ -176,8 +170,6 @@ export default function MyApp(props) {
             language={language}
             setLanuage={setLanuage}
             languageJson={languageJson}
-            Graphics={graphics}
-            Fonts={fonts}
             products={products}
           />
         )}

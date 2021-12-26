@@ -57,8 +57,7 @@ export default function Home(props) {
       <Grid item style={{ marginTop: '5em' }} className={classes.root}>
         <PopularProducts
           languageJson={props.languageJson}
-          Graphics={props.Graphics}
-          Fonts={props.Fonts}
+          products={props.products}
         />
       </Grid>
       <Grid item style={{ marginTop: '5em' }} className={classes.root}>

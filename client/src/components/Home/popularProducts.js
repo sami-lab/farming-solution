@@ -43,54 +43,43 @@ export default function PopularProducts(props) {
   const t = props.languageJson;
   return (
     <Grid container direction="column">
-      <Grid item>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Typography variant="h2">{t['Popular']} Graphics</Typography>
-          </Grid>
-          <Grid item>
-            <Link href="/category/Graphics">
-              <Typography
-                variant="caption"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {t['Explore']} Graphics <ChevronRightIcon />
-              </Typography>
-            </Link>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <RenderProducts products={props.Graphics} />
-      </Grid>
-      <Grid item style={{ marginTop: '4em' }}>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Typography variant="h2">{t['Popular']} Fonts</Typography>
-          </Grid>
-          <Grid item>
-            <Link href="/category/Fonts">
-              <Typography
-                variant="caption"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {t['Explore']} Fonts <ChevronRightIcon />
-              </Typography>
-            </Link>
+      {' '}
+      {props.products.map((p, i) => (
+        <Grid item key={i}>
+          <Grid
+            container
+            direction="column"
+            style={{ marginTop: i === 0 ? 0 : '5em' }}
+          >
+            <Grid item>
+              <Grid container justify="space-between">
+                <Grid item>
+                  <Typography variant="h2">
+                    {t['Popular']} {p._id}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Link href={`/category/${p._id}`}>
+                    <Typography
+                      variant="caption"
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {t['Explore']} {p._id} <ChevronRightIcon />
+                    </Typography>
+                  </Link>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <RenderProducts products={p.products} />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item>
-        <RenderProducts products={props.Fonts} />
-      </Grid>
+      ))}
     </Grid>
   );
 }

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     backgroundColor: '#f4f8fb',
-    height: '210px',
+    height: '180px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
