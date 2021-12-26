@@ -25,10 +25,7 @@ router.use(restrictTo(['Manager']));
 
 router.route('/').post(
   //productController.decode
-  upload.fields([
-    { name: 'file', maxCount: 1 },
-    { name: 'images', maxCount: 8 },
-  ]),
+  upload.fields([{ name: 'images', maxCount: 8 }]),
   //upload.array('images', 8),
   productController.createOne
 );
@@ -36,10 +33,7 @@ router.route('/').post(
 router
   .route('/:id')
   .patch(
-    upload.fields([
-      { name: 'file', maxCount: 1 },
-      { name: 'images', maxCount: 8 },
-    ]),
+    upload.fields([{ name: 'images', maxCount: 8 }]),
     productController.update
   )
   .delete(productController.delete);

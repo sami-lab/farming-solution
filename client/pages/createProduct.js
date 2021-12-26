@@ -55,21 +55,14 @@ export default function CreateShop(props) {
   });
   const [product, setProduct] = useState({
     title: '',
-    productCategory: 'Choose Category',
-    videoUrl: '',
     images: [],
-    description: '',
     details: '',
-    file: '',
-    fileData: null, //for front end only
-    personalLicence: '',
-    commercialLicence: '',
-    extendedCommercialLicence: '',
+    productCategory: '',
+    description: '',
+    price: '',
+    unit: '',
+    deliveryPrice: '',
     date: Date.now(),
-    compatibleWith: [],
-    layered: false,
-    tileable: false,
-    vector: false,
     tags: [],
   });
 
@@ -80,32 +73,26 @@ export default function CreateShop(props) {
       product.productCategory === '' ||
       product.description === '' ||
       product.details === '' ||
-      product.personalLicence === '' ||
-      product.extendedCommercialLicence === '' ||
-      product.commercialLicence === '' ||
-      product.tags.length <= 0 ||
-      product.compatibleWith.length <= 0
+      product.price === '' ||
+      product.deliveryPrice === '' ||
+      product.tags.length <= 0
     ) {
       setShowToast({
         active: true,
         message: t['Please fill all fields to continue'],
         severity: 'error',
       });
+      return;
     }
-    if (product.videoUrl === '' && product.images.length <= 0) {
+    if (product.images.length <= 0) {
       setShowToast({
         active: true,
         message: t['Please upload product images to continue'],
         severity: 'error',
       });
+      return;
     }
-    if (product.file === '') {
-      setShowToast({
-        active: true,
-        message: t['Please upload product File to continue'],
-        severity: 'error',
-      });
-    }
+
     try {
       setLoading({
         active: true,
@@ -170,7 +157,7 @@ export default function CreateShop(props) {
             {showToast.message}
           </Alert>
         </Snackbar>
-        <Grid item>
+        <Grid item container>
           <Header {...props} languageJson={t} />
         </Grid>
         {/* Save Button */}

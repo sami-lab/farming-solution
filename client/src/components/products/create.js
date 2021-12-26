@@ -83,21 +83,14 @@ export default function Create(props) {
   const { product, setProduct, categories, shopData } = props;
   const t = props.languageJson;
 
+  const categoryRef = React.useRef(null);
+
   const router = useRouter();
   const theme = useTheme();
   const classes = useStyles();
   const [shop, setShop] = useState(shopData);
   const [tag, setTag] = useState();
 
-  const compatibleList = [
-    'Adobe Illustrator',
-    'Adobe Reader',
-    'Microsoft PowerPoint',
-    'Microsoft Word',
-    'Adobe Photoshop',
-    'Photoshop Elements*',
-    'Adobe InDesign',
-  ];
   resetServerContext();
 
   useEffect(() => {
@@ -134,12 +127,6 @@ export default function Create(props) {
     });
 
     console.log(product.images);
-  };
-  const handlecompatibleWithDelete = (index) => {
-    setProduct({
-      ...product,
-      compatibleWith: product.compatibleWith.filter((item, i) => i !== index),
-    });
   };
 
   const productImagesHandler = (files) => {
@@ -225,60 +212,9 @@ export default function Create(props) {
               <span style={{ color: theme.palette.common.primary }}>
                 {shop?.shopName}
               </span>{' '}
-              {t['in']}
             </Typography>
           </Grid>
-          {/* Category */}
-          <Grid item>
-            <TextField
-              select
-              variant="outlined"
-              size="small"
-              inputProps={{
-                placeholder: t['Choose Category'],
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutlineNoBorder,
-                },
-              }}
-              SelectProps={{
-                MenuProps: {
-                  anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  },
-                  getContentAnchorEl: null,
-                },
-              }}
-              required
-              value={product.productCategory}
-              onChange={(e) =>
-                setProduct((pro) => {
-                  return {
-                    ...pro,
-                    productCategory: e.target.value,
-                  };
-                })
-              }
-              style={{ minWidth: '10em' }}
-            >
-              <MenuItem value="Choose Category" className={classes.label}>
-                {t['Choose Category']}
-              </MenuItem>
-              {categories.map((item) => (
-                <MenuItem
-                  key={item.name}
-                  value={item.name}
-                  className={classes.label}
-                >
-                  {' '}
-                  {item.name}{' '}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
+
           {/* images */}
           <Grid item>
             <Grid container spacing={1}>
@@ -354,43 +290,7 @@ export default function Create(props) {
                     </Grid>
                   </Grid>
                 )}
-                {/* for video */}
-                <div>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    style={{
-                      //color: 'gray',
-                      opacity: 0.8,
-                      marginTop: '-0.9em',
-                      marginBottom: '0.2em',
-                    }}
-                  >
-                    <span style={{ backgroundColor: '#fff' }}>
-                      {' '}
-                      --------- {t['OR']} ---------
-                    </span>
-                  </Typography>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    InputProps={{
-                      classes: {
-                        root: classes.input,
-                        notchedOutline: classes.inputOutline,
-                      },
-                    }}
-                    placeholder={t['Enter Youtube or Vimeo URL']}
-                    value={product.videoUrl}
-                    onChange={(e) =>
-                      setProduct({
-                        ...product,
-                        videoUrl: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+
                 <div style={{ marginTop: '1em' }}>
                   {' '}
                   <SunEditor
@@ -551,32 +451,6 @@ export default function Create(props) {
             </Grid>
           </Grid>
 
-          {/* Product description */}
-          <Grid item style={{ marginTop: '1em' }}>
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              placeholder={t['Add Product Description For Creative Market']}
-              required
-              value={product.description}
-              onChange={(e) =>
-                setProduct((pro) => {
-                  return {
-                    ...pro,
-                    description: e.target.value,
-                  };
-                })
-              }
-            />
-          </Grid>
-
           {/* Divider */}
           <Grid item style={{ marginTop: '1em' }}>
             <Divider />
@@ -613,91 +487,34 @@ export default function Create(props) {
       </Grid>
       <Grid item md={4} xs={12}>
         <Grid container direction="column">
-          {/* Actual file */}
+          {/* Description  */}
           <Grid item>
-            <DropzoneArea
-              classes={{
-                icon: classes.hide,
-                root: classes.dropzoneRoot,
+            <TextField
+              variant="outlined"
+              multiline
+              minRows={8}
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
               }}
-              filesLimit={1}
-              showPreviewsInDropzone={false}
-              showAlerts={false}
-              //acceptedFiles={['image/*']}
-              dropzoneText={
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  direction="column"
-                  spacing={1}
-                >
-                  <Grid item>
-                    <BackupIcon
-                      style={{
-                        fontSize: '3rem',
-                        fill: theme.palette.common.darkBlack,
-                        opacity: 0.8,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h6">
-                      {t['Drag or click to upload product']}
-                    </Typography>
-                    <Typography
-                      paragraph
-                      style={{ fontWeight: 300, fontSize: '0.8rem' }}
-                    >
-                      {t['Attach only files for sale. 4GB max']}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              }
-              onChange={(files) =>
+              placeholder={t['Add Product Description For Creative Market']}
+              required
+              value={product.description}
+              onChange={(e) =>
                 setProduct((pro) => {
                   return {
                     ...pro,
-                    file: files[0],
+                    description: e.target.value,
                   };
                 })
               }
             />
           </Grid>
-          {product.file && product.file !== '' && (
-            <Grid item style={{ marginTop: '0.8em' }}>
-              <Typography className={classes.label} align="center">
-                <Chip
-                  label={product.file.name}
-                  //label={product.file}
-                  onDelete={() =>
-                    setProduct({
-                      ...product,
-                      file: '',
-                      fileData: null,
-                    })
-                  }
-                />
-              </Typography>
-            </Grid>
-          )}
-          {product.fileData && product.fileData !== null && (
-            <Grid item style={{ marginTop: '0.8em' }}>
-              <Typography className={classes.label} align="center">
-                <Chip
-                  label={product.fileData.name}
-                  onDelete={() =>
-                    setProduct({
-                      ...product,
-                      file: '',
-                      fileData: null,
-                    })
-                  }
-                />
-              </Typography>
-            </Grid>
-          )}
-          {/* Licence Price */}
+          {/*  Price */}
           <Grid
             item
             style={{
@@ -717,15 +534,10 @@ export default function Create(props) {
             >
               <Grid item container justify="space-between">
                 <Typography variant="h6" style={{ fontWeight: '700' }}>
-                  {t['License prices']}
+                  {t['Price']}
                 </Typography>
-                {/* <Typography
-                      paragraph
-                      style={{ fontWeight: 300, fontSize: '0.8rem' }}
-                    >
-                      Attach only files for sale. 4GB max
-                    </Typography> */}
               </Grid>
+              {/* Product Price */}
               <Grid
                 item
                 container
@@ -734,7 +546,7 @@ export default function Create(props) {
                 wrap="nowrap"
               >
                 <Typography className={classes.label}>
-                  {t['Personal']}
+                  {t['Product Price']}
                 </Typography>
                 <TextField
                   InputProps={{
@@ -749,17 +561,18 @@ export default function Create(props) {
                   }}
                   className={classes.label}
                   required
-                  value={product.personalLicence}
+                  value={product.Price}
                   onChange={(e) =>
                     setProduct((pro) => {
                       return {
                         ...product,
-                        personalLicence: e.target.value,
+                        price: e.target.value,
                       };
                     })
                   }
                 />
               </Grid>
+              {/* Delivery Charges */}
               <Grid
                 item
                 container
@@ -768,7 +581,7 @@ export default function Create(props) {
                 wrap="nowrap"
               >
                 <Typography className={classes.label}>
-                  {t['Commercial']}
+                  {t['Delivery Charges']}
                 </Typography>
                 <TextField
                   InputProps={{
@@ -783,46 +596,52 @@ export default function Create(props) {
                   }}
                   className={classes.label}
                   required
-                  value={product.commercialLicence}
+                  value={product.deliveryPrice}
+                  onChange={(e) =>
+                    setProduct((pro) => {
+                      return {
+                        ...product,
+                        deliveryPrice: e.target.value,
+                      };
+                    })
+                  }
+                />
+              </Grid>
+              {/* unit */}
+              <Grid
+                item
+                container
+                justify="space-between"
+                alignItems="flex-end"
+                wrap="nowrap"
+              >
+                <Typography className={classes.label}>
+                  {t['Unit(if any)']}
+                </Typography>
+                <TextField
+                  InputProps={{
+                    classes: {
+                      input: classes.label,
+                    },
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Typography
+                          style={{ visibility: 'hidden' }}
+                          className={classes.label}
+                        >
+                          $
+                        </Typography>
+                      </InputAdornment>
+                    ),
+                  }}
+                  className={classes.label}
+                  required
+                  value={product.unit}
                   onChange={(e) =>
                     setProduct((pro) => {
                       return {
                         ...pro,
-                        commercialLicence: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </Grid>
-              <Grid
-                item
-                container
-                justify="space-between"
-                alignItems="flex-end"
-                wrap="nowrap"
-              >
-                <Typography className={classes.label}>
-                  {t['Extended Commercial']}
-                </Typography>
-                <TextField
-                  InputProps={{
-                    classes: {
-                      input: classes.label,
-                    },
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Typography className={classes.label}>$</Typography>
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={classes.label}
-                  required
-                  value={product.extendedCommercialLicence}
-                  onChange={(e) =>
-                    setProduct((pro) => {
-                      return {
-                        ...product,
-                        extendedCommercialLicence: e.target.value,
+                        unit: e.target.value,
                       };
                     })
                   }
@@ -830,7 +649,7 @@ export default function Create(props) {
               </Grid>
             </Grid>
           </Grid>
-          {/* Compatible with */}
+          {/* Category  */}
           <Grid
             item
             style={{
@@ -873,50 +692,49 @@ export default function Create(props) {
                 </Typography>
               </Grid>
               <Divider />
-              {/* compatible with */}
+              {/* category  */}
               <Grid
                 item
                 container
                 justify="space-between"
                 alignItems="center"
-                style={{ padding: '1em 1em 0 1em' }}
+                style={{ padding: '1em 1em 1em 1em' }}
               >
-                <Typography
-                  variant="h6"
-                  style={{
-                    fontWeight: '400',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <EventNoteIcon
-                    fontSize="small"
-                    style={{ marginRight: '6px' }}
-                  />{' '}
-                  {t['Compatible with']}
-                </Typography>
+                <div onClick={() => categoryRef.current.focus()}>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: '400',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <EventNoteIcon
+                      fontSize="small"
+                      style={{ marginRight: '6px' }}
+                    />{' '}
+                    {t['Choose Category']}
+                  </Typography>
+                </div>
+
                 <Typography variant="h6" style={{ fontWeight: '400' }}>
                   <TextField
                     select
                     className={classes.select}
-                    value={product.compatibleWith}
+                    value={product.productCategory}
                     onChange={(e) =>
                       setProduct((pro) => {
                         return {
                           ...pro,
-                          compatibleWith: e.target.value,
+                          productCategory: e.target.value,
                         };
                       })
                     }
                     SelectProps={{
-                      multiple: true,
-
                       renderValue: () => (
-                        <Typography className={classes.label}>
-                          {' '}
-                          Select{' '}
-                        </Typography>
+                        <Typography className={classes.label}> </Typography>
                       ),
+
                       IconComponent: (props) => (
                         <div style={{ marginRight: '0.5em' }}>
                           {' '}
@@ -933,182 +751,53 @@ export default function Create(props) {
                     }}
                     InputProps={{
                       disableUnderline: true,
+
+                      inputRef: categoryRef,
                       classes: {
                         input: classes.inputRoot,
                       },
                     }}
                   >
                     {' '}
-                    {compatibleList.map((x, i) => (
-                      <MenuItem key={i} value={x} className={classes.label}>
-                        {x}
+                    <MenuItem value="" className={classes.label}>
+                      {t['Choose Category']}
+                    </MenuItem>
+                    {categories.map((item, i) => (
+                      <MenuItem
+                        key={item.name}
+                        value={item.name}
+                        className={classes.label}
+                      >
+                        {item.name}
                       </MenuItem>
                     ))}
                   </TextField>
                 </Typography>
               </Grid>
-              {/* comatible item lists */}
-              <Grid
-                item
-                container
-                spacing={1}
-                alignItems="center"
-                style={{ padding: '0.5em 1em' }}
-              >
-                {product.compatibleWith.map((t, i) => (
-                  <Grid item key={i}>
+              {/* productCategory item  */}
+              {product.productCategory !== '' && (
+                <Grid
+                  item
+                  container
+                  spacing={1}
+                  alignItems="center"
+                  style={{ padding: '0.5em 1em' }}
+                >
+                  <Grid item>
                     <Chip
-                      label={t}
-                      onDelete={() => handlecompatibleWithDelete(i)}
+                      label={product.productCategory}
+                      onDelete={() =>
+                        setProduct((pro) => {
+                          return {
+                            ...pro,
+                            productCategory: '',
+                          };
+                        })
+                      }
                     />
                   </Grid>
-                ))}
-              </Grid>
-              <Divider />
-              {/* Other properties */}
-              <Grid
-                item
-                container
-                direction="column"
-                spacing={1}
-                style={{ padding: '1em' }}
-              >
-                {/* layered with */}
-                <Grid
-                  item
-                  container
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Typography
-                    variant="h6"
-                    style={{
-                      fontWeight: '400',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <LayersIcon
-                      fontSize="small"
-                      style={{ marginRight: '6px' }}
-                    />{' '}
-                    {t['Layered']}
-                  </Typography>
-                  <FormControlLabel
-                    style={{ marginRight: 0 }}
-                    control={
-                      <Checkbox
-                        checked={product.layered}
-                        onChange={(e) => {
-                          setProduct({
-                            ...product,
-                            layered: e.target.checked,
-                          });
-                        }}
-                        name="layered"
-                        style={{
-                          color: theme.palette.common.primary,
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography variant="h6" style={{ fontWeight: '400' }}>
-                        {product.layered ? t['Yes'] : t['No']}
-                      </Typography>
-                    }
-                  />
                 </Grid>
-                {/* vector */}
-                <Grid
-                  item
-                  container
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Typography
-                    variant="h6"
-                    style={{
-                      fontWeight: '400',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <DynamicFeedIcon
-                      fontSize="small"
-                      style={{ marginRight: '6px' }}
-                    />{' '}
-                    {t['Vector']}
-                  </Typography>
-                  <FormControlLabel
-                    style={{ marginRight: 0 }}
-                    control={
-                      <Checkbox
-                        checked={product.vector}
-                        onChange={(e) => {
-                          setProduct({
-                            ...product,
-                            vector: e.target.checked,
-                          });
-                        }}
-                        name="vector"
-                        style={{
-                          color: theme.palette.common.primary,
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography variant="h6" style={{ fontWeight: '400' }}>
-                        {product.vector ? t['Yes'] : t['No']}
-                      </Typography>
-                    }
-                  />
-                </Grid>
-                {/* tileable */}
-                <Grid
-                  item
-                  container
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Typography
-                    variant="h6"
-                    style={{
-                      fontWeight: '400',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <TitleIcon
-                      fontSize="small"
-                      style={{ marginRight: '6px' }}
-                    />{' '}
-                    {t['Tileable']}
-                  </Typography>
-                  <FormControlLabel
-                    style={{ marginRight: 0 }}
-                    control={
-                      <Checkbox
-                        checked={product.tileable}
-                        onChange={(e) => {
-                          setProduct({
-                            ...product,
-                            tileable: e.target.checked,
-                          });
-                        }}
-                        name="tileable"
-                        style={{
-                          color: theme.palette.common.primary,
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography variant="h6" style={{ fontWeight: '400' }}>
-                        {product.tileable ? t['Yes'] : t['No']}
-                      </Typography>
-                    }
-                  />
-                </Grid>
-              </Grid>
+              )}
             </Grid>
           </Grid>
           {/* tags */}

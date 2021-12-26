@@ -76,36 +76,16 @@ exports.update = catchAsync(async (req, res, next) => {
     req.body,
     'title',
     'productCategory',
-    'videoUrl',
     'description',
     'details',
-    'personalLicence',
-    'commercialLicence',
-    'extendedCommercialLicence',
-    'compatibleWith',
-    'layered',
-    'tileable',
-    'vector',
+    'price',
+    'unit',
+    'deliveryPrice',
     'tags'
   );
 
-  const product = await Product.findById(req.params.id);
-  if (!product) return next(new AppError('Requested Id not found', 404));
-
-  if (req.files && req.files.file) {
-    filterBody.file = req.files.file[0].filename;
-    if (product.file) {
-      fs.unlink(`/public/files/${product.file}`, function (err) {
-        if (err) {
-          console.log(
-            'Product file not deleted',
-            product.id + ' : ' + product.name
-          );
-        }
-      });
-    }
-  }
   //Must adjust images here
+
   //Saving IN DB
   const doc = await Product.findByIdAndUpdate(req.params.id, filterBody, {
     new: true,
@@ -126,23 +106,17 @@ exports.createOne = catchAsync(async (req, res, next) => {
     req.body,
     'title',
     'productCategory',
-    'videoUrl',
     'description',
     'details',
-    'personalLicence',
-    'commercialLicence',
-    'extendedCommercialLicence',
-    'compatibleWith',
-    'layered',
-    'tileable',
-    'vector',
+    'price',
+    'unit',
+    'deliveryPrice',
     'tags'
   );
-  if (req.files && req.files.file) filterBody.file = req.files.file[0].filename;
   if (req.files && req.files.images)
     filterBody.images = req.files.images.map((item) => item.filename);
 
-  filterBody.shopId = req.user.shop.id;
+  filterBody.shopId = req.user.shop._id;
   const doc = await Product.create(filterBody);
 
   res.status(201).json({

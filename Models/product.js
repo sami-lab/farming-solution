@@ -35,7 +35,7 @@ var ProductSchema = mongoose.Schema({
   unit: {
     type: String,
   },
-  delieveryPrice: {
+  deliveryPrice: {
     type: Number,
     require: [true, 'Delievery Product must have a price!'],
     min: [0, 'Price must be above 0'],
