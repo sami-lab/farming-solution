@@ -42,44 +42,36 @@ const sampleData = [
 export default function PopularProducts(props) {
   const t = props.languageJson;
   return (
-    <Grid container direction="column">
+    <div>
       {' '}
       {props.products.map((p, i) => (
-        <Grid item key={i}>
-          <Grid
-            container
-            direction="column"
-            style={{ marginTop: i === 0 ? 0 : '5em' }}
-          >
+        <div key={i} style={{ marginTop: i === 0 ? 0 : '5em' }}>
+          <Grid item container justify="space-between">
             <Grid item>
-              <Grid container justify="space-between">
-                <Grid item>
-                  <Typography variant="h2">
-                    {t['Popular']} {p._id}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Link href={`/category/${p._id}`}>
-                    <Typography
-                      variant="caption"
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {t['Explore']} {p._id} <ChevronRightIcon />
-                    </Typography>
-                  </Link>
-                </Grid>
-              </Grid>
+              <Typography variant="h2">
+                {t['Popular']} {p._id}
+              </Typography>
             </Grid>
             <Grid item>
-              <RenderProducts products={p.products} />
+              <Link href={`/category/${p._id}`}>
+                <Typography
+                  variant="caption"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  {t['Explore']} {p._id} <ChevronRightIcon />
+                </Typography>
+              </Link>
             </Grid>
           </Grid>
-        </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <RenderProducts products={p.products} />
+          </Grid>
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 }

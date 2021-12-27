@@ -38,7 +38,7 @@ export default function Home(props) {
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Grid container direction="column">
+    <div>
       <Head>
         <title>Home</title>
       </Head>
@@ -72,6 +72,6 @@ export default function Home(props) {
       <Grid item>
         <Footer languageJson={props.languageJson} />
       </Grid>
-    </Grid>
+    </div>
   );
 }

@@ -36,7 +36,7 @@ export default function RenderProducts(props) {
           <Card elevation={0}>
             <CardActionArea
               component={Link}
-              href={`/${item.shopId?.shopName}/${item._id}`}
+              href={`/${item.shop?.shopName}/${item._id}`}
             >
               <CardMedia
                 component="img"
@@ -82,7 +82,7 @@ export default function RenderProducts(props) {
                       by{' '}
                       <Link href={`/shop/${item.shopId?._id}`}>
                         <a style={{ textDecoration: 'none', color: '#615f5c' }}>
-                          {item.shopId?.shopName}
+                          {item.shop.shopName}
                         </a>
                       </Link>{' '}
                       in{' '}
@@ -107,20 +107,7 @@ export default function RenderProducts(props) {
                     >
                       <label className={classes.label}>
                         {' '}
-                        {item.personalLicence <= item.commercialLicence &&
-                          item.personalLicence <=
-                            item.extendedCommercialLicence &&
-                          item.personalLicence}
-                        {item.commercialLicence <= item.personalLicence &&
-                          item.commercialLicence <=
-                            item.extendedCommercialLicence &&
-                          item.commercialLicence}
-                        {item.extendedCommercialLicence <=
-                          item.commercialLicence &&
-                          item.extendedCommercialLicence <=
-                            item.personalLicence &&
-                          item.extendedCommercialLicence}
-                        $
+                        {item.price + item.deliveryPrice}$
                       </label>
                     </div>
                   </Grid>

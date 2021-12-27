@@ -242,7 +242,7 @@ exports.recentproducts = catchAsync(async (req, res, next) => {
     },
     {
       $lookup: {
-        from: 'Shop',
+        from: 'shops',
         localField: 'products.shopId',
         foreignField: '_id',
         as: 'shop',

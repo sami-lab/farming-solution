@@ -35,8 +35,8 @@ import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '2em',
-    paddingRight: '2em',
+    paddingLeft: '10em',
+    paddingRight: '10em',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '3em',
       paddingRight: '3em',
