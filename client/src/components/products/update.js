@@ -223,7 +223,11 @@ export default function Create(props) {
                 <Grid item md={10} xs={12} style={{ height: '100%' }}>
                   {product.images[0] ? (
                     <img
-                      src={URL.createObjectURL(product.images[0])}
+                      src={
+                        product.images[0].new === true
+                          ? URL.createObjectURL(product.images[0].img)
+                          : product.images[0].img
+                      }
                       style={{ width: '100%', height: '400px' }}
                     />
                   ) : (
@@ -374,7 +378,11 @@ export default function Create(props) {
                                       }}
                                     >
                                       <img
-                                        src={URL.createObjectURL(item)}
+                                        src={
+                                          item.new === true
+                                            ? URL.createObjectURL(item)
+                                            : item.img
+                                        }
                                         style={{
                                           width: '100%',
                                           height: '90px',
@@ -802,7 +810,6 @@ export default function Create(props) {
           <SunEditor
             mode="classic"
             setOptions={{
-              height: '400px',
               katex: 'window.katex',
               buttonList: [
                 [

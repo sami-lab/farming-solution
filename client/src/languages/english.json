@@ -93,6 +93,7 @@
   "Request an Invite": "Request an Invite",
   "Our shop space is limited to the most qualified sellers at the moment, so tell us why you'd be a great shop owner below. All fields are required.": "Our shop space is limited to the most qualified sellers at the moment, so tell us why you'd be a great shop owner below. All fields are required.",
   "Where does your food come from?": "Where does our food come from?",
+
   "Price": "Price",
   "Product Price": "Product Price",
   "Delivery Charges": "Delivery Charges",
@@ -166,7 +167,7 @@
   "Top Selling Products": "Top Selling Products",
   "Your Cart": "Your Cart",
   "View Past Purchases": "View Past Purchases",
-  "License Type": "License Type",
+  "Quantity": "Quantity",
   "Personal Licence": "Personal Licence",
   "Commercial Licence": "Commercial Licence",
   "Extended Commercial Licence": "Extended Commercial Licence",

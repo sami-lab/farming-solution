@@ -14,12 +14,15 @@ import { Alert } from '@material-ui/lab';
 
 import { makeStyles } from '@material-ui/styles';
 
-import Header from '../src/resusable/header';
-import Footer from '../src/resusable/footer';
-import Create from '../src/components/products/create';
-import CheckAuth from '../src/resusable/checkAuth';
+const { publicRuntimeConfig } = getConfig();
+import getConfig from 'next/config';
 
-import { createProduct } from '../api/product/product';
+import Header from '../../src/resusable/header';
+import Footer from '../../src/resusable/footer';
+import Update from '../../src/components/products/update';
+import CheckAuth from '../../src/resusable/checkAuth';
+
+import { updateProduct, getProductById } from '../../api/product/product';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateShop(props) {
+export default function UpdateProductPage(props) {
   const t = props.languageJson;
 
   const theme = useTheme();
@@ -65,6 +68,44 @@ export default function CreateShop(props) {
     date: Date.now(),
     tags: [],
   });
+
+  useEffect(async () => {
+    try {
+      setLoading({
+        active: true,
+        action: 'page',
+      });
+
+      let response = await getProductById(router.query.id);
+      let result = await response.json();
+      if (result.status === 'success') {
+        setProduct({
+          ...result.data.doc,
+          images: result.data.doc.images.map((x) => {
+            return {
+              img: publicRuntimeConfig.backend + '/files/' + x,
+              new: false,
+            };
+          }),
+        });
+      }
+      setLoading({
+        active: false,
+        action: '',
+      });
+    } catch (e) {
+      console.log(e.message);
+      setLoading({
+        active: false,
+        action: '',
+      });
+      setShowToast({
+        active: true,
+        message: t['Failed to Load Shop Data'],
+        severity: 'error',
+      });
+    }
+  }, [router.query.id]);
 
   const onSubmitHandler = async () => {
     ///Applying all validation
@@ -98,7 +139,7 @@ export default function CreateShop(props) {
         active: true,
         action: 'submit',
       });
-      const response = await createProduct(props.userToken, product);
+      const response = await updateProduct(props.userToken, product);
       const result = response.data;
       if (result.status === 'success') {
         setShowToast({
@@ -218,7 +259,7 @@ export default function CreateShop(props) {
           style={{ marginTop: '2em', marginBottom: '2em' }}
           className={classes.root}
         >
-          <Create
+          <Update
             product={product}
             setProduct={setProduct}
             categories={props.categories}

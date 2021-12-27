@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
-export const updateProduct = async (token, data) => {
+export const createProduct = async (token, data) => {
   var raw = new FormData();
   Object.keys(data).map((key) => {
     if (Array.isArray(data[key])) {
@@ -27,7 +27,32 @@ export const updateProduct = async (token, data) => {
 
   return response;
 };
+export const updateProduct = async (token, data) => {
+  var raw = new FormData();
+  Object.keys(data).map((key) => {
+    if (Array.isArray(data[key])) {
+      //raw.append(key, JSON.stringify(data[key]));
 
+      for (let i = 0; i < data[key].length; i++) {
+        raw.append(key, data[key][i]);
+      }
+    } else {
+      raw.append(key, data[key]);
+    }
+  });
+  const response = await axios.patch(
+    `${publicRuntimeConfig.backend}/api/products/`,
+    raw,
+    {
+      headers: {
+        authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+
+  return response;
+};
 export const getProductByName = async (name) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');

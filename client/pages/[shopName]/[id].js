@@ -205,13 +205,14 @@ export default function Shopsetup(props) {
     const query = [
       {
         id: product._id,
-        license: license,
         quantity: quantity,
         image: product.images[0],
         title: product.title,
         shopId: product.shopId.id,
         shopName: product.shopId.shopName,
-        price: product[license],
+        price: product.price,
+        deliveryPrice: product.deliveryPrice,
+        unit: product.unit,
       },
     ];
 
@@ -239,7 +240,7 @@ export default function Shopsetup(props) {
   }
 
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" style={{ overflow: 'hidden' }}>
       <Snackbar
         open={showToast.active}
         autoHideDuration={4000}
@@ -252,6 +253,35 @@ export default function Shopsetup(props) {
       <Grid item>
         <Header {...props} languageJson={t} />
       </Grid>
+      {props.userToken !== null &&
+        props.user &&
+        props.user?.roles.some((x) => x.name === 'Manager') && (
+          <Grid
+            item
+            style={{
+              alignSelf: 'flex-end',
+              marginTop: '0.3em',
+            }}
+            className={classes.root}
+          >
+            <Link
+              style={{ textDecoration: 'none' }}
+              href={`/updateProduct/${product._id}`}
+            >
+              <a>
+                <Button
+                  style={{
+                    background: theme.palette.common.primary,
+                    fontSize: '1rem',
+                    color: '#fff',
+                  }}
+                >
+                  Update
+                </Button>
+              </a>
+            </Link>
+          </Grid>
+        )}
 
       {/* For Breadcrumbs and starting price */}
       <Grid
@@ -275,15 +305,7 @@ export default function Shopsetup(props) {
         <Grid item>
           <Typography variant="h2">
             {t['Starting At $']}
-            {product.personalLicence <= product.commercialLicence &&
-              product.personalLicence <= product.extendedCommercialLicence &&
-              product.personalLicence}
-            {product.commercialLicence <= product.personalLicence &&
-              product.commercialLicence <= product.extendedCommercialLicence &&
-              product.commercialLicence}
-            {product.extendedCommercialLicence <= product.commercialLicence &&
-              product.extendedCommercialLicence <= product.personalLicence &&
-              product.extendedCommercialLicence}
+            {product.price}
           </Typography>
         </Grid>
       </Grid>
@@ -350,7 +372,7 @@ export default function Shopsetup(props) {
                 {/* Text */}
                 <Grid item>
                   <Typography variant="subtitle2">
-                    {t['License Type']}
+                    {t['Quantity']}
                     {/* <Link
                     href="/"
                     style={{
@@ -385,7 +407,9 @@ export default function Shopsetup(props) {
                       </Grid>
                     )}
                     <Grid item>
-                      <Typography variant="body2">{quantity} seat</Typography>
+                      <Typography variant="body2">
+                        {quantity} {product.unit ? product.unit : ''}{' '}
+                      </Typography>
                     </Grid>
                     <Grid item>
                       <IconButton
@@ -403,7 +427,7 @@ export default function Shopsetup(props) {
                   </Grid>
                 </Grid>
               </Grid>
-              {/* personalLicence */}
+              {/* Product Price */}
               <Grid
                 item
                 container
@@ -413,29 +437,27 @@ export default function Shopsetup(props) {
               >
                 <Grid item>
                   <FormControlLabel
-                    value="personalLicence"
                     control={
                       <Radio
                         style={{ color: theme.palette.common.primary }}
-                        name="license"
-                        checked={license === 'personalLicence'}
+                        readOnly
+                        checked={true}
                       />
                     }
-                    onChange={() => setLicense('personalLicence')}
                     label={
                       <Typography className={classes.label}>
-                        Personal
+                        {t['Product Price']}
                       </Typography>
                     }
                   />
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    ${product.personalLicence}
+                    ${product.price}
                   </Typography>
                 </Grid>
               </Grid>
-              {/* commercialLicence */}
+              {/* delivery */}
               <Grid
                 item
                 container
@@ -444,29 +466,27 @@ export default function Shopsetup(props) {
               >
                 <Grid item>
                   <FormControlLabel
-                    value="commercialLicence"
                     control={
                       <Radio
                         style={{ color: theme.palette.common.primary }}
-                        name="license"
-                        checked={license === 'commercialLicence'}
+                        readOnly
+                        checked={true}
                       />
                     }
-                    onChange={() => setLicense('commercialLicence')}
                     label={
                       <Typography className={classes.label}>
-                        Commercial
+                        {t['Delivery Charges']}
                       </Typography>
                     }
                   />
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    ${product.commercialLicence}
+                    ${product.deliveryPrice}
                   </Typography>
                 </Grid>
               </Grid>
-              {/* extendedCommercialLicence */}
+              {/* Subtotal */}
               <Grid
                 item
                 container
@@ -475,25 +495,25 @@ export default function Shopsetup(props) {
               >
                 <Grid item>
                   <FormControlLabel
-                    value="extendedCommercialLicence"
                     control={
                       <Radio
                         style={{ color: theme.palette.common.primary }}
-                        name="license"
-                        checked={license === 'extendedCommercialLicence'}
+                        readOnly
+                        checked={true}
                       />
                     }
-                    onChange={() => setLicense('extendedCommercialLicence')}
                     label={
                       <Typography className={classes.label}>
-                        Extended Commercial
+                        {t['Subtotal']}
                       </Typography>
                     }
                   />
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    ${product.extendedCommercialLicence}
+                    $
+                    {parseFloat(product.deliveryPrice) +
+                      parseFloat(product.price)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -566,7 +586,9 @@ export default function Shopsetup(props) {
             >
               <Divider />
             </Grid>
-            <Grid item>{html_Parser(sample.details)}</Grid>
+            {product.details && (
+              <Grid item>{html_Parser(product.details)}</Grid>
+            )}
           </Grid>
         </Grid>
 
@@ -594,94 +616,6 @@ export default function Shopsetup(props) {
                 {t['Created']}: {new Date(product.date).toDateString()}
               </Typography>
             </Grid>
-            {/* compatibleWith */}
-            <Grid item style={{ marginTop: '0.5em' }}>
-              <Typography
-                variant="h6"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  fontWeight: '400',
-                }}
-              >
-                <SwapHorizIcon
-                  style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                />{' '}
-                {t['Compatible with']}:{' '}
-                {product.compatibleWith?.map((ite) => ite)}
-              </Typography>
-            </Grid>
-            {/* filesize */}
-            <Grid item style={{ marginTop: '0.5em' }}>
-              <Typography
-                variant="h6"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  fontWeight: '400',
-                }}
-              >
-                <InsertDriveFileIcon
-                  style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                />{' '}
-                {t['File Size']} :{' '}
-                {product.fileSize ? product.fontSize : 'Not available'}
-              </Typography>
-            </Grid>
-            {/* vector */}
-            {product.vector && (
-              <Grid item style={{ marginTop: '0.5em' }}>
-                <Typography
-                  variant="h6"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontWeight: '400',
-                  }}
-                >
-                  <TimelineIcon
-                    style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                  />{' '}
-                  {t['Vector']}
-                </Typography>
-              </Grid>
-            )}
-            {/* tilable     */}
-            {product.tileable && (
-              <Grid item style={{ marginTop: '0.5em' }}>
-                <Typography
-                  variant="h6"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontWeight: '400',
-                  }}
-                >
-                  <DonutSmallIcon
-                    style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                  />{' '}
-                  {t['Tileable']}
-                </Typography>
-              </Grid>
-            )}
-            {/* Layered     */}
-            {product.layered && (
-              <Grid item style={{ marginTop: '0.5em' }}>
-                <Typography
-                  variant="h6"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontWeight: '400',
-                  }}
-                >
-                  <TableChartIcon
-                    style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                  />{' '}
-                  {t['Layered']}
-                </Typography>
-              </Grid>
-            )}
           </Grid>
         </Grid>
       </Grid>
@@ -719,7 +653,7 @@ export default function Shopsetup(props) {
           <Typography variant="subtitle1">{t['Keep Exploring']}</Typography>
         </Grid>
         <Grid item container style={{ marginTop: '0.6em' }}>
-          {sample.tags.map((tag) => (
+          {product.tags?.map((tag) => (
             <Chip
               style={{
                 backgroundColor: '#cce0ff',
@@ -808,7 +742,7 @@ export default function Shopsetup(props) {
                           color: 'white',
                         }}
                       >
-                        {t['Visit']}
+                        {t['Visit now']}
                       </Button>
                     </Link>
                   </div>
