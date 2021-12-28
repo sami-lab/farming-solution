@@ -102,7 +102,6 @@ export default function Create(props) {
 
   const setProductTags = (e) => {
     if (e.keyCode == 13 && tag !== '') {
-      console.log(tag.split(',').map((item) => item.trim()));
       setProduct((pro) => {
         return {
           ...pro,
@@ -117,25 +116,37 @@ export default function Create(props) {
       tags: product.tags.filter((item, i) => i !== index),
     });
   };
+
   const handleImageDeleteHandler = (index) => {
     const productCopy = { ...product };
     const images = [...productCopy.images];
-    const newImages = images.filter((item, i) => i !== index);
+    let deletedImages = [];
+    const newImages = images.filter((item, i) => {
+      if (i === index && item.new === false) {
+        deletedImages.push(item.img);
+      }
+      return i !== index;
+    });
     setProduct({
       ...product,
       images: newImages,
+      deletedImages: deletedImages,
     });
 
     console.log(product.images);
   };
 
   const productImagesHandler = (files) => {
-    console.log(files);
     if (files.length > 0) {
       setProduct((pro) => {
         return {
           ...pro,
-          images: files,
+          images: files.map((x) => {
+            return {
+              img: x,
+              new: true,
+            };
+          }),
         };
       });
     }

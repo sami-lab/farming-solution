@@ -81,6 +81,7 @@ export default function UpdateProductPage(props) {
       if (result.status === 'success') {
         setProduct({
           ...result.data.doc,
+          deletedImages: [],
           images: result.data.doc.images.map((x) => {
             return {
               img: publicRuntimeConfig.backend + '/files/' + x,
@@ -139,7 +140,21 @@ export default function UpdateProductPage(props) {
         active: true,
         action: 'submit',
       });
-      const response = await updateProduct(props.userToken, product);
+      let newImages = [];
+      let newImagesIndex = [];
+      product.images.map((img, ind) => {
+        if (img.new === true) {
+          {
+            newImages.push(img.img);
+            newImagesIndex.push(ind);
+          }
+        }
+      });
+      const response = await updateProduct(props.userToken, {
+        ...product,
+        newImages: newImages,
+        newImagesIndex: newImagesIndex,
+      });
       const result = response.data;
       if (result.status === 'success') {
         setShowToast({

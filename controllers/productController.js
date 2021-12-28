@@ -47,14 +47,7 @@ exports.delete = catchAsync(async (req, res, next) => {
   }
   const doc = await Product.deleteOne(req.params.id);
   if (!doc) return next(new AppError('Requested Id not found', 404));
-  fs.unlink(`/public/files/${product.file}`, function (err) {
-    if (err) {
-      console.log(
-        'Product file not deleted',
-        product.id + ' : ' + product.name
-      );
-    }
-  });
+
   deleteFiles(
     product.images.map((x) => `/public/files/${x}`),
     function (err) {
@@ -81,10 +74,24 @@ exports.update = catchAsync(async (req, res, next) => {
     'price',
     'unit',
     'deliveryPrice',
-    'tags'
+    'tags',
+    'images',
+    'newImagesIndex',
+    'deletedImages'
   );
 
-  //Must adjust images here
+  //if new images are uploaded
+  if (req.files && req.files.newImages) {
+    let newImgs = req.files.newImages.map((item) => item.filename);
+    //replaces file with filename
+    filterBody.newImagesIndex.map((i, ind) => {
+      filterBody.images[i] = {
+        new: true,
+        img: newImgs[ind],
+      };
+    });
+  }
+  filterBody.images = filterBody.images.map((x) => x.img);
 
   //Saving IN DB
   const doc = await Product.findByIdAndUpdate(req.params.id, filterBody, {
@@ -93,6 +100,20 @@ exports.update = catchAsync(async (req, res, next) => {
   });
   if (!doc) return next(new AppError('requested Id not found', 404));
 
+  //deleting images that is deleted
+  if (filterBody.deletedImages && filterBody.deletedImages.length > 0) {
+    deleteFiles(
+      filterBody.deletedImages.map((x) => `/public/files/${x}`),
+      function (err) {
+        if (err) {
+          console.log(
+            'Product images not deleted',
+            req.params.id + ' : ' + filterBody.title
+          );
+        }
+      }
+    );
+  }
   res.status(200).json({
     status: 'success',
     data: {

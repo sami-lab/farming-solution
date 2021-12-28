@@ -33,7 +33,7 @@ router.route('/').post(
 router
   .route('/:id')
   .patch(
-    upload.fields([{ name: 'images', maxCount: 8 }]),
+    upload.fields([{ name: 'newImages', maxCount: 8 }]),
     productController.update
   )
   .delete(productController.delete);
