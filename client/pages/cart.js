@@ -252,7 +252,7 @@ export default function Cart(props) {
         <Head>
           <title>Cart</title>
         </Head>
-        <Grid item>
+        <Grid item container>
           <Header {...props} languageJson={t} />
         </Grid>
         <Grid item>
@@ -266,30 +266,30 @@ export default function Cart(props) {
             <Empty languageJson={t} />
           )}
         </Grid>
-        <Grid item className={classes.root}>
-          <Grid container direction="column" spacing={2}>
-            <Grid item>
-              <Typography variant="subtitle1" style={{ fontWeight: '700' }}>
-                {t['Top Selling Products']}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <RenderProducts
-                products={[
-                  ...props.products,
-                  ...props.Graphics,
-                  ...props.Fonts,
-                ]}
-                cart={true}
-                cartHandler={addToCartHandler}
-                loading={loading.active && loading.action === 'addToCart'}
-                md={2}
-                sm={4}
-                xs={6}
-              />
+        {props.products && props.products.length > 0 && (
+          <Grid item style={{ marginTop: '2em' }} className={classes.root}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <Typography variant="subtitle1" style={{ fontWeight: '700' }}>
+                  {t['Top Selling Products']}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <RenderProducts
+                  products={props.products.flatMap((x) =>
+                    x.products.map((p) => p)
+                  )}
+                  cart={true}
+                  cartHandler={addToCartHandler}
+                  loading={loading.active && loading.action === 'addToCart'}
+                  md={2}
+                  sm={4}
+                  xs={6}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
         <Grid item style={{ marginTop: '2em' }}>
           <Footer languageJson={t} />
         </Grid>

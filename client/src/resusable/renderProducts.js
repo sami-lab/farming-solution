@@ -66,8 +66,8 @@ export default function RenderProducts(props) {
                       component="h1"
                       style={{ fontSize: '1rem', fontFamily: 'Averta' }}
                     >
-                      {item.title.length > 15
-                        ? item.title.toString().slice(0, 15) + '...'
+                      {item.title?.length > 15
+                        ? item.title?.toString().slice(0, 15) + '...'
                         : item.title}
                     </Typography>
                     <Typography
@@ -82,7 +82,7 @@ export default function RenderProducts(props) {
                       by{' '}
                       <Link href={`/shop/${item.shopId?._id}`}>
                         <a style={{ textDecoration: 'none', color: '#615f5c' }}>
-                          {item.shop.shopName}
+                          {item.shop?.shopName}
                         </a>
                       </Link>{' '}
                       in{' '}

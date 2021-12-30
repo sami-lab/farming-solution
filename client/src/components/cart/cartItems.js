@@ -64,13 +64,13 @@ export default function Cart(props) {
     const query = cartItems.map((item) => {
       return {
         id: item.product._id,
-        license: item.license,
         quantity: item.quantity,
         image: item.product.images[0],
         title: item.product.title,
         shopId: item.product.shopId.id,
         shopName: item.product.shopId.shopName,
-        price: item.product[item.license],
+        price: item.product.price,
+        deliveryPrice: item.product.deliveryPrice,
       };
     });
     router.push({
@@ -177,84 +177,6 @@ export default function Cart(props) {
                       <Grid item style={{ marginTop: '0.3em' }}>
                         <Grid container spacing={2}>
                           {' '}
-                          {/* slect */}
-                          <Grid item>
-                            <label htmlFor="email" className={classes.label}>
-                              {t['License Type']}
-                            </label>
-                            <TextField
-                              select
-                              id="License"
-                              variant="outlined"
-                              fullWidth
-                              size="small"
-                              InputProps={{
-                                classes: {
-                                  root: classes.input,
-                                  notchedOutline: classes.inputOutline,
-                                },
-                              }}
-                              SelectProps={{
-                                MenuProps: {
-                                  anchorOrigin: {
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                  },
-                                  getContentAnchorEl: null,
-                                },
-                              }}
-                              required
-                              value={item.license}
-                              onChange={(e) =>
-                                setCartItems(
-                                  cartItems.map((x) => {
-                                    if (x.id == item.id) {
-                                      item.license = e.target.value;
-                                    }
-                                    return x;
-                                  })
-                                )
-                              }
-                            >
-                              <MenuItem value="personalLicence">
-                                <Grid container justify="space-between">
-                                  <Typography className={classes.label}>
-                                    {' '}
-                                    {t['Personal Licence']}{' '}
-                                  </Typography>
-                                  <Typography className={classes.label}>
-                                    {' '}
-                                    ${item.product.personalLicence}{' '}
-                                  </Typography>
-                                </Grid>
-                              </MenuItem>
-                              <MenuItem value="commercialLicence">
-                                <Grid container justify="space-between">
-                                  <Typography className={classes.label}>
-                                    {' '}
-                                    {t['Commercial Licence']}{' '}
-                                  </Typography>
-                                  <Typography className={classes.label}>
-                                    {' '}
-                                    ${item.product.commercialLicence}{' '}
-                                  </Typography>
-                                </Grid>
-                              </MenuItem>
-                              <MenuItem value="extendedCommercialLicence">
-                                <Grid container justify="space-between">
-                                  <Typography className={classes.label}>
-                                    {t['Extended Commercial Licence']}{' '}
-                                  </Typography>
-                                  <Typography className={classes.label}>
-                                    {' '}
-                                    ${
-                                      item.product.extendedCommercialLicence
-                                    }{' '}
-                                  </Typography>
-                                </Grid>
-                              </MenuItem>
-                            </TextField>
-                          </Grid>{' '}
                           {/* quantity */}
                           <Grid item style={{ alignSelf: 'flex-end' }}>
                             <Grid container alignItems="center">
@@ -327,7 +249,9 @@ export default function Cart(props) {
                     {/* for Price */}
                     <Grid item>
                       <Typography variant="h6" align="right">
-                        ${item.product[item.license] * item.quantity}
+                        $
+                        {(item.product.price + item.product.deliveryPrice) *
+                          item.quantity}
                       </Typography>
 
                       <span
@@ -362,16 +286,20 @@ export default function Cart(props) {
           <label className={classes.label}>Items</label>
           <Grid container justify="space-between">
             <Typography className={classes.label} style={{ fontWeight: 300 }}>
-              {cartItems.length} Licenses x{' '}
+              {cartItems.length} Product{cartItems.length > 1 && 's'} x{' '}
               {cartItems.reduce((total, item) => {
                 return total + parseInt(item.quantity);
               }, 0)}{' '}
-              Seats
+              items
             </Typography>
             <Typography className={classes.label} style={{ fontWeight: 300 }}>
               $
               {cartItems.reduce((total, item) => {
-                return total + item.product[item.license] * item.quantity;
+                return (
+                  total +
+                  (item.product.price + item.product.deliveryPrice) *
+                    item.quantity
+                );
               }, 0)}
             </Typography>
           </Grid>

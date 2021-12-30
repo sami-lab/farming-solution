@@ -7,11 +7,6 @@ var CartSchema = mongoose.Schema({
     required: true,
   },
 
-  license: {
-    type: String,
-    require: [true, 'Please provide license details!'],
-    default: 'personalLicence',
-  },
   quantity: {
     type: Number,
     require: [true, 'Please provide quantity!'],

@@ -14,10 +14,10 @@ exports.delete = catchAsync(async (req, res, next) => {
   });
 });
 exports.update = catchAsync(async (req, res, next) => {
-  const { license, quantity } = req.body;
+  const { quantity } = req.body;
   const doc = await Cart.findByIdAndUpdate(
     req.params.id,
-    { license, quantity },
+    { quantity },
     {
       new: true,
       runValidators: true,
@@ -34,9 +34,8 @@ exports.update = catchAsync(async (req, res, next) => {
   });
 });
 exports.createOne = catchAsync(async (req, res, next) => {
-  const { license, quantity, product } = req.body;
+  const { quantity, product } = req.body;
   const doc = await Cart.create({
-    license: license ? license : 'personalLicence',
     quantity: quantity ? quantity : 1,
     product,
     userId: req.user.id,
