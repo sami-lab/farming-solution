@@ -47,7 +47,10 @@ export default function CheckoutForm(props) {
             const response = await checkout(
               props.userToken,
               res?.token,
-              props.products
+              props.products,
+              props.name,
+              props.address,
+              props.zipCode
             );
             const result = await response.json();
             if (result.status === 'success') {
@@ -140,11 +143,23 @@ export default function CheckoutForm(props) {
           fullWidth
           style={{
             backgroundColor:
-              processing || disabled || succeeded
+              processing ||
+              disabled ||
+              succeeded ||
+              props.name === '' ||
+              props.address === '' ||
+              props.zipCode === ''
                 ? '#E1E8EE'
                 : theme.palette.common.primary,
           }}
-          disabled={processing || disabled || succeeded}
+          disabled={
+            processing ||
+            disabled ||
+            succeeded ||
+            props.name === '' ||
+            props.address === '' ||
+            props.zipCode === ''
+          }
         >
           {processing ? (
             <CircularProgress size={20} color="primary" />

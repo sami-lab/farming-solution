@@ -71,6 +71,7 @@ export default function Cart(props) {
         shopName: item.product.shopId.shopName,
         price: item.product.price,
         deliveryPrice: item.product.deliveryPrice,
+        unit: item.product.unit,
       };
     });
     router.push({

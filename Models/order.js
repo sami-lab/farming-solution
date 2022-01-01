@@ -12,12 +12,6 @@ var OrderSchema = mongoose.Schema({
   //     default: 'CashOnDelievery',
   //     require: [true, "Order must have Payment method"]
   // },
-  license: {
-    type: String,
-    enum: ['personalLicence', 'commercialLicence', 'extendedCommercialLicence'],
-    default: 'personalLicence',
-    require: [true, 'Order must have license type'],
-  },
   totalAmount: {
     type: Number,
     min: [1, 'Amount must be above 0'],
@@ -42,7 +36,19 @@ var OrderSchema = mongoose.Schema({
     require: [true, 'Order Must contain Shop'],
   },
   transactionId: {
+    email: String,
+  },
+  name: {
     type: String,
+    require: [true, 'Order Must belong to any person'],
+  },
+  zipCode: {
+    type: String,
+    require: [true, 'zipcode cannot be empty'],
+  },
+  address: {
+    type: String,
+    require: [true, 'Address cannot be empty'],
   },
 });
 

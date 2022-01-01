@@ -11,7 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 // const Cart = require('../Models/cart');
 
 exports.buyNow = catchAsync(async (req, res, next) => {
-  const { productId, stripeToken, license, quantity } = req.body;
+  const { productId, stripeToken, quantity, name, zipCode, address } = req.body;
 
   let product = await Product.findById(productId);
   if (!product) return next(new AppError('requested Product not found', 404));
@@ -28,7 +28,7 @@ exports.buyNow = catchAsync(async (req, res, next) => {
           ///source: stripeToken.card.id,
           customer: customer.id, // set the customer id
           amount:
-            product[license] * 100 * quantity +
+            (product.price + product.deliveryPrice) * 100 * quantity +
             parseFloat(process.env.platformFee + process.env.gst), // 25
           currency: 'usd',
           description: `Product ${product.title} Purchased `,
@@ -39,8 +39,12 @@ exports.buyNow = catchAsync(async (req, res, next) => {
     })
     .then(async (result) => {
       const doc = await Order.create({
-        license,
-        totalAmount: product[license] * 100 * quantity,
+        name,
+        address,
+        zipCode,
+        totalAmount:
+          (product.price + product.deliveryPrice) * quantity +
+          parseFloat(process.env.platformFee + process.env.gst),
         quantity,
         shopId: product.shopId,
         productId,
@@ -122,7 +126,7 @@ exports.getAllOrderofShop = catchAsync(async (req, res, next) => {
 });
 
 exports.checkout = catchAsync(async (req, res, next) => {
-  const { cartItems, stripeToken } = req.body;
+  const { cartItems, stripeToken, name, zipCode, address } = req.body;
 
   let products = await Product.find({
     _id: { $in: cartItems.map((x) => x.id) },
@@ -132,8 +136,10 @@ exports.checkout = catchAsync(async (req, res, next) => {
     cartItems.reduce((total, item) => {
       let pr = products.find((x) => x._id == item.id);
 
-      return total + pr[item.license] * item.quantity;
-    }, 0) * 100;
+      return total + (pr.price + pr.deliveryPrice) * item.quantity;
+    }, 0) *
+      100 +
+    parseFloat(process.env.platformFee + process.env.gst);
 
   const fakeKey = uuidv4();
   return stripe.customers
@@ -158,8 +164,10 @@ exports.checkout = catchAsync(async (req, res, next) => {
       let finalArray = cartItems.map((item) => {
         let p = products.find((x) => x._id == item.id);
         return {
-          license: item.license,
-          totalAmount: p[item.license],
+          name: name,
+          zipCode,
+          address,
+          totalAmount: total,
           quantity: item.quantity,
           shopId: p.shopId,
           productId: item.id,

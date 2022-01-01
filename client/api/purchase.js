@@ -5,7 +5,9 @@ export const createOrder = async (
   token,
   stripeToken,
   productId,
-  license,
+  name,
+  address,
+  zipCode,
   quantity
 ) => {
   var myHeaders = new Headers();
@@ -14,7 +16,9 @@ export const createOrder = async (
   var raw = JSON.stringify({
     stripeToken,
     productId,
-    license,
+    name,
+    address,
+    zipCode,
     quantity,
   });
 

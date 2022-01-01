@@ -59,13 +59,23 @@ export const deleteCart = async (token, id) => {
   return response;
 };
 
-export const checkout = async (token, stripeToken, cartItems) => {
+export const checkout = async (
+  token,
+  stripeToken,
+  cartItems,
+  name,
+  address,
+  zipCode
+) => {
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('authorization', 'Bearer ' + token);
   var raw = JSON.stringify({
     stripeToken,
     cartItems,
+    name,
+    address,
+    zipCode,
   });
 
   var requestOptions = {

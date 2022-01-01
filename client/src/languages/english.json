@@ -52,6 +52,7 @@
   "First Name*": "First Name*",
   "Last Name": "Last Name",
   "Email*": "Email*",
+  "Name*": "Name*",
   "Username*": "Username*",
   "Create Account": "Create Account",
   "First Name cannot be empty": "First Name cannot be empty",

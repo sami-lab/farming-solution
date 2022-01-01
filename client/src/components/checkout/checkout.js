@@ -67,6 +67,23 @@ export default function Checkout(props) {
   const theme = useTheme();
   const classes = useStyles();
 
+  const [user, setUser] = useState({
+    name: {
+      value: props.user.firstName + props.user.lastName,
+      error: false,
+      errorMessage: '',
+    },
+    zipCode: {
+      value: props.user.zipCode || '',
+      error: false,
+      errorMessage: '',
+    },
+    address: {
+      value: props.user.address || '',
+      error: false,
+      errorMessage: '',
+    },
+  });
   return (
     <Grid container direction="column">
       {/* heading checkout*/}
@@ -161,20 +178,14 @@ export default function Checkout(props) {
                       {/* for liciance and quantity */}
                       <Grid item style={{ marginTop: '0.3em' }}>
                         <Typography variant="subtitle2">
-                          1{' '}
-                          {item.license === 'personalLicence'
-                            ? 'Personal Licence'
-                            : item.license === 'commercialLicence'
-                            ? 'Commercial Licence'
-                            : 'Extended Commercial Licence'}{' '}
-                          x {item.quantity} Seat
+                          {item.quantity} {item.unit ? item.unit : 'Quantity'}
                         </Typography>
                       </Grid>
                     </Grid>
                     {/* for Price */}
                     <Grid item>
                       <Typography variant="h6" align="right">
-                        ${item.price * item.quantity}
+                        ${(item.price + item.deliveryPrice) * item.quantity}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -231,7 +242,9 @@ export default function Checkout(props) {
                 $
                 {props.products.reduce((total, item) => {
                   return (
-                    total + parseFloat(item.price) * parseInt(item.quantity)
+                    total +
+                    parseFloat(item.price + item.deliveryPrice) *
+                      parseInt(item.quantity)
                   );
                 }, 0)}{' '}
                 USD
@@ -270,6 +283,7 @@ export default function Checkout(props) {
           >
             <Typography variant="subtitle2"> {props.user.email}</Typography>
           </Grid>
+
           <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
           {/* estimated total */}
           <Grid container alignItems="center" justifyContent="space-between">
@@ -284,7 +298,9 @@ export default function Checkout(props) {
                 $
                 {props.products.reduce((total, item) => {
                   return (
-                    total + parseFloat(item.price) * parseInt(item.quantity)
+                    total +
+                    parseFloat(item.price + item.deliveryPrice) *
+                      parseInt(item.quantity)
                   );
                 }, 0) +
                   parseFloat(publicRuntimeConfig.gst) +
@@ -293,11 +309,108 @@ export default function Checkout(props) {
               </Typography>
             </Grid>
           </Grid>
-          <Typography variant="subtitle2">
-            {' '}
-            {props.products.length} Licence{' '}
-          </Typography>
+
           <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
+          {/* user details */}
+          <Grid container direction="column">
+            <Grid item>
+              <label htmlFor="name" className={classes.label}>
+                {t['Name*']}
+              </label>
+              <TextField
+                id="name"
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                required
+                error={user.name.error}
+                helperText={user.name.error ? user.name.errorMessage : ''}
+                value={user.name.value}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    name: {
+                      value: e.target.value,
+                      error: false,
+                      errorMessage: '',
+                    },
+                  })
+                }
+              />
+            </Grid>
+            <Grid item style={{ marginTop: '1em' }}>
+              <label htmlFor="Zipcode" className={classes.label}>
+                {t['Zip Code']}
+              </label>
+              <TextField
+                id="Zipcode"
+                placeholder={t['Zip Code']}
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                required
+                error={user.zipCode.error}
+                helperText={user.zipCode.error ? user.zipCode.errorMessage : ''}
+                value={user.zipCode.value}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    zipCode: {
+                      value: e.target.value,
+                      error: false,
+                      errorMessage: '',
+                    },
+                  })
+                }
+              />
+            </Grid>
+            <Grid item style={{ marginTop: '1em' }}>
+              <label htmlFor="address" className={classes.label}>
+                {t['Address']}
+              </label>
+              <TextField
+                id="address"
+                variant="outlined"
+                placeholder={t['Address']}
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                required
+                error={user.address.error}
+                helperText={user.address.error ? user.address.errorMessage : ''}
+                value={user.address.value}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    address: {
+                      value: e.target.value,
+                      error: false,
+                      errorMessage: '',
+                    },
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
+          <Divider style={{ marginTop: '1em', marginBottom: '1em' }} />
+
           <div
             style={{
               padding: '1em',
@@ -327,6 +440,9 @@ export default function Checkout(props) {
                     //checkoutHandler={props.checkoutHandler}
                     user={props.user}
                     userToken={props.userToken}
+                    name={user.name.value}
+                    zipCode={user.zipCode.value}
+                    address={user.address.value}
                     products={props.products}
                     elements={elements}
                     stripe={stripe}

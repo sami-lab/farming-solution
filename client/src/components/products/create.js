@@ -109,6 +109,7 @@ export default function Create(props) {
           tags: tag.split(',').map((item) => item.trim()),
         };
       });
+      setTag('');
     }
   };
   const handleTagDelete = (index) => {
