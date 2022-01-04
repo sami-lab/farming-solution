@@ -5,6 +5,10 @@ module.exports = {
     stripe: process.env.stripe,
     platformFee: process.env.platformFee,
     gst: process.env.gst,
+    phone: process.env.phone,
+    whatsapp: process.env.whatsapp,
+    email: process.env.email,
+    address: process.env.address,
   },
   //{
   //   NODE_ENV: 'development',

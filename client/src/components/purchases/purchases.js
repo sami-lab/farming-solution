@@ -48,12 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Orders(props) {
+export default function Purchases(props) {
   const t = props.languageJson;
   const theme = useTheme();
   const classes = useStyles();
-  const [purchasing, setPurchasing] = useState(props.purchasings);
-
+  console.log(props);
   return (
     <Grid container direction="column">
       {/* heading Your product*/}
@@ -77,8 +76,8 @@ export default function Orders(props) {
         className={classes.root}
         spacing={2}
       >
-        {purchasing.length > 0 &&
-          purchasing.map((item) => (
+        {props.purchasings.length > 0 &&
+          props.purchasings.map((item) => (
             <Grid
               item
               style={{
@@ -133,16 +132,16 @@ export default function Orders(props) {
                   item
                   container
                   direction="column"
+                  justifyContent="center"
+                  alignItems="center"
                   style={{
                     flex: 1,
                     marginLeft: '0.5em',
-                    alignSelf: 'flex-start',
                   }}
                 >
                   {/* for title */}
                   <Grid item>
                     <Typography variant="subtitle2">
-                      Date
                       <span style={{ color: theme.palette.common.primary }}>
                         {' '}
                         {new Date(item.Date).toDateString()}
@@ -160,24 +159,11 @@ export default function Orders(props) {
                 {/* for Price */}
                 <Grid item>
                   <Typography variant="h6" align="right">
-                    ${item.productId[item.license] * item.quantity}
+                    $
+                    {item.productId.price *
+                      item.productId.deliveryPrice *
+                      item.quantity}
                   </Typography>
-
-                  <span
-                    variant="text"
-                    className={classes.label}
-                    style={{
-                      fontSize: '13px',
-                      fontWeight: 300,
-                      textAlign: 'right',
-                      color: theme.palette.common.primary,
-                      cursor: 'pointer',
-                      textDecoration: 'none',
-                    }}
-                    onClick={() => props.downloadFile(item.productId._id)}
-                  >
-                    Download{' '}
-                  </span>
                 </Grid>
               </Grid>
             </Grid>

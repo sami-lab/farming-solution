@@ -134,7 +134,7 @@ const sampleData = {
       userId: {
         name: 'Sami',
       },
-      license: 'personalLicence',
+
       totalAmount: 300,
       quantity: 1,
     },
@@ -148,7 +148,6 @@ const sampleData = {
       userId: {
         name: 'Sami',
       },
-      license: 'personalLicence',
       totalAmount: 300,
       quantity: 1,
     },
@@ -162,7 +161,6 @@ const sampleData = {
       userId: {
         name: 'Sami',
       },
-      license: 'personalLicence',
       totalAmount: 300,
       quantity: 1,
     },
@@ -176,7 +174,6 @@ const sampleData = {
       userId: {
         name: 'Sami',
       },
-      license: 'personalLicence',
       totalAmount: 300,
       quantity: 1,
     },
@@ -190,7 +187,6 @@ const sampleData = {
       userId: {
         name: 'Sami',
       },
-      license: 'personalLicence',
       totalAmount: 300,
       quantity: 1,
     },
@@ -235,11 +231,6 @@ const sampleData = {
   TotalProducts: 25,
 };
 
-const licenseType = [
-  { value: 'personalLicence', label: 'Personal' },
-  { value: 'commercialLicence', label: 'Commercial' },
-  { value: 'extendedCommercialLicence', label: 'Extended Commercial' },
-];
 export default function Manager(props) {
   const t = props.languageJson;
   const theme = useTheme();
@@ -483,9 +474,7 @@ export default function Manager(props) {
                   <TableCell className={classes.header} align="center">
                     Username
                   </TableCell>
-                  <TableCell className={classes.header} align="center">
-                    License
-                  </TableCell>
+
                   <TableCell className={classes.header} align="center">
                     Amount
                   </TableCell>
@@ -509,9 +498,7 @@ export default function Manager(props) {
                     <TableCell className={classes.tableItem} align="center">
                       {item.userId?.name}
                     </TableCell>
-                    <TableCell className={classes.tableItem} align="center">
-                      {licenseType.find((x) => x.value === item.license).label}
-                    </TableCell>
+
                     <TableCell className={classes.tableItem} align="center">
                       {item.totalAmount}
                     </TableCell>

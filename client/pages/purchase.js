@@ -117,29 +117,9 @@ export default function Purchase(props) {
     return <Loading />;
   }
 
-  const downloadFile = async (productId) => {
-    const response = await download(props.userToken, productId);
-
-    if (response.status === 200) {
-      let t = response.headers;
-      const result = await response.blob();
-
-      const blob = new Blob([result]);
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = response.headers.get('file');
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } else {
-      setShowToast({
-        active: true,
-        message: 'Failed to download Product',
-        severity: 'error',
-      });
-    }
-  };
+  console.log(
+    purchasings.filter((x) => x.productId.title.includes(searchPurchase))
+  );
   return (
     <CheckAuth {...props}>
       <Grid container direction="column">
@@ -158,33 +138,7 @@ export default function Purchase(props) {
         <Grid item>
           <Header {...props} languageJson={t} />
         </Grid>
-        <Grid item style={{ marginTop: '2em' }} className={classes.root}>
-          <Alert
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#DCEEFC',
-            }}
-            classes={{
-              root: classes.alert,
-            }}
-            icon={
-              <img
-                src="/dev/annoucement.svg"
-                style={{ width: '1em', height: '1em' }}
-              />
-            }
-          >
-            {' '}
-            <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-              {' '}
-              <a href="#" style={{ color: '#303538' }}>
-                {t['Click here to connect Dropbox']}
-              </a>{' '}
-              {t['and automatically sync purchases.']}
-            </Typography>
-          </Alert>
-        </Grid>
+
         <Grid item style={{ marginTop: '2em' }} className={classes.root}>
           <Grid container justify="space-between">
             <Grid item>
@@ -250,9 +204,10 @@ export default function Purchase(props) {
         <Grid item className={classes.root}>
           {purchasings.length > 0 ? (
             <Purchases
-              purchasings={purchasings}
+              purchasings={purchasings.filter((x) =>
+                x.productId.title.toLowerCase().includes(searchPurchase)
+              )}
               languageJson={t}
-              downloadFile={downloadFile}
             />
           ) : (
             <NoRecords languageJson={t} />
