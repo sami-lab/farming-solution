@@ -117,13 +117,21 @@ export default function Manager(props) {
       });
       const response = await deleteProduct(props.userToken, id);
       const result = await response.json();
-      setShowToast({
-        active: true,
-        message: "Item deleted Successfully",
-        severity: "success",
-      });
+      if (result.status === "success") {
+        setShowToast({
+          active: true,
+          message: "Item deleted Successfully",
+          severity: "success",
+        });
 
-      setData(data.filter((x) => x._id !== id));
+        setData(data.filter((x) => x._id !== id));
+      } else {
+        setShowToast({
+          active: true,
+          message: result.message,
+          severity: "error",
+        });
+      }
 
       setLoading({
         active: false,
