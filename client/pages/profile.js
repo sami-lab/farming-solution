@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Grid,
@@ -12,28 +12,28 @@ import {
   Tabs,
   Tab,
   Divider,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import Header from '../src/resusable/header';
-import Footer from '../src/resusable/footer';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import Header from "../src/resusable/header";
+import Footer from "../src/resusable/footer";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import UserProfile from '../src/components/authentication/profile';
-import ChangePassword from '../src/components/authentication/changePassword';
-import CheckAuth from '../src/resusable/checkAuth';
+import UserProfile from "../src/components/authentication/profile";
+import ChangePassword from "../src/components/authentication/changePassword";
+import CheckAuth from "../src/resusable/checkAuth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '10em',
-    paddingRight: '10em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '3em',
-      paddingRight: '3em',
+    paddingLeft: "10em",
+    paddingRight: "10em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
     },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
 
@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     ...theme.typography.label,
-    marginRight: '1.5em',
-    '&:hover': {
+    marginRight: "1.5em",
+    "&:hover": {
       border: 0,
       color: theme.palette.common.primary,
     },
@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 0,
   },
   input: {
-    '&::placeholder': {
-      fontFamily: 'Averta',
+    "&::placeholder": {
+      fontFamily: "Averta",
       fontWeight: 400,
-      fontSize: '1.1rem',
+      fontSize: "1.1rem",
     },
   },
   nested: {
@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
   nestedListtext: {
     ...theme.typography.caption,
     fontWeight: 300,
-    color: '#000',
-    cursor: 'pointer',
+    color: "#000",
+    cursor: "pointer",
   },
 }));
 
@@ -78,28 +78,28 @@ export default function Profile(props) {
   const t = props.languageJson;
 
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
 
   const [list1, setList1] = useState(true);
-  const [pageTab, setPageTab] = useState('profile');
+  const [pageTab, setPageTab] = useState("profile");
   return (
     <CheckAuth {...props}>
       <Grid container direction="column">
-        <Grid item>
+        <Grid item container>
           <Header {...props} languageJson={t} />
         </Grid>
         {/* Heading */}
         <Grid
           item
           container
-          style={{ marginTop: '1em', marginBottom: '0.3em' }}
+          style={{ marginTop: "1em", marginBottom: "0.3em" }}
           className={classes.root}
           spacing={2}
         >
           <Grid item md={2} xs={12}></Grid>
           <Grid item md={10} xs={12}>
-            <Typography variant="h2">{t['Account Settings']}</Typography>
+            <Typography variant="h2">{t["Account Settings"]}</Typography>
           </Grid>
         </Grid>
         <Grid item className={classes.root}>
@@ -108,7 +108,7 @@ export default function Profile(props) {
               item
               md={2}
               xs={12}
-              style={{ padding: 0, paddingRight: '0.2em' }}
+              style={{ padding: 0, paddingRight: "0.2em" }}
             >
               <List
                 component="nav"
@@ -117,7 +117,7 @@ export default function Profile(props) {
               >
                 <ListItem button onClick={() => setList1((l1) => !l1)}>
                   <ListItemText
-                    primary={t['Account Setting']}
+                    primary={t["Account Setting"]}
                     classes={{
                       primary: classes.listText,
                     }}
@@ -128,13 +128,13 @@ export default function Profile(props) {
                   <List
                     component="div"
                     disablePadding
-                    style={{ backgroundColor: '#f4f8fb', borderRadius: 10 }}
+                    style={{ backgroundColor: "#f4f8fb", borderRadius: 10 }}
                   >
                     <ListItem
                       className={classes.nested}
                       style={{
                         backgroundColor:
-                          pageTab === 'profile' ? '#DFF8F6' : '#f4f8fb',
+                          pageTab === "profile" ? "#DFF8F6" : "#f4f8fb",
                       }}
                       disableGutters
                     >
@@ -142,24 +142,24 @@ export default function Profile(props) {
                         primary={
                           <span
                             style={{
-                              color: pageTab === 'profile' ? '#088178' : '#000',
+                              color: pageTab === "profile" ? "#088178" : "#000",
                             }}
                           >
-                            {' '}
-                            {t['Profile Settings']}
+                            {" "}
+                            {t["Profile Settings"]}
                           </span>
                         }
                         classes={{
                           primary: classes.nestedListtext,
                         }}
-                        onClick={() => setPageTab('profile')}
+                        onClick={() => setPageTab("profile")}
                       />
                     </ListItem>
                     <ListItem
                       className={classes.nested}
                       style={{
                         backgroundColor:
-                          pageTab === 'changePassword' ? '#DFF8F6' : '#f4f8fb',
+                          pageTab === "changePassword" ? "#DFF8F6" : "#f4f8fb",
                       }}
                       disableGutters
                     >
@@ -168,19 +168,19 @@ export default function Profile(props) {
                           <span
                             style={{
                               color:
-                                pageTab === 'changePassword'
-                                  ? '#088178'
-                                  : '#000',
+                                pageTab === "changePassword"
+                                  ? "#088178"
+                                  : "#000",
                             }}
                           >
-                            {' '}
-                            {t['Change Password']}
+                            {" "}
+                            {t["Change Password"]}
                           </span>
                         }
                         classes={{
                           primary: classes.nestedListtext,
                         }}
-                        onClick={() => setPageTab('changePassword')}
+                        onClick={() => setPageTab("changePassword")}
                       />
                     </ListItem>
                   </List>
@@ -195,27 +195,27 @@ export default function Profile(props) {
                     onChange={(event, newValue) => setPageTab(newValue)}
                     TabIndicatorProps={{
                       style: {
-                        display: 'none',
+                        display: "none",
                       },
                     }}
-                    style={{ minHeight: '24px' }}
+                    style={{ minHeight: "24px" }}
                   >
                     <Tab
                       disableFocusRipple
-                      label={t['Profile Settings']}
+                      label={t["Profile Settings"]}
                       className={classes.tab}
                       classes={{
                         root: classes.tabRoot,
                       }}
                       value="profile"
                       style={{
-                        backgroundColor: 'transparent',
+                        backgroundColor: "transparent",
                         color:
-                          pageTab == 'profile'
+                          pageTab == "profile"
                             ? theme.palette.common.primary
-                            : 'inherit',
+                            : "inherit",
                         borderBottom:
-                          pageTab == 'profile'
+                          pageTab == "profile"
                             ? `2px solid ${theme.palette.common.primary}`
                             : 0,
                       }}
@@ -225,17 +225,17 @@ export default function Profile(props) {
                       classes={{
                         root: classes.tabRoot,
                       }}
-                      label={t['Change Password']}
+                      label={t["Change Password"]}
                       className={classes.tab}
                       value="changePassword"
                       style={{
-                        backgroundColor: 'transparent',
+                        backgroundColor: "transparent",
                         color:
-                          pageTab === 'changePassword'
+                          pageTab === "changePassword"
                             ? theme.palette.common.primary
-                            : 'inherit',
+                            : "inherit",
                         borderBottom:
-                          pageTab == 'changePassword'
+                          pageTab == "changePassword"
                             ? `2px solid ${theme.palette.common.primary}`
                             : 0,
                       }}
@@ -243,8 +243,8 @@ export default function Profile(props) {
                   </Tabs>
                   <Divider />
                 </Grid>
-                <Grid item style={{ marginTop: '2em' }}>
-                  {pageTab === 'profile' && (
+                <Grid item style={{ marginTop: "2em" }}>
+                  {pageTab === "profile" && (
                     <UserProfile
                       user={props.user}
                       setUser={props.setUser}
@@ -252,7 +252,7 @@ export default function Profile(props) {
                       languageJson={t}
                     />
                   )}
-                  {pageTab === 'changePassword' && (
+                  {pageTab === "changePassword" && (
                     <ChangePassword
                       userToken={props.userToken}
                       languageJson={t}
@@ -264,7 +264,7 @@ export default function Profile(props) {
           </Grid>
         </Grid>
         <Grid item>
-          <Footer languageJson={t} />
+          <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>
     </CheckAuth>

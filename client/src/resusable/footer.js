@@ -1,111 +1,111 @@
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import { useTheme, Grid, Typography, useMediaQuery } from '@material-ui/core';
-import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import LocationOnSharpIcon from '@material-ui/icons/LocationOnSharp';
-import LocalPhoneSharpIcon from '@material-ui/icons/LocalPhoneSharp';
-import MailSharpIcon from '@material-ui/icons/MailSharp';
+import { useTheme, Grid, Typography, useMediaQuery } from "@material-ui/core";
+import { lighten, makeStyles, withStyles } from "@material-ui/core/styles";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import LocationOnSharpIcon from "@material-ui/icons/LocationOnSharp";
+import LocalPhoneSharpIcon from "@material-ui/icons/LocalPhoneSharp";
+import MailSharpIcon from "@material-ui/icons/MailSharp";
 
-import Link from 'next/link';
+import Link from "next/link";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   container: {},
   paddingContainer: {
-    padding: '0 10px',
-    [theme.breakpoints.up('sm')]: {
-      padding: '0 39px',
+    padding: "0 10px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "0 39px",
     },
   },
   headingContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingTop: '50px',
+    display: "flex",
+    flexDirection: "column",
+    paddingTop: "50px",
     backgroundColor: theme.palette.common.primary,
   },
   footerHeading: {
-    color: 'white',
-    marginBottom: '0px',
-    fontFamily: 'Montserrat',
-    fontSize: '25px',
+    color: "white",
+    marginBottom: "0px",
+    fontFamily: "Averta",
+    fontSize: "25px",
     fontWeight: 700,
-    lineHeight: '1.3em',
+    lineHeight: "1.3em",
   },
   footerHeadingBottomContent: {
-    color: 'white',
-    marginBottom: '0px',
-    fontFamily: 'Montserrat',
-    fontSize: '15px',
+    color: "white",
+    marginBottom: "0px",
+    fontFamily: "Averta",
+    fontSize: "15px",
     fontWeight: 700,
   },
   nestedColumn: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    flexDirection: "column",
     //TODO condition hereF
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       flex: 1,
     },
   },
   nestedColumnHeading: {
-    fontSize: '1.25em',
-    fontFamily: 'Montserrat',
+    fontSize: "1.25em",
+    fontFamily: "Averta",
     fontWeight: 700,
-    color: 'black',
-    marginTop: '0.5rem',
-    marginBottom: '1rem',
-    lineHeight: '1.2',
+    color: "black",
+    marginTop: "0.5rem",
+    marginBottom: "1rem",
+    lineHeight: "1.2",
   },
   nestedColumnContent: {
-    color: '#000',
+    color: "#000",
     fontWeight: 500,
-    fontSize: '14px',
-    lineHeight: '30px',
-    fontFamily: 'Montserrat',
+    fontSize: "14px",
+    lineHeight: "30px",
+    fontFamily: "Averta",
     // fontSize: "1em",
     // fontFamily:""
   },
   copyRightText: {
-    fontSize: '14px',
+    fontSize: "14px",
     fontWeight: 600,
-    color: '#7a7a7a',
-    fontFamily: 'Montserrat',
-    padding: '1em 0',
-    [theme.breakpoints.up('sm')]: {
-      padding: '0 0',
+    color: "#7a7a7a",
+    fontFamily: "Averta",
+    padding: "1em 0",
+    [theme.breakpoints.up("sm")]: {
+      padding: "0 0",
     },
   },
   iconsContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    marginTop: '1em',
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-start",
+    marginTop: "1em",
   },
   icons: {
-    margin: '0 0.4em',
+    margin: "0 0.4em",
   },
   smallIcons: {
-    width: '20px',
-    marginRight: '9px',
+    width: "20px",
+    marginRight: "9px",
   },
   link: {
-    textDecoration: 'none',
-    color: 'inherit',
+    textDecoration: "none",
+    color: "inherit",
   },
 }));
 
 export default function Footer(props) {
   const theme = useTheme();
   const classes = useStyles();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
-  const matchesLG = useMediaQuery(theme.breakpoints.between('1300', '1550'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesLG = useMediaQuery(theme.breakpoints.between("1300", "1550"));
 
   return (
     <>
@@ -118,7 +118,7 @@ export default function Footer(props) {
             </Typography>
 
             <Typography className={classes.footerHeadingBottomContent}>
-              Please call us at{' '}
+              Please call us at{" "}
               <a
                 className={classes.link}
                 href={`tel:${publicRuntimeConfig.phone}`}
@@ -134,9 +134,9 @@ export default function Footer(props) {
             viewBox="0 0 283.5 27.8"
             preserveAspectRatio="xMidYMax slice"
             style={{
-              height: matchesSM ? '156px' : 'inherit',
-              fill: 'white',
-              position: 'relative',
+              height: matchesSM ? "156px" : "inherit",
+              fill: "white",
+              position: "relative",
               bottom: -1,
             }}
           >
@@ -155,23 +155,23 @@ export default function Footer(props) {
               xs={12}
               className={classes.nestedColumn}
               style={{
-                position: matchesSM ? 'relative' : 'inherit',
-                top: '-45px',
+                position: matchesSM ? "relative" : "inherit",
+                top: "-45px",
               }}
             >
               <div
                 style={{
-                  display: 'flex',
-                  width: '100%',
-                  marginBottom: '0.7em',
+                  display: "flex",
+                  width: "100%",
+                  marginBottom: "0.7em",
                 }}
               >
                 <img
                   src="dev/logo.png"
                   style={{
-                    width: '100px',
-                    height: '60px',
-                    marginLeft: '2em',
+                    width: "100px",
+                    height: "60px",
+                    marginLeft: "2em",
                   }}
                 />
               </div>
@@ -185,7 +185,7 @@ export default function Footer(props) {
                   href={
                     publicRuntimeConfig.facebook
                       ? publicRuntimeConfig.facebook
-                      : '#'
+                      : "#"
                   }
                   className={classes.link}
                 >
@@ -196,7 +196,7 @@ export default function Footer(props) {
                   href={
                     publicRuntimeConfig.twitter
                       ? publicRuntimeConfig.twitter
-                      : '#'
+                      : "#"
                   }
                   className={classes.link}
                 >
@@ -205,7 +205,7 @@ export default function Footer(props) {
                 <a
                   target="_blank"
                   href={
-                    publicRuntimeConfig.insta ? publicRuntimeConfig.insta : '#'
+                    publicRuntimeConfig.insta ? publicRuntimeConfig.insta : "#"
                   }
                   className={classes.link}
                 >
@@ -216,7 +216,7 @@ export default function Footer(props) {
                   href={
                     publicRuntimeConfig.linkedIn
                       ? publicRuntimeConfig.linkedIn
-                      : '#'
+                      : "#"
                   }
                   className={classes.link}
                 >
@@ -234,25 +234,14 @@ export default function Footer(props) {
               </Typography>
 
               <div className={classes.nestedColumnContentContainer}>
-                <Link href="/" style={{ textDecoration: 'none' }}>
+                <Link href="/" style={{ textDecoration: "none" }}>
                   <Typography className={classes.nestedColumnContent}>
                     Home
                   </Typography>
                 </Link>
-                <Link href="/about" style={{ textDecoration: 'none' }}>
+                <Link href="/partner" style={{ textDecoration: "none" }}>
                   <Typography className={classes.nestedColumnContent}>
-                    About
-                  </Typography>
-                </Link>
-
-                <Link href="/contactus" style={{ textDecoration: 'none' }}>
-                  <Typography className={classes.nestedColumnContent}>
-                    Contact Us
-                  </Typography>
-                </Link>
-                <Link href="/career" style={{ textDecoration: 'none' }}>
-                  <Typography className={classes.nestedColumnContent}>
-                    Career
+                    Partner
                   </Typography>
                 </Link>
               </div>
@@ -263,57 +252,20 @@ export default function Footer(props) {
                 className={classes.nestedColumnHeading}
                 component="h5"
               >
-                Services
+                Categories
               </Typography>
               <div className={classes.nestedColumnContentContainer}>
-                <Link
-                  href="/web-development"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    Web Development
-                  </Typography>
-                </Link>
-                <Link
-                  href="/mobile-app-development"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    App Development
-                  </Typography>
-                </Link>
-                <Link
-                  href="/digital-marketing-services"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    Digital Marketing
-                  </Typography>
-                </Link>
-                <Link
-                  href="/ui-ux-design-services"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    UI/UX Design
-                  </Typography>
-                </Link>
-                <Link
-                  href="/software-development-services"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    Software Development
-                  </Typography>
-                </Link>
-                <Link
-                  href="/ai-ml-etl-services"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography className={classes.nestedColumnContent}>
-                    AI/ML – ETL
-                  </Typography>
-                </Link>
+                {props.categories &&
+                  props.categories.map((item) => (
+                    <Link
+                      href={"/category/" + item.name}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Typography className={classes.nestedColumnContent}>
+                        {item.name}
+                      </Typography>
+                    </Link>
+                  ))}
               </div>
             </Grid>
             {/* fourth */}
@@ -340,7 +292,7 @@ export default function Footer(props) {
             <Grid
               item
               className={classes.nestedColumn}
-              style={{ flex: matchesSM ? 'inherit' : '1.1' }}
+              style={{ flex: matchesSM ? "inherit" : "1.1" }}
             >
               <Typography
                 className={classes.nestedColumnHeading}
@@ -349,13 +301,13 @@ export default function Footer(props) {
                 Get in touch
               </Typography>
               <div className={classes.nestedColumnContentContainer}>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: "flex" }}>
                   <LocationOnSharpIcon
                     className={classes.smallIcons}
                   ></LocationOnSharpIcon>
                   <Typography
                     className={classes.nestedColumnContent}
-                    style={{ lineHeight: '1.3em' }}
+                    style={{ lineHeight: "1.3em" }}
                   >
                     {publicRuntimeConfig.address}
                   </Typography>
@@ -365,7 +317,7 @@ export default function Footer(props) {
                   className={classes.link}
                   href={`tel:${publicRuntimeConfig.phone}`}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <LocalPhoneSharpIcon
                       className={classes.smallIcons}
                     ></LocalPhoneSharpIcon>
@@ -378,7 +330,7 @@ export default function Footer(props) {
                   className={classes.link}
                   href={`mailto: ${publicRuntimeConfig.email}`}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <MailSharpIcon
                       className={classes.smallIcons}
                     ></MailSharpIcon>
@@ -394,11 +346,11 @@ export default function Footer(props) {
 
         <svg
           style={{
-            fill: '#DDEFFC',
-            width: '100%',
-            height: '105px',
-            fill: 'rgb(221, 239, 252)',
-            transform: 'rotate(180deg)',
+            fill: "#DDEFFC",
+            width: "100%",
+            height: "105px",
+            fill: "rgb(221, 239, 252)",
+            transform: "rotate(180deg)",
           }}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 283.5 27.8"

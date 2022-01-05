@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -14,41 +14,41 @@ import {
   Typography,
   Button,
   useMediaQuery,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
-import CheckAuth from '../src/resusable/checkAuth';
-import Loading from '../src/resusable/spinner';
-import Header from '../src/resusable/header';
-import Footer from '../src/resusable/footer';
-import { getAllShopOrder } from '../api/admin/admin';
-import dynamic from 'next/dynamic';
-const Chart = dynamic(() => import('../src/components/dashboard/chart'), {
+import CheckAuth from "../src/resusable/checkAuth";
+import Loading from "../src/resusable/spinner";
+import Header from "../src/resusable/header";
+import Footer from "../src/resusable/footer";
+import { getAllShopOrder } from "../api/admin/admin";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("../src/components/dashboard/chart"), {
   ssr: false,
 });
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '10em',
-    paddingRight: '10em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '3em',
-      paddingRight: '3em',
+    paddingLeft: "10em",
+    paddingRight: "10em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
     },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   table: {
     minWidth: 650,
   },
   card: {
-    padding: '2em 1em',
-    boxShadow: 'rgba(100,100,111,0.2) 0px 7px 29px 0px',
+    padding: "2em 1em",
+    boxShadow: "rgba(100,100,111,0.2) 0px 7px 29px 0px",
     borderRadius: 20,
   },
   icon: {
-    fontSize: '3rem',
+    fontSize: "3rem",
     color: theme.palette.common.primary,
   },
   header: {
@@ -61,53 +61,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const licenseType = [
-  { value: 'personalLicence', label: 'Personal' },
-  { value: 'commercialLicence', label: 'Commercial' },
-  { value: 'extendedCommercialLicence', label: 'Extended Commercial' },
+  { value: "personalLicence", label: "Personal" },
+  { value: "commercialLicence", label: "Commercial" },
+  { value: "extendedCommercialLicence", label: "Extended Commercial" },
 ];
 export default function Manager(props) {
   const t = props.languageJson;
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const classes = useStyles();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState({
     active: false,
-    action: '',
+    action: "",
   });
   const [showToast, setShowToast] = useState({
     active: false,
-    message: '',
-    severity: '',
+    message: "",
+    severity: "",
   });
 
   const fetchData = async () => {
     try {
       setLoading({
         active: true,
-        action: 'page',
+        action: "page",
       });
       let response = await getAllShopOrder(props.userToken);
       let result = await response.json();
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setData(result.data.doc);
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (e) {
       console.log(e.message);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: 'Failed to Load Products',
-        severity: 'error',
+        message: "Failed to Load Products",
+        severity: "error",
       });
     }
   };
@@ -129,17 +129,17 @@ export default function Manager(props) {
   }, []);
 
   const handleToastClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     setShowToast({
       active: false,
-      message: '',
-      severity: '',
+      message: "",
+      severity: "",
     });
   };
-  if (!data || (loading && loading.action === 'page')) {
+  if (!data || (loading && loading.action === "page")) {
     return <Loading />;
   }
   return (
@@ -167,10 +167,10 @@ export default function Manager(props) {
           className={classes.root}
         >
           <Typography variant="h4">Shop Orders</Typography>
-          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+          <Link href="/dashboard" style={{ textDecoration: "none" }}>
             <Typography
               variant="h4"
-              style={{ cursor: 'pointer', color: theme.palette.common.primary }}
+              style={{ cursor: "pointer", color: theme.palette.common.primary }}
             >
               Back
             </Typography>
@@ -180,7 +180,7 @@ export default function Manager(props) {
         {/* for sales tables */}
         <Grid
           item
-          style={{ marginTop: '1em' }}
+          style={{ marginTop: "1em" }}
           container
           xs={12}
           className={classes.root}
@@ -218,7 +218,7 @@ export default function Manager(props) {
                 {data.map((item) => (
                   <TableRow key={item._id} hover>
                     <TableCell className={classes.tableItem}>
-                      {new Date(item.Date).toLocaleDateString()}{' '}
+                      {new Date(item.Date).toLocaleDateString()}{" "}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
                       {item.productId?.title}
@@ -245,8 +245,8 @@ export default function Manager(props) {
           </TableContainer>
         </Grid>
 
-        <Grid item style={{ marginTop: '2em' }}>
-          <Footer languageJson={props.languageJson} />
+        <Grid item style={{ marginTop: "2em" }}>
+          <Footer {...props} languageJson={props.languageJson} />
         </Grid>
       </Grid>
     </CheckAuth>

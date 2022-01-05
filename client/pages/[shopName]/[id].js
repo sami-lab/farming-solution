@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import getConfig from 'next/config';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from "react";
+import getConfig from "next/config";
+import { useRouter } from "next/router";
 const { publicRuntimeConfig } = getConfig();
 import {
   Button,
@@ -21,67 +21,67 @@ import {
   IconButton,
   Snackbar,
   CircularProgress,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
-import Rating from '@material-ui/lab/Rating';
-import Link from '@material-ui/core/Link';
-import html_Parser from 'html-react-parser';
+import Rating from "@material-ui/lab/Rating";
+import Link from "@material-ui/core/Link";
+import html_Parser from "html-react-parser";
 
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import RemoveIcon from '@material-ui/icons/Remove';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import DonutSmallIcon from '@material-ui/icons/DonutSmall';
-import TableChartIcon from '@material-ui/icons/TableChart';
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import AddIcon from '@material-ui/icons/Add';
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import RemoveIcon from "@material-ui/icons/Remove";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import TimelineIcon from "@material-ui/icons/Timeline";
+import DonutSmallIcon from "@material-ui/icons/DonutSmall";
+import TableChartIcon from "@material-ui/icons/TableChart";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import AddIcon from "@material-ui/icons/Add";
 
-import Header from '../../src/resusable/header';
-import Footer from '../../src/resusable/footer';
-import CommentExampleMetadata from '../../src/components/products/commentSection';
-import ImageCarousel from '../../src/components/products/imageCarousel';
+import Header from "../../src/resusable/header";
+import Footer from "../../src/resusable/footer";
+import CommentExampleMetadata from "../../src/components/products/commentSection";
+import ImageCarousel from "../../src/components/products/imageCarousel";
 
-import { getProductById } from '../../api/product/product';
-import { addToCart } from '../../api/cart/cart';
+import { getProductById } from "../../api/product/product";
+import { addToCart } from "../../api/cart/cart";
 
-import Loading from '../../src/resusable/spinner';
+import Loading from "../../src/resusable/spinner";
 
 const sample = {
-  title: 'new bundle 38 in 1 -9000 graphics',
-  productCategory: 'Graphics',
+  title: "new bundle 38 in 1 -9000 graphics",
+  productCategory: "Graphics",
   shop: {
-    id: '1',
-    shopName: 'Graphics guro',
-    shopDescription: 'Some best selling things',
+    id: "1",
+    shopName: "Graphics guro",
+    shopDescription: "Some best selling things",
   },
-  videoUrl: '', //if there is video url show video instead of images
-  images: ['anyimage..png', 'anyimage.png'],
-  description: '',
-  details: 'paste some html here and render',
-  file: '',
-  fileSize: '591KB',
-  personalLicence: '49',
-  commercialLicence: '59',
-  extendedCommercialLicence: '69',
-  date: '08/08/2021',
+  videoUrl: "", //if there is video url show video instead of images
+  images: ["anyimage..png", "anyimage.png"],
+  description: "",
+  details: "paste some html here and render",
+  file: "",
+  fileSize: "591KB",
+  personalLicence: "49",
+  commercialLicence: "59",
+  extendedCommercialLicence: "69",
+  date: "08/08/2021",
   compatibleWith: [
-    'Adobe PhotoShop',
-    'Illustrator',
-    'After effect',
-    'Adobe XD',
+    "Adobe PhotoShop",
+    "Illustrator",
+    "After effect",
+    "Adobe XD",
   ],
   layered: false, //if true display it in product specs
   tileable: false, //if true display it in product specs
   vector: false, //if true display it in product specs
-  tags: ['Bundle', 'Whole Shop', 'Gradient'],
+  tags: ["Bundle", "Whole Shop", "Gradient"],
   reviews: [
     {
-      name: 'Jem Thamos',
-      profile: '/dev/empty.jpg', //if there is no photo use any sample user photo
+      name: "Jem Thamos",
+      profile: "/dev/empty.jpg", //if there is no photo use any sample user photo
       message:
-        'Wow! SO many amazing elements!! Easily one of my best purchases on Creative Market!',
+        "Wow! SO many amazing elements!! Easily one of my best purchases on Creative Market!",
       rating: 5,
       date: new Date(), //should be in format 1 min ago
     },
@@ -90,15 +90,15 @@ const sample = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '10em',
-    paddingRight: '10em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '3em',
-      paddingRight: '3em',
+    paddingLeft: "10em",
+    paddingRight: "10em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
     },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   label: {
@@ -113,44 +113,44 @@ export default function Shopsetup(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [quantity, setQuantity] = useState(1);
-  const [license, setLicense] = useState('personalLicence');
+  const [license, setLicense] = useState("personalLicence");
   const [product, setProduct] = useState({});
 
   const [loading, setLoading] = useState({
     active: false,
-    action: '',
+    action: "",
   });
   const [showToast, setShowToast] = useState({
     active: false,
-    message: '',
-    severity: '',
+    message: "",
+    severity: "",
   });
   useEffect(async () => {
     try {
       setLoading({
         active: true,
-        action: 'page',
+        action: "page",
       });
 
       let response = await getProductById(router.query.id);
       let result = await response.json();
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setProduct(result.data.doc);
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (e) {
       console.log(e.message);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Failed to Load Shop Data'],
-        severity: 'error',
+        message: t["Failed to Load Shop Data"],
+        severity: "error",
       });
     }
   }, [router.query.id]);
@@ -159,7 +159,7 @@ export default function Shopsetup(props) {
     try {
       setLoading({
         active: true,
-        action: 'addToCart',
+        action: "addToCart",
       });
       const response = await addToCart(
         props.userToken,
@@ -168,35 +168,35 @@ export default function Shopsetup(props) {
         license
       );
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShowToast({
           active: true,
-          message: t['Item Added To Cart Successfully'],
-          severity: 'success',
+          message: t["Item Added To Cart Successfully"],
+          severity: "success",
         });
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to Add Item to Cart'],
-          severity: 'error',
+          message: t["Failed to Add Item to Cart"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
         message: err?.response?.data?.error
           ? err?.response?.data?.error
-          : 'Something went wrong',
-        severity: 'error',
+          : "Something went wrong",
+        severity: "error",
       });
     }
   };
@@ -217,30 +217,30 @@ export default function Shopsetup(props) {
     ];
 
     router.push({
-      pathname: '/checkout',
+      pathname: "/checkout",
       query: {
         data: JSON.stringify(query),
       },
     });
   };
   const handleToastClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     setShowToast({
       active: false,
-      message: '',
-      severity: '',
+      message: "",
+      severity: "",
     });
   };
 
-  if (loading.active && loading.action === 'page') {
+  if (loading.active && loading.action === "page") {
     return <Loading />;
   }
 
   return (
-    <Grid container direction="column" style={{ overflow: 'hidden' }}>
+    <Grid container direction="column" style={{ overflow: "hidden" }}>
       <Snackbar
         open={showToast.active}
         autoHideDuration={4000}
@@ -250,30 +250,30 @@ export default function Shopsetup(props) {
           {showToast.message}
         </Alert>
       </Snackbar>
-      <Grid item>
+      <Grid item container>
         <Header {...props} languageJson={t} />
       </Grid>
       {props.userToken !== null &&
         props.user &&
-        props.user?.roles.some((x) => x.name === 'Manager') && (
+        props.user?.roles.some((x) => x.name === "Manager") && (
           <Grid
             item
             style={{
-              alignSelf: 'flex-end',
-              marginTop: '0.3em',
+              alignSelf: "flex-end",
+              marginTop: "0.3em",
             }}
             className={classes.root}
           >
             <Link
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: "none" }}
               href={`/updateProduct/${product._id}`}
             >
               <a>
                 <Button
                   style={{
                     background: theme.palette.common.primary,
-                    fontSize: '1rem',
-                    color: '#fff',
+                    fontSize: "1rem",
+                    color: "#fff",
                   }}
                 >
                   Update
@@ -288,7 +288,7 @@ export default function Shopsetup(props) {
         item
         container
         justifyContent="space-between"
-        style={{ marginTop: '1em' }}
+        style={{ marginTop: "1em" }}
         className={classes.root}
       >
         <Grid item>
@@ -304,7 +304,7 @@ export default function Shopsetup(props) {
         </Grid>
         <Grid item>
           <Typography variant="h2">
-            {t['Starting At $']}
+            {t["Starting At $"]}
             {product.price}
           </Typography>
         </Grid>
@@ -312,7 +312,7 @@ export default function Shopsetup(props) {
       {/* Images and Detials card */}
       <Grid
         item
-        style={{ marginTop: '1em' }}
+        style={{ marginTop: "1em" }}
         container
         className={classes.root}
         spacing={3}
@@ -321,7 +321,7 @@ export default function Shopsetup(props) {
           <ImageCarousel images={product.images} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper elevation={2} style={{ padding: '1em 2em' }}>
+          <Paper elevation={2} style={{ padding: "1em 2em" }}>
             <Grid container direction="column">
               {/* For title */}
               <Grid item>
@@ -332,7 +332,7 @@ export default function Shopsetup(props) {
                 <Grid item>
                   <Grid container>
                     <Rating
-                      style={{ fontSize: '16px' }}
+                      style={{ fontSize: "16px" }}
                       name="read-only"
                       value={(
                         product.reviews.reduce(
@@ -354,17 +354,17 @@ export default function Shopsetup(props) {
               {/* Shop owwner */}
               <Grid item>
                 <Typography variant="body2">
-                  {t['by']}{' '}
+                  {t["by"]}{" "}
                   <Link href={`/shop/${product.shopId?.id}`}>
                     <a style={{ color: theme.palette.common.primary }}>
-                      {' '}
+                      {" "}
                       {product.shopId?.shopName}
                     </a>
                   </Link>
                 </Typography>
               </Grid>
               {/* Divider */}
-              <Grid item style={{ marginTop: '1em', marginBottom: '1em' }}>
+              <Grid item style={{ marginTop: "1em", marginBottom: "1em" }}>
                 <Divider />
               </Grid>
               {/* Quantity */}
@@ -372,7 +372,7 @@ export default function Shopsetup(props) {
                 {/* Text */}
                 <Grid item>
                   <Typography variant="subtitle2">
-                    {t['Quantity']}
+                    {t["Quantity"]}
                     {/* <Link
                     href="/"
                     style={{
@@ -393,14 +393,14 @@ export default function Shopsetup(props) {
                         <IconButton
                           onClick={() => setQuantity((q) => q - 1)}
                           style={{
-                            backgroundColor: 'transparent',
+                            backgroundColor: "transparent",
                             padding: 0,
                           }}
                         >
                           <RemoveIcon
                             style={{
                               color: theme.palette.common.primary,
-                              fontSize: '18px',
+                              fontSize: "18px",
                             }}
                           />
                         </IconButton>
@@ -408,18 +408,18 @@ export default function Shopsetup(props) {
                     )}
                     <Grid item>
                       <Typography variant="body2">
-                        {quantity} {product.unit ? product.unit : ''}{' '}
+                        {quantity} {product.unit ? product.unit : ""}{" "}
                       </Typography>
                     </Grid>
                     <Grid item>
                       <IconButton
                         onClick={() => setQuantity((q) => q + 1)}
-                        style={{ backgroundColor: 'transparent', padding: 0 }}
+                        style={{ backgroundColor: "transparent", padding: 0 }}
                       >
                         <AddIcon
                           style={{
                             color: theme.palette.common.primary,
-                            fontSize: '18px',
+                            fontSize: "18px",
                           }}
                         />
                       </IconButton>
@@ -433,7 +433,7 @@ export default function Shopsetup(props) {
                 container
                 justifyContent="space-between"
                 alignItems="center"
-                style={{ marginTop: '0.5em' }}
+                style={{ marginTop: "0.5em" }}
               >
                 <Grid item>
                   <FormControlLabel
@@ -446,7 +446,7 @@ export default function Shopsetup(props) {
                     }
                     label={
                       <Typography className={classes.label}>
-                        {t['Product Price']}
+                        {t["Product Price"]}
                       </Typography>
                     }
                   />
@@ -475,7 +475,7 @@ export default function Shopsetup(props) {
                     }
                     label={
                       <Typography className={classes.label}>
-                        {t['Delivery Charges']}
+                        {t["Delivery Charges"]}
                       </Typography>
                     }
                   />
@@ -504,7 +504,7 @@ export default function Shopsetup(props) {
                     }
                     label={
                       <Typography className={classes.label}>
-                        {t['Subtotal']}
+                        {t["Subtotal"]}
                       </Typography>
                     }
                   />
@@ -518,38 +518,38 @@ export default function Shopsetup(props) {
                 </Grid>
               </Grid>
               {/* Divider */}
-              <Grid item style={{ marginTop: '1em', marginBottom: '1em' }}>
+              <Grid item style={{ marginTop: "1em", marginBottom: "1em" }}>
                 <Divider />
               </Grid>
               {/* Add to cart */}
-              <Grid item style={{ width: '100%' }}>
+              <Grid item style={{ width: "100%" }}>
                 <Button
-                  style={{ backgroundColor: '#32a889', color: 'white' }}
+                  style={{ backgroundColor: "#32a889", color: "white" }}
                   fullWidth
                   variant="contained"
                   onClick={cartHandler}
-                  disabled={loading.active && loading.action === 'addToCart'}
+                  disabled={loading.active && loading.action === "addToCart"}
                 >
-                  {loading.active && loading.action === 'addToCart' ? (
+                  {loading.active && loading.action === "addToCart" ? (
                     <CircularProgress />
                   ) : (
-                    'Add to Cart'
+                    "Add to Cart"
                   )}
                 </Button>
               </Grid>
               {/* buy now */}
               <Grid
                 item
-                style={{ width: '100%' }}
-                style={{ marginTop: '1em', marginBottom: '1em' }}
+                style={{ width: "100%" }}
+                style={{ marginTop: "1em", marginBottom: "1em" }}
               >
                 <Button
                   fullWidth={true}
                   style={{
-                    border: '2px solid #32a889',
-                    backgroundColor: 'white',
+                    border: "2px solid #32a889",
+                    backgroundColor: "white",
 
-                    color: '#32a889',
+                    color: "#32a889",
                   }}
                   variant="contained"
                   onClick={redirectToCheckout}
@@ -565,7 +565,7 @@ export default function Shopsetup(props) {
       {/* Product details */}
       <Grid
         item
-        style={{ marginTop: '2em' }}
+        style={{ marginTop: "2em" }}
         container
         spacing={3}
         className={classes.root}
@@ -573,8 +573,8 @@ export default function Shopsetup(props) {
         <Grid item md={8} xs={12}>
           <Grid container direction="column" justifyContent="center">
             <Grid item>
-              <Typography variant="h2" style={{ fontWeight: '700' }}>
-                {t['About the Product']}
+              <Typography variant="h2" style={{ fontWeight: "700" }}>
+                {t["About the Product"]}
               </Typography>
             </Grid>
             <Grid item>
@@ -582,7 +582,7 @@ export default function Shopsetup(props) {
             </Grid>
             <Grid
               item
-              style={{ width: '100%', marginTop: '1em', marginBottom: '1em' }}
+              style={{ width: "100%", marginTop: "1em", marginBottom: "1em" }}
             >
               <Divider />
             </Grid>
@@ -596,24 +596,24 @@ export default function Shopsetup(props) {
           <Grid container direction="column">
             {/* Headng */}
             <Grid item>
-              <Typography variant="h2" style={{ fontWeight: '700' }}>
-                {t['Product Specs']}
+              <Typography variant="h2" style={{ fontWeight: "700" }}>
+                {t["Product Specs"]}
               </Typography>
             </Grid>
             {/* Date */}
-            <Grid item style={{ marginTop: '0.5em' }}>
+            <Grid item style={{ marginTop: "0.5em" }}>
               <Typography
                 variant="h6"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  fontWeight: '400',
+                  display: "flex",
+                  alignItems: "center",
+                  fontWeight: "400",
                 }}
               >
                 <DateRangeIcon
-                  style={{ marginRight: '0.3em', fontSize: '2rem' }}
-                />{' '}
-                {t['Created']}: {new Date(product.date).toDateString()}
+                  style={{ marginRight: "0.3em", fontSize: "2rem" }}
+                />{" "}
+                {t["Created"]}: {new Date(product.date).toDateString()}
               </Typography>
             </Grid>
           </Grid>
@@ -624,7 +624,7 @@ export default function Shopsetup(props) {
         item
         container
         direction="column"
-        style={{ marginTop: '2em' }}
+        style={{ marginTop: "2em" }}
         className={classes.root}
       >
         {product.reviews &&
@@ -646,19 +646,19 @@ export default function Shopsetup(props) {
         item
         container
         direction="column"
-        style={{ marginTop: '1em' }}
+        style={{ marginTop: "1em" }}
         className={classes.root}
       >
         <Grid item>
-          <Typography variant="subtitle1">{t['Keep Exploring']}</Typography>
+          <Typography variant="subtitle1">{t["Keep Exploring"]}</Typography>
         </Grid>
-        <Grid item container style={{ marginTop: '0.6em' }}>
+        <Grid item container style={{ marginTop: "0.6em" }}>
           {product.tags?.map((tag) => (
             <Chip
               style={{
-                backgroundColor: '#cce0ff',
-                border: 'none',
-                margin: '5px 2px',
+                backgroundColor: "#cce0ff",
+                border: "none",
+                margin: "5px 2px",
               }}
               label={tag}
               variant="outlined"
@@ -672,15 +672,15 @@ export default function Shopsetup(props) {
         item
         container
         direction="column"
-        style={{ marginTop: '1em' }}
+        style={{ marginTop: "1em" }}
         className={classes.root}
       >
         {/* Meet the Shop */}
         <Grid item>
-          <Typography variant="subtitle1"> {t['Meet The Shop']}</Typography>
+          <Typography variant="subtitle1"> {t["Meet The Shop"]}</Typography>
         </Grid>
         {/* Cards */}
-        <Grid item style={{ marginTop: '1em' }}>
+        <Grid item style={{ marginTop: "1em" }}>
           <Grid container>
             {/* Shop */}
             <Grid item md={4} xs={12}>
@@ -690,7 +690,7 @@ export default function Shopsetup(props) {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                style={{ padding: '2em' }}
+                style={{ padding: "2em" }}
                 spacing={1}
                 elevation={2}
               >
@@ -699,7 +699,7 @@ export default function Shopsetup(props) {
                   <img
                     src={
                       publicRuntimeConfig.backend +
-                      '/files/' +
+                      "/files/" +
                       product.shopId?.shopProfile
                     }
                     alt="profile"
@@ -711,7 +711,7 @@ export default function Shopsetup(props) {
                 <Grid item>
                   <Typography
                     align="center"
-                    style={{ fontSize: '1.3rem' }}
+                    style={{ fontSize: "1.3rem" }}
                     className={classes.label}
                   >
                     {product.shopId?.shopName}
@@ -727,22 +727,22 @@ export default function Shopsetup(props) {
                 <Grid item>
                   <div
                     style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <Link href={`/shop/${product.shopId?.id}`}>
                       <Button
                         variant="contained"
                         style={{
-                          backgroundColor: '#32a889',
-                          fontSize: '15px',
-                          marginRight: '5px',
-                          color: 'white',
+                          backgroundColor: "#32a889",
+                          fontSize: "15px",
+                          marginRight: "5px",
+                          color: "white",
                         }}
                       >
-                        {t['Visit now']}
+                        {t["Visit now"]}
                       </Button>
                     </Link>
                   </div>
@@ -755,7 +755,7 @@ export default function Shopsetup(props) {
 
       {/* footer */}
       <Grid item>
-        <Footer languageJson={t} />
+        <Footer {...props} languageJson={t} />
       </Grid>
     </Grid>
   );

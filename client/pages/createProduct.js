@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   Grid,
   useMediaQuery,
@@ -9,29 +9,29 @@ import {
   Divider,
   Snackbar,
   CircularProgress,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/styles";
 
-import Header from '../src/resusable/header';
-import Footer from '../src/resusable/footer';
-import Create from '../src/components/products/create';
-import CheckAuth from '../src/resusable/checkAuth';
+import Header from "../src/resusable/header";
+import Footer from "../src/resusable/footer";
+import Create from "../src/components/products/create";
+import CheckAuth from "../src/resusable/checkAuth";
 
-import { createProduct } from '../api/product/product';
+import { createProduct } from "../api/product/product";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '9em',
-    paddingRight: '9em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '3em',
-      paddingRight: '3em',
+    paddingLeft: "9em",
+    paddingRight: "9em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
     },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
 }));
@@ -41,27 +41,27 @@ export default function CreateShop(props) {
 
   const theme = useTheme();
   const router = useRouter();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
 
   const [loading, setLoading] = useState({
     active: false,
-    action: '',
+    action: "",
   });
   const [showToast, setShowToast] = useState({
     active: false,
-    message: '',
-    severity: '',
+    message: "",
+    severity: "",
   });
   const [product, setProduct] = useState({
-    title: '',
+    title: "",
     images: [],
-    details: '',
-    productCategory: '',
-    description: '',
-    price: '',
-    unit: '',
-    deliveryPrice: '',
+    details: "",
+    productCategory: "",
+    description: "",
+    price: "",
+    unit: "",
+    deliveryPrice: "",
     date: Date.now(),
     tags: [],
   });
@@ -69,26 +69,26 @@ export default function CreateShop(props) {
   const onSubmitHandler = async () => {
     ///Applying all validation
     if (
-      product.title === '' ||
-      product.productCategory === '' ||
-      product.description === '' ||
-      product.details === '' ||
-      product.price === '' ||
-      product.deliveryPrice === '' ||
+      product.title === "" ||
+      product.productCategory === "" ||
+      product.description === "" ||
+      product.details === "" ||
+      product.price === "" ||
+      product.deliveryPrice === "" ||
       product.tags.length <= 0
     ) {
       setShowToast({
         active: true,
-        message: t['Please fill all fields to continue'],
-        severity: 'error',
+        message: t["Please fill all fields to continue"],
+        severity: "error",
       });
       return;
     }
     if (product.images.length <= 0) {
       setShowToast({
         active: true,
-        message: t['Please upload product images to continue'],
-        severity: 'error',
+        message: t["Please upload product images to continue"],
+        severity: "error",
       });
       return;
     }
@@ -96,53 +96,53 @@ export default function CreateShop(props) {
     try {
       setLoading({
         active: true,
-        action: 'submit',
+        action: "submit",
       });
       const response = await createProduct(props.userToken, product);
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShowToast({
           active: true,
-          message: 'Done',
-          severity: 'success',
+          message: "Done",
+          severity: "success",
         });
         //router.push(props.user.shop.shopName + '/' + result.data.doc.title);
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to Create Product'],
-          severity: 'error',
+          message: t["Failed to Create Product"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err.response.data.error);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
         message: err?.response?.data?.error
           ? err.response.data.error
-          : t['Something went wrong'],
-        severity: 'error',
+          : t["Something went wrong"],
+        severity: "error",
       });
     }
   };
 
   const handleToastClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     setShowToast({
       active: false,
-      message: '',
-      severity: '',
+      message: "",
+      severity: "",
     });
   };
   return (
@@ -165,7 +165,7 @@ export default function CreateShop(props) {
           item
           container
           justify="flex-end"
-          style={{ marginTop: matchesSM ? '1em' : '1.5em' }}
+          style={{ marginTop: matchesSM ? "1em" : "1.5em" }}
           className={classes.root}
         >
           <Button
@@ -173,17 +173,17 @@ export default function CreateShop(props) {
             size="small"
             style={{
               background: theme.palette.common.primary,
-              padding: '5px 30px',
-              marginRight: '1em',
+              padding: "5px 30px",
+              marginRight: "1em",
             }}
             onClick={onSubmitHandler}
-            disabled={loading.active && loading.action === 'submit'}
+            disabled={loading.active && loading.action === "submit"}
           >
-            <Typography variant="h6" style={{ color: '#fff' }}>
-              {loading.active && loading.action === 'submit' ? (
+            <Typography variant="h6" style={{ color: "#fff" }}>
+              {loading.active && loading.action === "submit" ? (
                 <CircularProgress />
               ) : (
-                t['Save']
+                t["Save"]
               )}
             </Typography>
           </Button>
@@ -191,8 +191,8 @@ export default function CreateShop(props) {
             variant="outlined"
             size="small"
             style={{
-              backgroundColor: 'transparent',
-              padding: '5px 30px',
+              backgroundColor: "transparent",
+              padding: "5px 30px",
             }}
           >
             <Typography
@@ -202,20 +202,20 @@ export default function CreateShop(props) {
                 borderColor: theme.palette.common.primary,
               }}
             >
-              {t['Close']}
+              {t["Close"]}
             </Typography>
           </Button>
         </Grid>
         {/* Divider */}
-        <Grid item style={{ marginTop: '1em' }}>
+        <Grid item style={{ marginTop: "1em" }}>
           <Divider
-            style={{ color: theme.palette.common.darkBlack, height: '3px' }}
+            style={{ color: theme.palette.common.darkBlack, height: "3px" }}
           />
         </Grid>
         {/* Form */}
         <Grid
           item
-          style={{ marginTop: '2em', marginBottom: '2em' }}
+          style={{ marginTop: "2em", marginBottom: "2em" }}
           className={classes.root}
         >
           <Create
@@ -227,7 +227,7 @@ export default function CreateShop(props) {
           />
         </Grid>
         <Grid item>
-          <Footer languageJson={t} />
+          <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>
     </CheckAuth>

@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import getConfig from 'next/config';
+import React, { useState, useEffect } from "react";
+import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Snackbar, Paper, Button } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Typography, Snackbar, Paper, Button } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
-import CreateIcon from '@material-ui/icons/Create';
+import CreateIcon from "@material-ui/icons/Create";
 
-import Dialog from '../../src/components/shopSetting/Dialog';
-import ShopNameDialog from '../../src/components/shopSetting/ShopNameDialog';
+import Dialog from "../../src/components/shopSetting/Dialog";
+import ShopNameDialog from "../../src/components/shopSetting/ShopNameDialog";
 
-import Header from '../../src/resusable/header';
-import Footer from '../../src/resusable/footer';
-import RenderProducts from '../../src/resusable/renderProducts';
+import Header from "../../src/resusable/header";
+import Footer from "../../src/resusable/footer";
+import RenderProducts from "../../src/resusable/renderProducts";
 
 import {
   updateShopCover,
   updateShopData,
   updateShopProfile,
-} from '../../api/shop/shopSettings';
-import { getMyShop, getShopById } from '../../api/shop/shop';
-import { getProductByShop } from '../../api/product/product';
-import Link from 'next/link';
-import CheckAuth from '../../src/resusable/checkAuth';
+} from "../../api/shop/shopSettings";
+import { getMyShop, getShopById } from "../../api/shop/shop";
+import { getProductByShop } from "../../api/product/product";
+import Link from "next/link";
+import CheckAuth from "../../src/resusable/checkAuth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(4),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   },
 }));
@@ -46,24 +46,24 @@ export default function Shopsetup(props) {
   const classes = useStyles();
   const [products, setProducts] = useState([]);
   const [shop, setShop] = useState({
-    shopName: 'Shop Name here',
-    shopDescription: 'Shop description here',
+    shopName: "Shop Name here",
+    shopDescription: "Shop description here",
     shopProfile: `defaultShop.png`,
-    shopCover: '',
+    shopCover: "",
   });
   const [loading, setLoading] = useState({
     active: false,
-    action: '',
+    action: "",
   });
   const [showToast, setShowToast] = useState({
     active: false,
-    message: '',
-    severity: '',
+    message: "",
+    severity: "",
   });
   const [manager, setManager] = useState(
     props.user &&
       props.user?.roles &&
-      props.user?.roles.some((x) => x.name === 'Manager')
+      props.user?.roles.some((x) => x.name === "Manager")
   );
 
   useEffect(async () => {
@@ -72,7 +72,7 @@ export default function Shopsetup(props) {
         await findShopData(props.userToken);
         await getProducts(props.user.shop._id);
       } else {
-        console.log(router.query.id, '--------------');
+        console.log(router.query.id, "--------------");
         await findShopData(router.query.id);
         await getProducts(router.query.id);
       }
@@ -84,41 +84,41 @@ export default function Shopsetup(props) {
     try {
       setLoading({
         active: true,
-        action: 'shopCover',
+        action: "shopCover",
       });
       const response = await updateShopCover(props.userToken, selected);
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShop({
           ...shop,
           shopCover: `${result.data.doc.shopCover}`,
         });
         setShowToast({
           active: true,
-          message: t['Shop Cover Updated Successfully'],
-          severity: 'success',
+          message: t["Shop Cover Updated Successfully"],
+          severity: "success",
         });
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to upload Banner Image'],
-          severity: 'error',
+          message: t["Failed to upload Banner Image"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Something went wrong'],
-        severity: 'error',
+        message: t["Something went wrong"],
+        severity: "error",
       });
     }
   };
@@ -128,86 +128,86 @@ export default function Shopsetup(props) {
     try {
       setLoading({
         active: true,
-        action: 'shopProfile',
+        action: "shopProfile",
       });
       const response = await updateShopProfile(props.userToken, selected);
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShop({
           ...shop,
           shopProfile: result.data.doc.shopProfile,
         });
         setShowToast({
           active: true,
-          message: t['Shop Profile Updated Successfully'],
-          severity: 'success',
+          message: t["Shop Profile Updated Successfully"],
+          severity: "success",
         });
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to upload Profile Image'],
-          severity: 'error',
+          message: t["Failed to upload Profile Image"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Invalid file type'],
-        severity: 'error',
+        message: t["Invalid file type"],
+        severity: "error",
       });
     }
   };
   const shopDataSubmitHandler = async () => {
-    if (shop.shopName === '' || shop.shopDescription === '') {
+    if (shop.shopName === "" || shop.shopDescription === "") {
       setShowToast({
         active: true,
-        message: t['Invalid Data'],
-        severity: 'error',
+        message: t["Invalid Data"],
+        severity: "error",
       });
     }
     try {
       setLoading({
         active: true,
-        action: 'shopData',
+        action: "shopData",
       });
       const response = await updateShopData(props.userToken, shop);
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShowToast({
           active: true,
-          message: t['Shop data Updated Successfully'],
-          severity: 'success',
+          message: t["Shop data Updated Successfully"],
+          severity: "success",
         });
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to Update Shop Data'],
-          severity: 'error',
+          message: t["Failed to Update Shop Data"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Something went wrong'],
-        severity: 'error',
+        message: t["Something went wrong"],
+        severity: "error",
       });
     }
   };
@@ -216,7 +216,7 @@ export default function Shopsetup(props) {
     try {
       setLoading({
         active: true,
-        action: 'page',
+        action: "page",
       });
       let response = null;
       if (manager) {
@@ -227,40 +227,40 @@ export default function Shopsetup(props) {
 
       let result = await response.json();
 
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setShop(result.data.doc);
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (e) {
       console.log(e.message);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Failed to Load Shop Data'],
-        severity: 'error',
+        message: t["Failed to Load Shop Data"],
+        severity: "error",
       });
     }
   };
 
   const addProducts = () => {
-    router.push('/createProduct');
+    router.push("/createProduct");
   };
 
   const handleToastClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     setShowToast({
       active: false,
-      message: '',
-      severity: '',
+      message: "",
+      severity: "",
     });
   };
 
@@ -268,7 +268,7 @@ export default function Shopsetup(props) {
     try {
       let response = await getProductByShop(shopId);
       let result = await response.json();
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setProducts(result.data.doc);
       }
     } catch (e) {
@@ -276,15 +276,15 @@ export default function Shopsetup(props) {
 
       setShowToast({
         active: true,
-        message: t['Failed to Load Products'],
-        severity: 'error',
+        message: t["Failed to Load Products"],
+        severity: "error",
       });
     }
   };
 
   return (
     <Grid container direction="column">
-      <Grid item>
+      <Grid item container>
         <Header {...props} languageJson={t} />
       </Grid>
       <Snackbar
@@ -301,12 +301,12 @@ export default function Shopsetup(props) {
           // className={classes.paper}
           style={{
             backgroundImage: `url(${publicRuntimeConfig.backend}/files/${shop.shopCover})`,
-            backgroundColor: shop.shopCover ? null : '#edf1f7',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            height: '192px',
-            width: '100%',
-            marginBottom: '60px',
+            backgroundColor: shop.shopCover ? null : "#edf1f7",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            height: "192px",
+            width: "100%",
+            marginBottom: "60px",
             // width: "1328px",
           }}
           xs={12}
@@ -317,26 +317,26 @@ export default function Shopsetup(props) {
         >
           <Paper
             style={{
-              height: '192px',
-              width: '387px',
-              margin: '0 auto',
-              backgroundColor: 'transparent',
-              backgroundSize: 'cover',
-              border: 'none',
+              height: "192px",
+              width: "387px",
+              margin: "0 auto",
+              backgroundColor: "transparent",
+              backgroundSize: "cover",
+              border: "none",
             }}
             elevation={manager && !shop.shopCover ? 1 : 0}
           >
             <div
               // className={classes.paper}
               style={{
-                position: 'absolute',
-                height: '113px',
-                width: '358px',
-                margin: '10px 15px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'transparent',
+                position: "absolute",
+                height: "113px",
+                width: "358px",
+                margin: "10px 15px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "transparent",
                 opacity: 0.8,
               }}
             >
@@ -347,7 +347,7 @@ export default function Shopsetup(props) {
                       onChange={bannerImageChangeHandler}
                       accept="image/*"
                       className={classes.input}
-                      style={{ display: 'none' }}
+                      style={{ display: "none" }}
                       id="raised-button-file"
                       type="file"
                     />
@@ -356,9 +356,9 @@ export default function Shopsetup(props) {
                         variant="raised"
                         component="span"
                         className={classes.button}
-                        style={{ backgroundColor: '#3d3030', color: 'white' }}
+                        style={{ backgroundColor: "#3d3030", color: "white" }}
                       >
-                        {t['Upload Banner']}
+                        {t["Upload Banner"]}
                       </Button>
                     </label>
 
@@ -367,21 +367,21 @@ export default function Shopsetup(props) {
                     </Typography>
                   </div>
                 ) : null}
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: "relative" }}>
                   <img
                     style={{
-                      position: manager ? 'absolute' : 'relative',
-                      borderRadius: '50%',
-                      marginTop: manager ? '40px' : null,
-                      marginLeft: manager ? '35px' : null,
+                      position: manager ? "absolute" : "relative",
+                      borderRadius: "50%",
+                      marginTop: manager ? "40px" : null,
+                      marginLeft: manager ? "35px" : null,
 
-                      top: manager ? null : '125px',
-                      border: '1px solid gray',
+                      top: manager ? null : "125px",
+                      border: "1px solid gray",
                     }}
                     width="100px"
                     height="100px"
                     src={
-                      publicRuntimeConfig.backend + '/files/' + shop.shopProfile
+                      publicRuntimeConfig.backend + "/files/" + shop.shopProfile
                     }
                   />
                 </div>
@@ -389,17 +389,17 @@ export default function Shopsetup(props) {
                 {manager ? (
                   <div
                     style={{
-                      position: 'absolute',
-                      marginTop: '108px',
-                      marginLeft: '112px',
+                      position: "absolute",
+                      marginTop: "108px",
+                      marginLeft: "112px",
                     }}
                   >
-                    <div style={{ display: 'none' }}>
+                    <div style={{ display: "none" }}>
                       <input
                         onChange={profileImageChangeHandler}
                         accept="image/*"
                         className={classes.input}
-                        style={{ display: 'none' }}
+                        style={{ display: "none" }}
                         id="raised-button-file1"
                         multiple
                         type="file"
@@ -408,12 +408,12 @@ export default function Shopsetup(props) {
                     <label htmlFor="raised-button-file1">
                       <CreateIcon
                         style={{
-                          color: '#305085',
-                          fontSize: '25px',
-                          backgroundColor: '#fff',
-                          border: '1px solid #000',
+                          color: "#305085",
+                          fontSize: "25px",
+                          backgroundColor: "#fff",
+                          border: "1px solid #000",
                           borderRadius: 50,
-                          cursor: 'pointer',
+                          cursor: "pointer",
                         }}
                       />
                     </label>
@@ -435,20 +435,20 @@ export default function Shopsetup(props) {
           {manager ? (
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '10px 0',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "10px 0",
               }}
             >
-              <CreateIcon style={{ color: '#305085', fontSize: '15px' }} />
+              <CreateIcon style={{ color: "#305085", fontSize: "15px" }} />
               <ShopNameDialog
                 shop={shop}
                 setShop={setShop}
                 shopDataSubmitHandler={shopDataSubmitHandler}
-                loading={loading.active && loading.action === 'shopData'}
+                loading={loading.active && loading.action === "shopData"}
                 languageJson={t}
-              />{' '}
+              />{" "}
             </div>
           ) : null}
         </Typography>
@@ -457,18 +457,18 @@ export default function Shopsetup(props) {
         {manager ? (
           <Paper
             style={{
-              height: '200px',
-              margin: '20px 50px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              border: '1px solid grey',
-              cursor: 'pointer',
+              height: "200px",
+              margin: "20px 50px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "1px solid grey",
+              cursor: "pointer",
             }}
             onClick={addProducts}
           >
             <Link href="/createProduct">
-              <Typography>{t['Add Products']} </Typography>
+              <Typography>{t["Add Products"]} </Typography>
             </Link>
           </Paper>
         ) : null}
@@ -477,7 +477,7 @@ export default function Shopsetup(props) {
         item
         container
         xs={12}
-        style={{ marginTop: '1em', marginBottom: '1em' }}
+        style={{ marginTop: "1em", marginBottom: "1em" }}
       >
         <RenderProducts products={products} />
       </Grid>
