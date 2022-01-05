@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import {
   Grid,
   useMediaQuery,
@@ -141,12 +143,15 @@ export default function Create(props) {
       setProduct((pro) => {
         return {
           ...pro,
-          images: files.map((x) => {
-            return {
-              img: x,
-              new: true,
-            };
-          }),
+          images: [
+            ...pro.images,
+            ...files.map((x) => {
+              return {
+                img: x,
+                new: true,
+              };
+            }),
+          ],
         };
       });
     }
@@ -237,7 +242,9 @@ export default function Create(props) {
                       src={
                         product.images[0].new === true
                           ? URL.createObjectURL(product.images[0].img)
-                          : product.images[0].img
+                          : publicRuntimeConfig.backend +
+                            '/files/' +
+                            product.images[0].img
                       }
                       style={{ width: '100%', height: '400px' }}
                     />
@@ -391,8 +398,10 @@ export default function Create(props) {
                                       <img
                                         src={
                                           item.new === true
-                                            ? URL.createObjectURL(item)
-                                            : item.img
+                                            ? URL.createObjectURL(item.img)
+                                            : publicRuntimeConfig.backend +
+                                              '/files/' +
+                                              item.img
                                         }
                                         style={{
                                           width: '100%',

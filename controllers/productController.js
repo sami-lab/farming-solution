@@ -52,7 +52,7 @@ exports.delete = catchAsync(async (req, res, next) => {
   if (!doc) return next(new AppError('Requested Id not found', 404));
 
   deleteFiles(
-    product.images.map((x) => `/public/files/${x}`),
+    product.images.map((x) => `${__dirname}/../public/files/${x}`),
     function (err) {
       if (err) {
         console.log(
@@ -62,7 +62,7 @@ exports.delete = catchAsync(async (req, res, next) => {
       }
     }
   );
-  res.status(204).json({
+  res.status(200).json({
     status: 'success',
     data: 'deleted Successfully',
   });
@@ -82,6 +82,10 @@ exports.update = catchAsync(async (req, res, next) => {
     'newImagesIndex',
     'deletedImages'
   );
+  filterBody.tags = JSON.parse(filterBody.tags);
+  filterBody.images = JSON.parse(filterBody.images);
+  filterBody.newImagesIndex = JSON.parse(filterBody.newImagesIndex);
+  filterBody.deletedImages = JSON.parse(filterBody.deletedImages);
 
   //if new images are uploaded
   if (req.files && req.files.newImages) {
