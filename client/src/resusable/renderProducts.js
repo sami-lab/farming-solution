@@ -80,7 +80,7 @@ export default function RenderProducts(props) {
                       }}
                     >
                       by{' '}
-                      <Link href={`/shop/${item.shopId?._id}`}>
+                      <Link href={`/shop/${item.shop?._id}`}>
                         <a style={{ textDecoration: 'none', color: '#615f5c' }}>
                           {item.shop?.shopName}
                         </a>

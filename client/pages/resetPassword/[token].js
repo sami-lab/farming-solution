@@ -12,7 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import AuthHeader from '../../src/resusable/authHeader';
-import AuthFooter from '../../src/resusable/authFooter';
+import AuthFooter from '../../src/resusable/footer';
 import ResetPassword from '../../src/components/authentication/resetPassword';
 
 const useStyles = makeStyles((theme) => ({

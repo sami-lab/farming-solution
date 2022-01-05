@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import SignUpForm from '../src/components/authentication/signup';
 import AuthHeader from '../src/resusable/authHeader';
-import AuthFooter from '../src/resusable/authFooter';
+import AuthFooter from '../src/resusable/footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {

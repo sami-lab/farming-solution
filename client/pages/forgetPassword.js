@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ForgetPasswordForm from '../src/components/authentication/forgetPassword';
 import AuthHeader from '../src/resusable/authHeader';
-import AuthFooter from '../src/resusable/authFooter';
+import AuthFooter from '../src/resusable/footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {

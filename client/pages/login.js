@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import LoginForm from '../src/components/authentication/login';
 import AuthHeader from '../src/resusable/authHeader';
-import AuthFooter from '../src/resusable/authFooter';
+import AuthFooter from '../src/resusable/footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,9 +128,9 @@ export default function Login(props) {
           </Grid>
         </Grid>
       </Grid>
-      <div style={{ marginTop: '2em' }}>
+      <Grid container style={{ marginTop: '5em' }}>
         <AuthFooter languageJson={t} />
-      </div>
+      </Grid>
     </>
   );
 }
