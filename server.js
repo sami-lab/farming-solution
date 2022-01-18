@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 const app = require('./app');
+const { createDefaultRoles } = require('./controllers/rolesController');
+const { signUpAdmin } = require('./controllers/authController');
 
 process.on('uncaughtException', (err) => {
   console.log(err.name, err.message);
@@ -25,7 +27,12 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('DB connection Success'))
+  .then(async () => {
+    console.log('DB connection Success');
+    await createDefaultRoles(['Admin', 'User']);
+    await signUpAdmin();
+    console.log('Default data success');
+  })
   .catch((err) => console.log(err));
 
 const port = process.env.PORT || 3000;

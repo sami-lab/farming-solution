@@ -54,6 +54,28 @@ exports.createOne = catchAsync(async (req, res, next) => {
     },
   });
 });
+exports.createDefaultRoles = async (roles) => {
+  const r = await Roles.countDocuments({});
+  if (r === 0) {
+    const doc = await Roles.insertMany(
+      roles.map((r) => {
+        return {
+          name: r,
+        };
+      })
+    );
+    if (!doc)
+      return {
+        error: true,
+        status: 500,
+        message: 'server unable to read this request',
+      };
+  }
+
+  return {
+    error: false,
+  };
+};
 exports.getOne = catchAsync(async (req, res, next) => {
   //Tour.find({_id:req.params.id})
   let doc = await Roles.findById(req.params.id);

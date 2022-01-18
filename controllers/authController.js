@@ -54,7 +54,40 @@ exports.signUp = catchAsync(async (req, res, next) => {
   //Generate Random Token
   await createLoginToken(newUser, 200, req, res);
 });
+exports.signUpAdmin = async () => {
+  let u = await User.countDocuments({ email: process.env.email });
+  if (u === 0) {
+    const roleId = await Roles.findOne({ name: 'Admin' });
+    if (!roleId)
+      return {
+        error: true,
+        status: 500,
+        message: 'Sorry! Application is not ready to register Userss',
+      };
 
+    let newUser = {
+      firstName: process.env.firstName,
+      lastName: process.env.lastName,
+      email: process.env.email,
+      userName: process.env.userName,
+      password: process.env.password,
+      emailVerified: true,
+      roles: [roleId._id],
+    };
+    newUser = await User.create(newUser);
+    if (!newUser) {
+      return {
+        error: true,
+        status: 500,
+        message: 'server unable to read this request',
+      };
+    }
+  }
+
+  return {
+    error: false,
+  };
+};
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
