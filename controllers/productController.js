@@ -1,11 +1,11 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
-const Product = require('../Models/product');
-const Category = require('../Models/category');
+const Product = require("../Models/product");
+const Order = require("../Models/order");
+const Category = require("../Models/category");
 
-const fs = require('fs');
-const { ObjectId } = require('mongodb');
+const fs = require("fs");
 
 exports.decode = (req, res, next) => {
   //req.body.compatibleWith = JSON.parse(req.body.compatibleWith);
@@ -13,7 +13,7 @@ exports.decode = (req, res, next) => {
   //req.body.images = JSON.parse(req.body.images);
   //next();
   res.status(200).json({
-    status: 'success',
+    status: "success",
     body: req.body,
     files: req.files,
   });
@@ -33,7 +33,7 @@ function deleteFiles(files, callback) {
     fs.unlink(f, function (err) {
       if (err) callback(err);
       else {
-        console.log(f + ' deleted.');
+        console.log(f + " deleted.");
         deleteFiles(files, callback);
       }
     });
@@ -42,45 +42,46 @@ function deleteFiles(files, callback) {
 exports.delete = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
-  if (!product) return next(new AppError('Requested Id not found', 404));
+  if (!product) return next(new AppError("Requested Id not found", 404));
   //means some wrong move by mislead user
 
   if (!product.shopId.equals(req.user.shop._id)) {
-    return next(new AppError('Access Denied ', 403));
+    return next(new AppError("Access Denied ", 403));
   }
   const doc = await Product.findByIdAndDelete(req.params.id);
-  if (!doc) return next(new AppError('Requested Id not found', 404));
+  if (!doc) return next(new AppError("Requested Id not found", 404));
+  await Order.deleteMany({ productId: doc._id });
 
   deleteFiles(
     product.images.map((x) => `${__dirname}/../public/files/${x}`),
     function (err) {
       if (err) {
         console.log(
-          'Product images not deleted',
-          product.id + ' : ' + product.title
+          "Product images not deleted",
+          product.id + " : " + product.title
         );
       }
     }
   );
   res.status(200).json({
-    status: 'success',
-    data: 'deleted Successfully',
+    status: "success",
+    data: "deleted Successfully",
   });
 });
 exports.update = catchAsync(async (req, res, next) => {
   const filterBody = filterObj(
     req.body,
-    'title',
-    'productCategory',
-    'description',
-    'details',
-    'price',
-    'unit',
-    'deliveryPrice',
-    'tags',
-    'images',
-    'newImagesIndex',
-    'deletedImages'
+    "title",
+    "productCategory",
+    "description",
+    "details",
+    "price",
+    "unit",
+    "deliveryPrice",
+    "tags",
+    "images",
+    "newImagesIndex",
+    "deletedImages"
   );
   filterBody.tags = JSON.parse(filterBody.tags);
   filterBody.images = JSON.parse(filterBody.images);
@@ -105,7 +106,7 @@ exports.update = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  if (!doc) return next(new AppError('requested Id not found', 404));
+  if (!doc) return next(new AppError("requested Id not found", 404));
 
   //deleting images that is deleted
   if (filterBody.deletedImages && filterBody.deletedImages.length > 0) {
@@ -114,15 +115,15 @@ exports.update = catchAsync(async (req, res, next) => {
       function (err) {
         if (err) {
           console.log(
-            'Product images not deleted',
-            req.params.id + ' : ' + filterBody.title
+            "Product images not deleted",
+            req.params.id + " : " + filterBody.title
           );
         }
       }
     );
   }
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       doc,
     },
@@ -132,14 +133,14 @@ exports.update = catchAsync(async (req, res, next) => {
 exports.createOne = catchAsync(async (req, res, next) => {
   const filterBody = filterObj(
     req.body,
-    'title',
-    'productCategory',
-    'description',
-    'details',
-    'price',
-    'unit',
-    'deliveryPrice',
-    'tags'
+    "title",
+    "productCategory",
+    "description",
+    "details",
+    "price",
+    "unit",
+    "deliveryPrice",
+    "tags"
   );
   if (req.files && req.files.images)
     filterBody.images = req.files.images.map((item) => item.filename);
@@ -148,7 +149,7 @@ exports.createOne = catchAsync(async (req, res, next) => {
   const doc = await Product.create(filterBody);
 
   res.status(201).json({
-    status: 'success',
+    status: "success",
     data: {
       doc,
     },
@@ -157,29 +158,29 @@ exports.createOne = catchAsync(async (req, res, next) => {
 
 exports.getProductByName = catchAsync(async (req, res, next) => {
   let doc = await Product.findOne({ title: req.params.productName }).populate(
-    'shopId'
+    "shopId"
   );
-  if (!doc) return next(new AppError('requested Product not found', 404));
+  if (!doc) return next(new AppError("requested Product not found", 404));
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: { doc },
   });
 });
 exports.getOne = catchAsync(async (req, res, next) => {
-  let doc = await Product.findById(req.params.id).populate('shopId');
-  if (!doc) return next(new AppError('requested Id not found', 404));
+  let doc = await Product.findById(req.params.id).populate("shopId");
+  if (!doc) return next(new AppError("requested Id not found", 404));
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: { doc },
   });
 });
 exports.getAll = catchAsync(async (req, res, next) => {
-  const doc = await Product.find().populate('shopId');
+  const doc = await Product.find().populate("shopId");
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     result: doc.length,
     data: { doc },
   });
@@ -189,10 +190,10 @@ exports.getAll = catchAsync(async (req, res, next) => {
 exports.getAllProductsCategories = catchAsync(async (req, res, next) => {
   const doc = await Product.find({
     productCategory: req.params.category,
-  }).populate('shopId');
+  }).populate("shopId");
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     result: doc.length,
     data: { doc },
   });
@@ -200,7 +201,7 @@ exports.getAllProductsCategories = catchAsync(async (req, res, next) => {
 
 //Get all Products of my shop
 exports.getMyProducts = catchAsync(async (req, res, next) => {
-  if (req.user.roles.filter((role) => role.name === 'Manager')) {
+  if (req.user.roles.filter((role) => role.name === "Manager")) {
     req.params.shop = req.user.id;
   }
   next();
@@ -215,10 +216,10 @@ exports.getAllProductofShop = catchAsync(async (req, res, next) => {
   //All Products with
   const doc = await Product.find({
     shopId: req.params.shopId,
-  }).populate('shopId');
+  }).populate("shopId");
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     result: doc.length,
     data: { doc },
   });
@@ -226,24 +227,24 @@ exports.getAllProductofShop = catchAsync(async (req, res, next) => {
 //Get recent Products
 exports.recentproduct = catchAsync(async (req, res, next) => {
   const Graphics = await Product.find({
-    productCategory: 'Graphics',
+    productCategory: "Graphics",
   })
-    .populate('shopId')
+    .populate("shopId")
     .sort({ date: -1 })
     .limit(4);
 
   const Fonts = await Product.find({
-    productCategory: 'Fonts',
+    productCategory: "Fonts",
   })
-    .populate('shopId')
+    .populate("shopId")
     .sort({ date: -1 })
     .limit(4);
 
-  const products = await Product.find({}).populate('shopId').limit(3);
+  const products = await Product.find({}).populate("shopId").limit(3);
   const categories = await Category.find().limit(7);
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       products,
       Graphics,
@@ -259,39 +260,39 @@ exports.recentproducts = catchAsync(async (req, res, next) => {
     { $sort: { date: -1 } },
     {
       $group: {
-        _id: '$productCategory',
-        products: { $push: '$$ROOT' },
+        _id: "$productCategory",
+        products: { $push: "$$ROOT" },
       },
     },
     {
       $project: {
-        products: { $slice: ['$products', 4] },
+        products: { $slice: ["$products", 4] },
       },
     },
     {
       $lookup: {
-        from: 'shops',
-        localField: 'products.shopId',
-        foreignField: '_id',
-        as: 'shop',
+        from: "shops",
+        localField: "products.shopId",
+        foreignField: "_id",
+        as: "shop",
       },
     },
     {
       $project: {
         products: {
           $map: {
-            input: '$products',
+            input: "$products",
             in: {
               $mergeObjects: [
-                '$$this',
+                "$$this",
                 {
                   shop: {
                     $arrayElemAt: [
                       {
                         $filter: {
-                          input: '$shop',
-                          as: 's',
-                          cond: { $eq: ['$$s._id', '$$this.shopId'] },
+                          input: "$shop",
+                          as: "s",
+                          cond: { $eq: ["$$s._id", "$$this.shopId"] },
                         },
                       },
                       0,
@@ -308,7 +309,7 @@ exports.recentproducts = catchAsync(async (req, res, next) => {
   //await Shop.populate(doc, { path: 'shopId' });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
 
     data: { products: doc, categories: categories },
   });

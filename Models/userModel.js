@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const Roles = require('./roles');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const Roles = require("./roles");
 
 var UserSchema = mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: [true, 'A User must have a first Name'],
+      required: [true, "A User must have a first Name"],
       trim: true,
     },
     lastName: {
@@ -20,18 +20,18 @@ var UserSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'A User must have an email'],
+      required: [true, "A User must have an email"],
       unique: true,
       lowercase: true,
-      validate: [validator.isEmail, 'Please Provide a Valid Email'],
+      validate: [validator.isEmail, "Please Provide a Valid Email"],
     },
     userName: {
       type: String,
-      required: [true, 'A User must have a username'],
+      required: [true, "A User must have a username"],
     },
     zipCode: {
       type: String,
-      validate: [validator.isURL, 'Please Provide a Valid Website URL'],
+      // validate: [validator.isURL, 'Please Provide a Valid Website URL'],
     },
     address: {
       type: String,
@@ -52,10 +52,10 @@ var UserSchema = mongoose.Schema(
 
     password: {
       type: String,
-      required: [true, 'A User must have a Password'],
+      required: [true, "A User must have a Password"],
       minlength: [
         5,
-        'A User Password must have more or equal then 5 characters',
+        "A User Password must have more or equal then 5 characters",
       ],
       select: false,
     },
@@ -67,12 +67,12 @@ var UserSchema = mongoose.Schema(
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Roles',
+        ref: "Roles",
         validate: {
           validator: async function (v) {
             return await Roles.findById(v, (err, rec) => rec !== null);
           },
-          message: 'Invalid Object ID',
+          message: "Invalid Object ID",
         },
         required: true,
       },
@@ -87,9 +87,9 @@ var UserSchema = mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function (next) {
   //hashing password
-  if (!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.confirmPassword = undefined;
   next();
@@ -113,14 +113,14 @@ UserSchema.methods.changedPasswordAfter = function (JWTtimestamp) {
   return false; //Not Changed
 };
 UserSchema.methods.createResetPasswordToken = function () {
-  const resetToken = crypto.randomBytes(32).toString('hex');
+  const resetToken = crypto.randomBytes(32).toString("hex");
   this.passwordResetToken = crypto
-    .createHash('Sha256')
+    .createHash("Sha256")
     .update(resetToken)
-    .digest('hex');
+    .digest("hex");
   this.passwordResetExpires = Date.now() + 60 * 60 * 1000;
   return resetToken;
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 module.exports = User;

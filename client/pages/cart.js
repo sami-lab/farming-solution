@@ -290,7 +290,7 @@ export default function Cart(props) {
             </Grid>
           </Grid>
         )}
-        <Grid item style={{ marginTop: "2em" }}>
+        <Grid item style={{ marginTop: "12em" }}>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>

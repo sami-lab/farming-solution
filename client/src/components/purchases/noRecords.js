@@ -1,5 +1,6 @@
-import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import React from "react";
+import { Grid, Typography } from "@material-ui/core";
+
 export default function noRecords(props) {
   const t = props.languageJson;
 
@@ -8,24 +9,24 @@ export default function noRecords(props) {
       container
       direction="column"
       alignItems="center"
-      style={{ marginTop: '5em' }}
+      style={{ marginTop: "5em" }}
     >
       <Grid item>
         <Typography
           variant="subtitle2"
           component="h1"
           style={{
-            textAlign: 'center',
+            textAlign: "center",
             fontWeight: 700,
           }}
         >
-          {t['NO PURCHASE FOUND']}
+          {t["NO PURCHASE FOUND"]}
         </Typography>
-        <Grid item style={{ marginTop: '2em' }}>
+        <Grid item style={{ marginTop: "2em" }}>
           <Typography
             variant="h1"
             style={{
-              textAlign: 'center',
+              textAlign: "center",
             }}
           >
             {t["More Products You'll Love"]}
@@ -35,7 +36,7 @@ export default function noRecords(props) {
           <Typography
             variant="subtitle1"
             style={{
-              textAlign: 'center',
+              textAlign: "center",
             }}
           >
             {t["Didn't find what you are looking for?"]}
@@ -43,10 +44,10 @@ export default function noRecords(props) {
           <Typography
             variant="subtitle1"
             style={{
-              textAlign: 'center',
+              textAlign: "center",
             }}
           >
-            {t['Check out these popular products.']}
+            {t["Check out these popular products."]}
           </Typography>
         </Grid>
       </Grid>

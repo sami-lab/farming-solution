@@ -14,6 +14,7 @@ import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/styles";
 import { Search } from "@material-ui/icons";
 
+import RenderProducts from "../src/resusable/renderProducts";
 import Purchases from "../src/components/purchases/purchases";
 import NoRecords from "../src/components/purchases/noRecords";
 import Header from "../src/resusable/header";
@@ -117,9 +118,6 @@ export default function Purchase(props) {
     return <Loading />;
   }
 
-  console.log(
-    purchasings.filter((x) => x.productId.title.includes(searchPurchase))
-  );
   return (
     <CheckAuth {...props}>
       <Grid container direction="column">
@@ -210,10 +208,24 @@ export default function Purchase(props) {
               languageJson={t}
             />
           ) : (
-            <NoRecords languageJson={t} />
+            <>
+              <NoRecords languageJson={t} products={props.products} />
+              {props.products && props.products.length > 0 && (
+                <Grid item container style={{ marginTop: "2em" }}>
+                  <RenderProducts
+                    products={props.products.flatMap((x) =>
+                      x.products.map((p) => p)
+                    )}
+                    md={2}
+                    sm={4}
+                    xs={6}
+                  />
+                </Grid>
+              )}
+            </>
           )}
         </Grid>
-        <Grid item style={{ marginTop: "2em" }}>
+        <Grid item style={{ marginTop: "12em" }}>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>
