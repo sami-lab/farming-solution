@@ -262,7 +262,7 @@ export default function CreateShop(props) {
             >
               {t["Find your niche within our categories"]}
             </p>
-            <Categories categories={sample} languageJson={t} />
+            <Categories categories={props.categories} languageJson={t} />
           </Grid>
         </Grid>
 
@@ -294,7 +294,7 @@ export default function CreateShop(props) {
               >
                 {
                   t[
-                    "Our community of producers share their stories about how Creative Market helps them spend more time doing what they love."
+                    "Our community of producers share their stories about how Farming Solutions helps them spend more time doing what they love."
                   ]
                 }
               </Typography>

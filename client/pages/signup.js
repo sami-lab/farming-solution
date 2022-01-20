@@ -1,50 +1,50 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
-import Link from 'next/link';
+import Link from "next/link";
 import {
   Grid,
   Typography,
   Hidden,
   useMediaQuery,
   useTheme,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import SignUpForm from '../src/components/authentication/signup';
-import AuthHeader from '../src/resusable/authHeader';
-import AuthFooter from '../src/resusable/footer';
+import SignUpForm from "../src/components/authentication/signup";
+import AuthHeader from "../src/resusable/authHeader";
+import AuthFooter from "../src/resusable/footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: '3.5em',
-    paddingLeft: '10em',
-    paddingRight: '10em',
+    paddingTop: "3.5em",
+    paddingLeft: "10em",
+    paddingRight: "10em",
 
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '1em',
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "1em",
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   ruled: {
-    width: '100%',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e9ee',
+    width: "100%",
+    textAlign: "center",
+    borderBottom: "1px solid #e2e9ee",
     lineHeight: 0,
-    color: '#899298',
+    color: "#899298",
   },
 }));
 
 export default function SignUp(props) {
   const t = props.languageJson;
   const router = useRouter();
-  if (props.user !== null && props.userToken !== null) router.push('/');
+  if (props.user !== null && props.userToken !== null) router.push("/");
 
   const classes = useStyles();
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -62,17 +62,17 @@ export default function SignUp(props) {
                 <Typography variant="h4">
                   {
                     t[
-                      'Discover fresh and affordable produce and food products created by talented producers around the country.'
+                      "Discover fresh and affordable produce and food products created by talented producers around the country."
                     ]
                   }
                 </Typography>
               </Grid>
               {/* for Image */}
-              <Grid item style={{ display: 'flex', justifyContent: 'center' }}>
+              <Grid item style={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src="/dev/signup.png"
                   alt="login"
-                  style={{ width: '60%', height: '50%' }}
+                  style={{ width: "60%", height: "50%" }}
                 />
               </Grid>
             </Grid>
@@ -82,67 +82,67 @@ export default function SignUp(props) {
           item
           md={5}
           xs={12}
-          style={{ paddingLeft: matchesSM ? 0 : '4em' }}
+          style={{ paddingLeft: matchesSM ? 0 : "4em" }}
         >
           <Grid container direction="column">
             {/* For heading  */}
             <Grid item>
               <Typography variant="subtitle1">
-                {t['Sign up for Creative Market']}
+                {t["Sign up for Farming Solutions"]}
               </Typography>
             </Grid>
             {/* for form */}
             <Grid item>
-              {' '}
+              {" "}
               <SignUpForm {...props} languageJson={t} />
             </Grid>
-            <Grid item style={{ alignSelf: 'center', marginTop: '1.5em' }}>
+            <Grid item style={{ alignSelf: "center", marginTop: "1.5em" }}>
               <Typography variant="subtitle2" align="center">
-                {t['By creating an account, you agree to our']}{' '}
+                {t["By creating an account, you agree to our"]}{" "}
                 <span
                   style={{
-                    cursor: 'pointer',
-                    fontWeight: '700',
+                    cursor: "pointer",
+                    fontWeight: "700",
                     color: theme.palette.common.primary,
                   }}
                 >
-                  {t['terms']}
-                </span>{' '}
-                {t['and']}{' '}
+                  {t["terms"]}
+                </span>{" "}
+                {t["and"]}{" "}
                 <span
                   style={{
-                    cursor: 'pointer',
-                    fontWeight: '700',
+                    cursor: "pointer",
+                    fontWeight: "700",
                     color: theme.palette.common.primary,
                   }}
                 >
-                  {' '}
-                  {t['privacy policy']}
+                  {" "}
+                  {t["privacy policy"]}
                 </span>
               </Typography>
             </Grid>
 
             {/* for signin */}
-            <Grid item style={{ alignSelf: 'center', marginTop: '1.5em' }}>
+            <Grid item style={{ alignSelf: "center", marginTop: "1.5em" }}>
               <Typography variant="subtitle1">
-                {t['Have an account?']}{' '}
+                {t["Have an account?"]}{" "}
                 <Link href="/login">
                   <a
                     style={{
-                      textDecoration: 'none',
+                      textDecoration: "none",
                       color: theme.palette.common.primary,
                     }}
                   >
-                    {' '}
-                    {t['Log In!']}
+                    {" "}
+                    {t["Log In!"]}
                   </a>
-                </Link>{' '}
+                </Link>{" "}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <div style={{ marginTop: '2em' }}>
+      <div style={{ marginTop: "2em" }}>
         <AuthFooter languageJson={t} />
       </div>
     </>

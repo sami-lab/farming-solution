@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
 import {
   Grid,
   useMediaQuery,
@@ -16,30 +16,30 @@ import {
   Chip,
   Paper,
   IconButton,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { DropzoneArea } from 'material-ui-dropzone';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { DropzoneArea } from "material-ui-dropzone";
 import {
   resetServerContext,
   DragDropContext,
   Droppable,
   Draggable,
-} from 'react-beautiful-dnd';
-import dynamic from 'next/dynamic';
-import 'suneditor/dist/css/suneditor.min.css';
-const SunEditor = dynamic(() => import('suneditor-react'), {
+} from "react-beautiful-dnd";
+import dynamic from "next/dynamic";
+import "suneditor/dist/css/suneditor.min.css";
+const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-import WallpaperIcon from '@material-ui/icons/Wallpaper';
-import BackupIcon from '@material-ui/icons/Backup';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import LayersIcon from '@material-ui/icons/Layers';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
-import TitleIcon from '@material-ui/icons/Title';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import DeleteIcon from '@material-ui/icons/Delete';
+import WallpaperIcon from "@material-ui/icons/Wallpaper";
+import BackupIcon from "@material-ui/icons/Backup";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import LayersIcon from "@material-ui/icons/Layers";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import DynamicFeedIcon from "@material-ui/icons/DynamicFeed";
+import TitleIcon from "@material-ui/icons/Title";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -47,26 +47,26 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     ...theme.typography.input,
-    borderRadius: '3px',
-    background: '#fbfbfd',
-    boxShadow: 'none',
-    '&::placeholder': {
-      fontFamily: 'Averta',
+    borderRadius: "3px",
+    background: "#fbfbfd",
+    boxShadow: "none",
+    "&::placeholder": {
+      fontFamily: "Averta",
       fontWeight: 400,
-      fontSize: '1.1rem',
+      fontSize: "1.1rem",
     },
   },
   inputOutline: {
-    border: '1px solid #899298',
+    border: "1px solid #899298",
   },
   inputOutlineNoBorder: {
     border: 0,
   },
   hide: {
-    display: 'none',
+    display: "none",
   },
   dropzoneRoot: {
-    minHeight: '100px',
+    minHeight: "100px",
   },
 
   dropZoneTextContainer: {
@@ -74,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     ...theme.typography.label,
-    '& .MuiSelect-select:focus': {
-      backgroundColor: 'white',
+    "& .MuiSelect-select:focus": {
+      backgroundColor: "white",
     },
   },
 }));
@@ -96,20 +96,20 @@ export default function Create(props) {
   useEffect(() => {
     //Here we have to find shop id and shopname (if shop is pending navigate to shop page)
     if (!shop.shopStatus) {
-      router.push('/partner');
+      router.push("/partner");
     }
   }, []);
 
   const setProductTags = (e) => {
-    if (e.keyCode == 13 && tag !== '') {
-      console.log(tag.split(',').map((item) => item.trim()));
+    if (e.keyCode == 13 && tag !== "") {
+      console.log(tag.split(",").map((item) => item.trim()));
       setProduct((pro) => {
         return {
           ...pro,
-          tags: tag.split(',').map((item) => item.trim()),
+          tags: tag.split(",").map((item) => item.trim()),
         };
       });
-      setTag('');
+      setTag("");
     }
   };
   const handleTagDelete = (index) => {
@@ -170,8 +170,8 @@ export default function Create(props) {
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
-    width: '100%',
+    userSelect: "none",
+    width: "100%",
 
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -194,7 +194,7 @@ export default function Create(props) {
                     notchedOutline: classes.inputOutline,
                   },
                 }}
-                placeholder={t['Add Product Title For Creative Market']}
+                placeholder={t["Add Product Title For Farming Solutions"]}
                 required
                 value={product.title}
                 onChange={(e) =>
@@ -210,10 +210,10 @@ export default function Create(props) {
             {/* Shopname */}
             <Grid item>
               <Typography variant="h6">
-                {t['by']}{' '}
+                {t["by"]}{" "}
                 <span style={{ color: theme.palette.common.primary }}>
                   {shop?.shopName}
-                </span>{' '}
+                </span>{" "}
               </Typography>
             </Grid>
 
@@ -221,11 +221,11 @@ export default function Create(props) {
             <Grid item>
               <Grid container spacing={1}>
                 {/* For input image */}
-                <Grid item md={10} xs={12} style={{ height: '100%' }}>
+                <Grid item md={10} xs={12} style={{ height: "100%" }}>
                   {product.images[0] ? (
                     <img
                       src={URL.createObjectURL(product.images[0])}
-                      style={{ width: '100%', height: '400px' }}
+                      style={{ width: "100%", height: "400px" }}
                     />
                   ) : (
                     <Grid
@@ -235,14 +235,14 @@ export default function Create(props) {
                       direction="column"
                       spacing={1}
                       style={{
-                        padding: '2em',
-                        border: '4px dashed rgba(0, 0, 0, 0.12)',
-                        borderRadius: '4px',
-                        height: '400px',
-                        cursor: 'pointer',
+                        padding: "2em",
+                        border: "4px dashed rgba(0, 0, 0, 0.12)",
+                        borderRadius: "4px",
+                        height: "400px",
+                        cursor: "pointer",
                       }}
                       onClick={() => {
-                        const dropzone = document.getElementById('dropzone');
+                        const dropzone = document.getElementById("dropzone");
                         if (dropzone) {
                           dropzone.click();
                         }
@@ -251,7 +251,7 @@ export default function Create(props) {
                       <Grid item>
                         <WallpaperIcon
                           style={{
-                            fontSize: '6rem',
+                            fontSize: "6rem",
                             fill: theme.palette.common.darkBlack,
                             opacity: 0.8,
                           }}
@@ -259,14 +259,14 @@ export default function Create(props) {
                       </Grid>
                       <Grid item>
                         <Typography variant="h6" align="center">
-                          {t['Drag and drop here to upload your screenshot(s)']}
+                          {t["Drag and drop here to upload your screenshot(s)"]}
                         </Typography>
                         <Typography
                           align="center"
                           paragraph
-                          style={{ fontWeight: 300, fontSize: '0.8rem' }}
+                          style={{ fontWeight: 300, fontSize: "0.8rem" }}
                         >
-                          {t['1820 x 1214px ideal for hi-res']}
+                          {t["1820 x 1214px ideal for hi-res"]}
                         </Typography>
                       </Grid>
 
@@ -275,8 +275,8 @@ export default function Create(props) {
                           variant="outlined"
                           size="small"
                           style={{
-                            backgroundColor: 'transparent',
-                            padding: '5px 30px',
+                            backgroundColor: "transparent",
+                            padding: "5px 30px",
                           }}
                         >
                           <Typography
@@ -286,7 +286,7 @@ export default function Create(props) {
                               borderColor: theme.palette.common.primary,
                             }}
                           >
-                            {t['or Select files']}
+                            {t["or Select files"]}
                           </Typography>
                         </Button>
                       </Grid>
@@ -302,7 +302,7 @@ export default function Create(props) {
                     spacing={1}
                   >
                     {/* DropZone items */}
-                    <Grid item style={{ width: '100%' }}>
+                    <Grid item style={{ width: "100%" }}>
                       <DropzoneArea
                         classes={{
                           icon: classes.hide,
@@ -310,7 +310,7 @@ export default function Create(props) {
                           text: classes.dropZoneTextContainer,
                         }}
                         inputProps={{
-                          id: 'dropzone',
+                          id: "dropzone",
                         }}
                         id="dropzone"
                         showAlerts={false}
@@ -323,12 +323,12 @@ export default function Create(props) {
                             justify="center"
                             alignItems="center"
                             direction="column"
-                            style={{ padding: '0.3em' }}
+                            style={{ padding: "0.3em" }}
                           >
                             <Grid item>
                               <BackupIcon
                                 style={{
-                                  fontSize: '2rem',
+                                  fontSize: "2rem",
                                   fill: theme.palette.common.darkBlack,
                                   opacity: 0.8,
                                 }}
@@ -336,7 +336,7 @@ export default function Create(props) {
                             </Grid>
                             <Grid item>
                               <Typography className={classes.label}>
-                                {t['Drag or click to upload product']}
+                                {t["Drag or click to upload product"]}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -354,7 +354,7 @@ export default function Create(props) {
                             // style={{ width: '100%' }}
                           >
                             {product.images.map((item, i) => (
-                              <Draggable key={i} draggableId={i + ''} index={i}>
+                              <Draggable key={i} draggableId={i + ""} index={i}>
                                 {(provided, snapshot) => (
                                   <div
                                     ref={provided.innerRef}
@@ -370,15 +370,15 @@ export default function Create(props) {
                                       key={i}
                                       xs={12}
                                       style={{
-                                        width: '100%',
-                                        position: 'relative',
+                                        width: "100%",
+                                        position: "relative",
                                       }}
                                     >
                                       <img
                                         src={URL.createObjectURL(item)}
                                         style={{
-                                          width: '100%',
-                                          height: '90px',
+                                          width: "100%",
+                                          height: "90px",
                                         }}
                                       />
                                       <IconButton
@@ -387,10 +387,10 @@ export default function Create(props) {
                                           handleImageDeleteHandler(i)
                                         }
                                         style={{
-                                          position: 'absolute',
+                                          position: "absolute",
                                           top: -8,
                                           right: -8,
-                                          backgroundColor: '#fff',
+                                          backgroundColor: "#fff",
                                           color: theme.palette.common.primary,
                                         }}
                                       >
@@ -454,7 +454,7 @@ export default function Create(props) {
                     notchedOutline: classes.inputOutline,
                   },
                 }}
-                placeholder={t['Add Product Description For Creative Market']}
+                placeholder={t["Add Product Description For Farming Solutions"]}
                 required
                 value={product.description}
                 onChange={(e) =>
@@ -471,23 +471,23 @@ export default function Create(props) {
             <Grid
               item
               style={{
-                marginTop: '1em',
+                marginTop: "1em",
               }}
             >
               <Grid
                 container
                 direction="column"
                 style={{
-                  padding: '1em',
+                  padding: "1em",
                   border: `1px solid rgb(0 0 0 / 12%)`,
-                  borderRadius: '4px',
+                  borderRadius: "4px",
                   borderTop: `4px solid ${theme.palette.common.primary}`,
                 }}
                 component={Card}
               >
                 <Grid item container justify="space-between">
-                  <Typography variant="h6" style={{ fontWeight: '700' }}>
-                    {t['Price']}
+                  <Typography variant="h6" style={{ fontWeight: "700" }}>
+                    {t["Price"]}
                   </Typography>
                 </Grid>
                 {/* Product Price */}
@@ -499,7 +499,7 @@ export default function Create(props) {
                   wrap="nowrap"
                 >
                   <Typography className={classes.label}>
-                    {t['Product Price']}
+                    {t["Product Price"]}
                   </Typography>
                   <TextField
                     InputProps={{
@@ -534,7 +534,7 @@ export default function Create(props) {
                   wrap="nowrap"
                 >
                   <Typography className={classes.label}>
-                    {t['Delivery Charges']}
+                    {t["Delivery Charges"]}
                   </Typography>
                   <TextField
                     InputProps={{
@@ -569,7 +569,7 @@ export default function Create(props) {
                   wrap="nowrap"
                 >
                   <Typography className={classes.label}>
-                    {t['Unit(if any)']}
+                    {t["Unit(if any)"]}
                   </Typography>
                   <TextField
                     InputProps={{
@@ -579,7 +579,7 @@ export default function Create(props) {
                       startAdornment: (
                         <InputAdornment position="start">
                           <Typography
-                            style={{ visibility: 'hidden' }}
+                            style={{ visibility: "hidden" }}
                             className={classes.label}
                           >
                             $
@@ -606,7 +606,7 @@ export default function Create(props) {
             <Grid
               item
               style={{
-                marginTop: '1em',
+                marginTop: "1em",
               }}
             >
               <Grid
@@ -614,7 +614,7 @@ export default function Create(props) {
                 direction="column"
                 style={{
                   border: `1px solid ${theme.palette.common.darkBlack}`,
-                  borderRadius: '4px',
+                  borderRadius: "4px",
                 }}
                 component={Card}
               >
@@ -624,23 +624,23 @@ export default function Create(props) {
                   container
                   justify="space-between"
                   alignItems="center"
-                  style={{ padding: '1em' }}
+                  style={{ padding: "1em" }}
                 >
                   <Typography
                     variant="h6"
                     style={{
-                      fontWeight: '400',
-                      display: 'flex',
-                      alignItems: 'center',
+                      fontWeight: "400",
+                      display: "flex",
+                      alignItems: "center",
                     }}
                   >
                     <CalendarTodayIcon
                       fontSize="small"
-                      style={{ marginRight: '6px' }}
-                    />{' '}
-                    {t['Date']}
+                      style={{ marginRight: "6px" }}
+                    />{" "}
+                    {t["Date"]}
                   </Typography>
-                  <Typography variant="h6" style={{ fontWeight: '400' }}>
+                  <Typography variant="h6" style={{ fontWeight: "400" }}>
                     {new Date().toDateString()}
                   </Typography>
                 </Grid>
@@ -651,26 +651,26 @@ export default function Create(props) {
                   container
                   justify="space-between"
                   alignItems="center"
-                  style={{ padding: '1em 1em 1em 1em' }}
+                  style={{ padding: "1em 1em 1em 1em" }}
                 >
                   <div onClick={() => categoryRef.current.focus()}>
                     <Typography
                       variant="h6"
                       style={{
-                        fontWeight: '400',
-                        display: 'flex',
-                        alignItems: 'center',
+                        fontWeight: "400",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       <EventNoteIcon
                         fontSize="small"
-                        style={{ marginRight: '6px' }}
-                      />{' '}
-                      {t['Choose Category']}
+                        style={{ marginRight: "6px" }}
+                      />{" "}
+                      {t["Choose Category"]}
                     </Typography>
                   </div>
 
-                  <Typography variant="h6" style={{ fontWeight: '400' }}>
+                  <Typography variant="h6" style={{ fontWeight: "400" }}>
                     <TextField
                       select
                       className={classes.select}
@@ -689,15 +689,15 @@ export default function Create(props) {
                         ),
 
                         IconComponent: (props) => (
-                          <div style={{ marginRight: '0.5em' }}>
-                            {' '}
+                          <div style={{ marginRight: "0.5em" }}>
+                            {" "}
                             <KeyboardArrowDownIcon {...props} />
                           </div>
                         ),
                         MenuProps: {
                           anchorOrigin: {
-                            vertical: 'bottom',
-                            horizontal: 'left',
+                            vertical: "bottom",
+                            horizontal: "left",
                           },
                           getContentAnchorEl: null,
                         },
@@ -711,9 +711,9 @@ export default function Create(props) {
                         },
                       }}
                     >
-                      {' '}
+                      {" "}
                       <MenuItem value="" className={classes.label}>
-                        {t['Choose Category']}
+                        {t["Choose Category"]}
                       </MenuItem>
                       {categories.map((item, i) => (
                         <MenuItem
@@ -728,13 +728,13 @@ export default function Create(props) {
                   </Typography>
                 </Grid>
                 {/* productCategory item  */}
-                {product.productCategory !== '' && (
+                {product.productCategory !== "" && (
                   <Grid
                     item
                     container
                     spacing={1}
                     alignItems="center"
-                    style={{ padding: '0.5em 1em' }}
+                    style={{ padding: "0.5em 1em" }}
                   >
                     <Grid item>
                       <Chip
@@ -743,7 +743,7 @@ export default function Create(props) {
                           setProduct((pro) => {
                             return {
                               ...pro,
-                              productCategory: '',
+                              productCategory: "",
                             };
                           })
                         }
@@ -757,7 +757,7 @@ export default function Create(props) {
             <Grid
               item
               style={{
-                marginTop: '1em',
+                marginTop: "1em",
               }}
             >
               <Grid container direction="column" spacing={2}>
@@ -772,7 +772,7 @@ export default function Create(props) {
                         notchedOutline: classes.inputOutline,
                       },
                     }}
-                    placeholder={t['Type a tag and press enter..']}
+                    placeholder={t["Type a tag and press enter.."]}
                     value={tag}
                     onChange={(e) => setTag(e.target.value)}
                     onKeyDown={setProductTags}
@@ -794,54 +794,54 @@ export default function Create(props) {
       </Grid>
       <Grid container direction="column">
         {/* Divider */}
-        <Grid item style={{ marginTop: '1em' }}>
+        <Grid item style={{ marginTop: "1em" }}>
           <Divider />
         </Grid>
         {/* for sun editor */}
-        <Grid item style={{ marginTop: '1em' }}>
-          {' '}
+        <Grid item style={{ marginTop: "1em" }}>
+          {" "}
           <SunEditor
             mode="classic"
             setOptions={{
-              height: '400px',
-              katex: 'window.katex',
+              height: "400px",
+              katex: "window.katex",
               buttonList: [
                 [
-                  'undo',
-                  'redo',
-                  'font',
-                  'fontSize',
-                  'formatBlock',
-                  'paragraphStyle',
-                  'blockquote',
-                  'bold',
-                  'underline',
-                  'italic',
-                  'strike',
-                  'subscript',
-                  'superscript',
-                  'fontColor',
-                  'hiliteColor',
-                  'textStyle',
-                  'removeFormat',
-                  'outdent',
-                  'indent',
-                  'align',
-                  'horizontalRule',
-                  'list',
-                  'lineHeight',
-                  'table',
-                  'link',
-                  'image',
-                  'video',
-                  'math',
-                  'imageGallery',
-                  'fullScreen',
-                  'codeView',
+                  "undo",
+                  "redo",
+                  "font",
+                  "fontSize",
+                  "formatBlock",
+                  "paragraphStyle",
+                  "blockquote",
+                  "bold",
+                  "underline",
+                  "italic",
+                  "strike",
+                  "subscript",
+                  "superscript",
+                  "fontColor",
+                  "hiliteColor",
+                  "textStyle",
+                  "removeFormat",
+                  "outdent",
+                  "indent",
+                  "align",
+                  "horizontalRule",
+                  "list",
+                  "lineHeight",
+                  "table",
+                  "link",
+                  "image",
+                  "video",
+                  "math",
+                  "imageGallery",
+                  "fullScreen",
+                  "codeView",
                 ],
               ],
             }}
-            placeholder={t['Please Enter Product Details...']}
+            placeholder={t["Please Enter Product Details..."]}
             setContents={product.details}
             onChange={(content) =>
               setProduct((pro) => {
@@ -854,30 +854,30 @@ export default function Create(props) {
           />
         </Grid>
         {/* SEO card */}
-        <Grid item style={{ marginTop: '1em' }}>
+        <Grid item style={{ marginTop: "1em" }}>
           <Typography variant="h2">
-            {t['Customize Your Search Engine Listing']}
+            {t["Customize Your Search Engine Listing"]}
           </Typography>
-          <Paper elevation={4} style={{ padding: '1em' }}>
+          <Paper elevation={4} style={{ padding: "1em" }}>
             <Typography
               className={classes.label}
               style={{ color: theme.palette.common.primary }}
             >
               {product.title.length > 0
                 ? product.title
-                : t['Your Product Name']}{' '}
-              | {t['Creative Market']}
+                : t["Your Product Name"]}{" "}
+              | {t["Farming Solutions"]}
             </Typography>
             <Typography className={classes.label}>
-              https://creativemarket.com/{shop.shopName.replace(' ', '-')}/
+              https://creativemarket.com/{shop.shopName.replace(" ", "-")}/
               {product.title.length > 0
                 ? product.title
-                : t['your-product-name']}
+                : t["your-product-name"]}
             </Typography>
             <Typography variant="subtitle2">
               {product.description > 0
                 ? product.description
-                : t['Search engine autoomatically generate a description.']}
+                : t["Search engine autoomatically generate a description."]}
             </Typography>
           </Paper>
         </Grid>

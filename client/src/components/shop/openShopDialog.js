@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Grid,
   Dialog,
@@ -9,18 +9,18 @@ import {
   useTheme,
   Button,
   CircularProgress,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 
-import { CloseSharp } from '@material-ui/icons';
-import { createShop } from '../../../api/shop/shop';
+import { CloseSharp } from "@material-ui/icons";
+import { createShop } from "../../../api/shop/shop";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '1em',
+    padding: "1em",
   },
 
   label: {
@@ -29,33 +29,33 @@ const useStyles = makeStyles((theme) => ({
   button: {
     ...theme.typography.label,
     background: theme.palette.common.primary,
-    color: '#fff',
-    '&$disabled': {
-      backgroundColor: '#e2e9ee',
+    color: "#fff",
+    "&$disabled": {
+      backgroundColor: "#e2e9ee",
       color: theme.palette.common.darkBlack,
     },
   },
   input: {
-    fontFamily: 'Averta',
-    fontSize: '1rem',
+    fontFamily: "Averta",
+    fontSize: "1rem",
     color: theme.palette.common.darkBlack,
     lineHeight: 1.4,
-    borderRadius: '3px',
-    background: '#fbfbfd',
-    boxShadow: 'none',
-    marginTop: '3px',
-    resize:"vertical",
-    '&:hover': {
-      border: '1px solid #899298',
+    borderRadius: "3px",
+    background: "#fbfbfd",
+    boxShadow: "none",
+    marginTop: "3px",
+    resize: "vertical",
+    "&:hover": {
+      border: "1px solid #899298",
     },
-    '&:focus': {
-      outline: 'none',
-      boxShadow: '0 0 0 3px #dceefc',
+    "&:focus": {
+      outline: "none",
+      boxShadow: "0 0 0 3px #dceefc",
     },
-    '&::placeholder': {
-      fontFamily: 'Averta',
+    "&::placeholder": {
+      fontFamily: "Averta",
       fontWeight: 400,
-      fontSize: '1.1rem',
+      fontSize: "1.1rem",
     },
   },
 }));
@@ -64,24 +64,24 @@ export default function OpenShopDialog(props) {
 
   const theme = useTheme();
   const classes = useStyles();
-  const [what, setWhat] = useState('');
-  const [where, setWhere] = useState('');
-  const [whyChooseUs, setWhyChooseUs] = useState('');
+  const [what, setWhat] = useState("");
+  const [where, setWhere] = useState("");
+  const [whyChooseUs, setWhyChooseUs] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     status: false,
-    message: '',
+    message: "",
   });
 
   const submitFormHandler = async () => {
     setError({
       status: false,
-      message: '',
+      message: "",
     });
-    if (what === '' || whyChooseUs === '' || where === '') {
+    if (what === "" || whyChooseUs === "" || where === "") {
       setError({
         status: true,
-        message: t['Please fill All fields to continue'],
+        message: t["Please fill All fields to continue"],
       });
       return;
     }
@@ -93,7 +93,7 @@ export default function OpenShopDialog(props) {
         whyChooseUs,
       });
       const result = await response.json();
-      if (result.status === 'success') {
+      if (result.status === "success") {
         setLoading(false);
         props.shopApproved();
         props.onClose();
@@ -126,17 +126,17 @@ export default function OpenShopDialog(props) {
       className={classes.root}
     >
       <DialogContent className={classes.root}>
-        <span style={{ position: 'absolute', right: 5, top: 5 }}>
+        <span style={{ position: "absolute", right: 5, top: 5 }}>
           <IconButton onClick={props.onClose}>
             <CloseSharp />
           </IconButton>
         </span>
         <Grid container direction="column" spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h1">{t['Request an Invite']} </Typography>
+            <Typography variant="h1">{t["Request an Invite"]} </Typography>
           </Grid>
           <Grid item xs={12}>
-            <p style={{ fontFamily: 'Averta', margin: 0 }}>
+            <p style={{ fontFamily: "Averta", margin: 0 }}>
               {
                 t[
                   "Our shop space is limited to the most qualified sellers at the moment, so tell us why you'd be a great shop owner below. All fields are required."
@@ -146,7 +146,7 @@ export default function OpenShopDialog(props) {
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t['What type of food you will Sell?']}
+              {t["What type of food you will Sell?"]}
             </label>
             <textarea
               className={classes.input}
@@ -157,7 +157,7 @@ export default function OpenShopDialog(props) {
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t['Where does your food come from?']}
+              {t["Where does your food come from?"]}
             </label>
             <textarea
               className={classes.input}
@@ -168,7 +168,7 @@ export default function OpenShopDialog(props) {
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t['Why do you want to open a shop on Creative Market?']}
+              {t["Why do you want to open a shop on Farming Solutions?"]}
             </label>
             <textarea
               className={classes.input}
@@ -187,7 +187,7 @@ export default function OpenShopDialog(props) {
               onClick={submitFormHandler}
               disabled={loading}
             >
-              {loading ? <CircularProgress /> : t['Request Invite']}
+              {loading ? <CircularProgress /> : t["Request Invite"]}
             </Button>
           </Grid>
         </Grid>

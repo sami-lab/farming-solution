@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   Grid,
   Typography,
   Hidden,
   useMediaQuery,
   useTheme,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import LoginForm from '../src/components/authentication/login';
-import AuthHeader from '../src/resusable/authHeader';
-import AuthFooter from '../src/resusable/footer';
+import LoginForm from "../src/components/authentication/login";
+import AuthHeader from "../src/resusable/authHeader";
+import AuthFooter from "../src/resusable/footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: '3.5em',
-    paddingLeft: '10em',
-    paddingRight: '10em',
+    paddingTop: "3.5em",
+    paddingLeft: "10em",
+    paddingRight: "10em",
 
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '1em',
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "1em",
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   ruled: {
-    width: '100%',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e9ee',
+    width: "100%",
+    textAlign: "center",
+    borderBottom: "1px solid #e2e9ee",
     lineHeight: 0,
-    color: '#899298',
+    color: "#899298",
   },
 }));
 
 export default function Login(props) {
   const t = props.languageJson;
   const router = useRouter();
-  if (props.user !== null && props.userToken !== null) router.push('/');
+  if (props.user !== null && props.userToken !== null) router.push("/");
 
   const classes = useStyles();
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function Login(props) {
                 <Typography variant="h4">
                   {
                     t[
-                      'Welcome to the marketplace built to support amazing Farm to Home producers like you.'
+                      "Welcome to the marketplace built to support amazing Farm to Home producers like you."
                     ]
                   }
                 </Typography>
@@ -70,7 +70,7 @@ export default function Login(props) {
                 <img
                   src="/dev/login.png"
                   alt="login"
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ width: "100%", height: "100%" }}
                 />
               </Grid>
             </Grid>
@@ -80,55 +80,55 @@ export default function Login(props) {
           item
           md={5}
           xs={12}
-          style={{ paddingLeft: matchesSM ? 0 : '4em' }}
+          style={{ paddingLeft: matchesSM ? 0 : "4em" }}
         >
           <Grid container direction="column">
             {/* For heading  */}
             <Grid item>
               <Typography variant="subtitle1">
-                {t['Log in to Creative Market']}
+                {t["Log in to Creative "]}
               </Typography>
             </Grid>
             {/* for form */}
             <Grid item>
-              {' '}
+              {" "}
               <LoginForm {...props} languageJson={t} />
             </Grid>
             {/* for Line */}
-            <Grid item style={{ marginTop: '2.5em' }}>
+            <Grid item style={{ marginTop: "2.5em" }}>
               <div className={classes.ruled}>
                 <span
                   style={{
-                    background: '#fff',
-                    padding: '0 20px',
-                    fontSize: '1.25rem',
-                    fontFamily: 'Averta',
+                    background: "#fff",
+                    padding: "0 20px",
+                    fontSize: "1.25rem",
+                    fontFamily: "Averta",
                   }}
                 >
-                  {t['OR']}
+                  {t["OR"]}
                 </span>
               </div>
             </Grid>
             {/* for Signup */}
-            <Grid item style={{ alignSelf: 'center', marginTop: '1.5em' }}>
+            <Grid item style={{ alignSelf: "center", marginTop: "1.5em" }}>
               <Typography variant="subtitle1">
-                {t['New around here?']}{' '}
+                {t["New around here?"]}{" "}
                 <Link href="/signup">
                   <a
                     style={{
-                      textDecoration: 'none',
+                      textDecoration: "none",
                       color: theme.palette.common.primary,
                     }}
                   >
-                    {t['Sign up!']}
+                    {t["Sign up!"]}
                   </a>
-                </Link>{' '}
+                </Link>{" "}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid container style={{ marginTop: '5em' }}>
+      <Grid container style={{ marginTop: "5em" }}>
         <AuthFooter languageJson={t} />
       </Grid>
     </>
