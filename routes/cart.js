@@ -1,5 +1,5 @@
 const express = require("express");
-const cartController = require("../Controllers/cartController");
+const cartController = require("../controllers/cartController");
 
 const protect = require("../middleware/protect");
 

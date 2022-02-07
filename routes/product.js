@@ -1,5 +1,5 @@
 const express = require("express");
-const productController = require("../Controllers/productController");
+const productController = require("../controllers/productController");
 const upload = require("../middleware/imageUpload");
 const protect = require("../middleware/protect");
 const restrictTo = require("../middleware/restrictedTo");
