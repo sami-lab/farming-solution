@@ -1,19 +1,19 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 //const Email = require('../utils/emails');
 
-const User = require('../Models/userModel');
-const Shop = require('../Models/shop');
-const Roles = require('../Models/roles');
-const Order = require('../Models/order');
-const Product = require('../Models/product');
+const User = require("../Models/userModel");
+const Shop = require("../Models/shop");
+const Roles = require("../Models/roles");
+const Order = require("../Models/order");
+const Product = require("../Models/product");
 
 //For Admin
 exports.pendingShop = catchAsync(async (req, res, next) => {
   const shop = await Shop.find({ shopStatus: false });
 
   res.status(204).json({
-    status: 'success',
+    status: "success",
     result: shop.length,
     data: {
       doc: shop,
@@ -25,9 +25,9 @@ exports.approveShop = catchAsync(async (req, res, next) => {
   const shop = await Shop.findByIdAndUpdate(req.params.id, {
     shopStatus: true,
   });
-  if (!shop) return next(new AppError('No Shop Exist with this id', 404));
+  if (!shop) return next(new AppError("No Shop Exist with this id", 404));
 
-  const ShopManagerRole = await Roles.findOne({ name: 'Manager' });
+  const ShopManagerRole = await Roles.findOne({ name: "Manager" });
   await User.findByIdAndUpdate(
     shop.managerId,
     {
@@ -39,17 +39,17 @@ exports.approveShop = catchAsync(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: 'success',
-    message: 'Shop Approved Successfully',
+    status: "success",
+    message: "Shop Approved Successfully",
   });
 });
 function getDayName(dateStr, locale) {
   var date = new Date(dateStr);
-  return date.toLocaleDateString(locale, { weekday: 'long' });
+  return date.toLocaleDateString(locale, { weekday: "long" });
 }
 exports.getShopDashboardData = catchAsync(async (req, res, next) => {
   if (!req.user.shop) {
-    return next(new AppError('Not Allowed', 403));
+    return next(new AppError("Not Allowed", 403));
   }
   let finalData = {
     shopId: req.user.shop._id,
@@ -57,18 +57,18 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
   };
 
   const MONTHS_ARRAY = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   let lastYearSalesGraph = await Order.aggregate([
@@ -82,8 +82,8 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        _id: { $month: '$Date' },
-        y: { $sum: '$totalAmount' },
+        _id: { $month: "$Date" },
+        y: { $sum: "$totalAmount" },
       },
     },
   ]);
@@ -103,7 +103,7 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
         },
       },
     },
-    { $group: { _id: '$Date', y: { $sum: '$totalAmount' } } },
+    { $group: { _id: "$Date", y: { $sum: "$totalAmount" } } },
   ]);
   finalData.lastMonthSalesGraph = lastMonthSalesGraph.map((it) => {
     return {
@@ -121,20 +121,20 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
         },
       },
     },
-    { $group: { _id: '$Date', y: { $sum: '$totalAmount' } } },
+    { $group: { _id: "$Date", y: { $sum: "$totalAmount" } } },
   ]);
   finalData.lastWeekSalesGraph = lastWeekSalesGraph.map((item) => {
     return {
       y: item.y,
-      label: getDayName(item._id, 'en-US'),
+      label: getDayName(item._id, "en-US"),
     };
   });
 
   let totalSales = await Order.aggregate([
     { $match: { shopId: req.user.shop._id } },
-    { $group: { _id: null, amount: { $sum: '$totalAmount' } } },
+    { $group: { _id: null, amount: { $sum: "$totalAmount" } } },
   ]);
-  finalData.totalSales = totalSales[0]?.amount || 0;
+  finalData.totalSales = totalSales[0] ? totalSales[0].amount : 0;
 
   let lastMonthSales = await Order.aggregate([
     { $match: { shopId: req.user.shop._id } },
@@ -145,9 +145,9 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
         },
       },
     },
-    { $group: { _id: null, amount: { $sum: '$totalAmount' } } },
+    { $group: { _id: null, amount: { $sum: "$totalAmount" } } },
   ]);
-  finalData.lastMonthSales = lastMonthSales[0]?.amount || 0;
+  finalData.lastMonthSales = lastMonthSales[0] ? lastMonthSales[0].amount : 0;
 
   let lastWeekSales = await Order.aggregate([
     { $match: { shopId: req.user.shop._id } },
@@ -158,9 +158,9 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
         },
       },
     },
-    { $group: { _id: null, amount: { $sum: '$totalAmount' } } },
+    { $group: { _id: null, amount: { $sum: "$totalAmount" } } },
   ]);
-  finalData.lastWeekSales = lastWeekSales[0]?.amount || 0;
+  finalData.lastWeekSales = lastWeekSales[0] ? lastWeekSales[0].amount : 0;
 
   let TotalProducts = await Product.countDocuments({
     shopId: req.user.shop._id,
@@ -174,13 +174,13 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
 
   let recentSales = await Order.find({ shopId: req.user.shop._id })
     .sort({ _id: -1 })
-    .populate('productId', 'productId title productCategory')
-    .populate('userId', 'name')
+    .populate("productId", "productId title productCategory")
+    .populate("userId", "name")
     .limit(5);
   finalData.recentSales = recentSales;
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: finalData,
   });
 });
