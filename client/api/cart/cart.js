@@ -1,6 +1,6 @@
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import axios from 'axios';
+import axios from "axios";
 
 export const addToCart = async (token, product, quantity, license) => {
   const response = await axios.post(
@@ -12,7 +12,7 @@ export const addToCart = async (token, product, quantity, license) => {
     },
     {
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: "Bearer " + token,
       },
     }
   );
@@ -22,16 +22,16 @@ export const addToCart = async (token, product, quantity, license) => {
 
 export const getMyCart = async (token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'get',
+    method: "get",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
-
+  console.log(publicRuntimeConfig.backend, "test");
   const response = await fetch(
     `${publicRuntimeConfig.backend}/api/cart/myCart`,
     requestOptions
@@ -41,14 +41,14 @@ export const getMyCart = async (token) => {
 };
 export const deleteCart = async (token, id) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'delete',
+    method: "delete",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -68,8 +68,8 @@ export const checkout = async (
   zipCode
 ) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
   var raw = JSON.stringify({
     stripeToken,
     cartItems,
@@ -79,10 +79,10 @@ export const checkout = async (
   });
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
