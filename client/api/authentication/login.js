@@ -1,16 +1,16 @@
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import axios from 'axios';
+import axios from "axios";
 export const validateToken = async (token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -22,17 +22,19 @@ export const validateToken = async (token) => {
 };
 export const login = async (email, password) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     email,
     password,
   });
 
+  console.log(publicRuntimeConfig.backend, "test");
+
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -45,16 +47,16 @@ export const login = async (email, password) => {
 
 export const forgetPassword = async (email) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     email,
   });
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -66,17 +68,17 @@ export const forgetPassword = async (email) => {
 };
 export const resetPassword = async (password, confirmPassword, token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     password,
     confirmPassword,
   });
 
   var requestOptions = {
-    method: 'post',
+    method: "post",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -94,7 +96,7 @@ export const signUp = async (
   password
 ) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     firstName,
     lastName,
@@ -104,10 +106,10 @@ export const signUp = async (
   });
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -124,7 +126,7 @@ export const changePassword = async (token, data) => {
     data,
     {
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: "Bearer " + token,
       },
     }
   );
@@ -141,7 +143,7 @@ export const updateProfile = async (token, data) => {
     raw,
     {
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: "Bearer " + token,
       },
     }
   );

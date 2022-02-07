@@ -31,7 +31,6 @@ export const getMyCart = async (token) => {
     body: null,
     redirect: "follow",
   };
-  console.log(publicRuntimeConfig.backend, "test");
   const response = await fetch(
     `${publicRuntimeConfig.backend}/api/cart/myCart`,
     requestOptions
