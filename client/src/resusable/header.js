@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Link from "next/link";
 import {
   Button,
   AppBar,
@@ -21,43 +21,43 @@ import {
   Drawer,
   Divider,
   Avatar,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import SearchIcon from '@material-ui/icons/Search';
-import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import SearchIcon from "@material-ui/icons/Search";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import StorefrontIcon from '@material-ui/icons/Storefront';
-import { useRouter } from 'next/router';
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '10em',
-    paddingRight: '10em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '3em',
-      paddingRight: '3em',
+    paddingLeft: "10em",
+    paddingRight: "10em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
     },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   grow: {
     flexGrow: 1,
   },
   inputRoot: {
-    fontFamily: 'Averta',
-    fontSize: '1.1rem',
+    fontFamily: "Averta",
+    fontSize: "1.1rem",
     fontWeight: 500,
-    '&::placeholder': {
-      fontFamily: 'Averta',
-      fontStyle: 'italic',
+    "&::placeholder": {
+      fontFamily: "Averta",
+      fontStyle: "italic",
       fontWeight: 300,
-      fontSize: '1rem',
+      fontSize: "1rem",
       opacity: 0.7,
     },
   },
@@ -66,29 +66,29 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     ...theme.typography.label,
-    '& .MuiSelect-select:focus': {
-      backgroundColor: 'white',
+    "& .MuiSelect-select:focus": {
+      backgroundColor: "white",
     },
   },
   desktopItemPadding: {
-    padding: '10px 16px 0px 16px',
+    padding: "10px 16px 0px 16px",
   },
   desktopItem: {
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
     ...theme.typography.subtitle2,
     color: theme.palette.common.darkBlack,
     fontWeight: 700,
-    paddingBottom: '8px',
-    cursor: 'pointer',
+    paddingBottom: "8px",
+    cursor: "pointer",
     borderBottom: `4px solid ${theme.palette.common.light}`,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.common.primary,
       borderBottom: `4px solid ${theme.palette.common.primary}`,
     },
   },
   listText: {
     ...theme.typography.subtitle2,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   nestedListtext: {
     ...theme.typography.label,
@@ -99,7 +99,7 @@ export default function PrimarySearchAppBar(props) {
   const t = props.languageJson;
   const theme = useTheme();
   const classes = useStyles();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   //const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const router = useRouter();
@@ -113,35 +113,35 @@ export default function PrimarySearchAppBar(props) {
       };
     })
   );
-  const [search, setSearch] = React.useState('');
-  const [searchOption, setSearchOption] = React.useState('allProducts');
+  const [search, setSearch] = React.useState("");
+  const [searchOption, setSearchOption] = React.useState("allProducts");
   const searchOptions = [
     {
-      label: 'All Products',
-      value: 'allProducts',
+      label: "All Products",
+      value: "allProducts",
     },
     {
-      label: 'Photos',
-      value: 'photos',
+      label: "Photos",
+      value: "photos",
     },
     {
-      label: 'Graphics',
-      value: 'graphics',
+      label: "Graphics",
+      value: "graphics",
     },
   ];
   const logoutHandler = async () => {
     try {
-      router.push('/login');
-      await localStorage.removeItem('farmingToken');
+      router.push("/login");
+      await localStorage.removeItem("farmingToken");
       props.setUserToken(null);
       props.setUser(null);
       setProfileMenu(null);
     } catch (e) {
-      console.log('faled to logout', e);
+      console.log("faled to logout", e);
     }
   };
 
-  const menuID = 'profile-menu';
+  const menuID = "profile-menu";
   const renderMenu = (
     <Menu
       anchorEl={profileMenu}
@@ -150,61 +150,61 @@ export default function PrimarySearchAppBar(props) {
       open={Boolean(profileMenu)}
       onClose={() => setProfileMenu(null)}
       getContentAnchorEl={null}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
     >
       <MenuItem onClick={() => setProfileMenu(null)}>
-        {' '}
+        {" "}
         <Link href="/profile">
-          <a style={{ textDecoration: 'none' }} className={classes.label}>
-            {t['Profile']}
+          <a style={{ textDecoration: "none" }} className={classes.label}>
+            {t["Profile"]}
           </a>
-        </Link>{' '}
+        </Link>{" "}
       </MenuItem>
       <MenuItem onClick={() => setProfileMenu(null)}>
-        {' '}
+        {" "}
         <Link href="/purchase">
-          <a style={{ textDecoration: 'none' }} className={classes.label}>
-            {t['Purchase']}
+          <a style={{ textDecoration: "none" }} className={classes.label}>
+            {t["Purchase"]}
           </a>
-        </Link>{' '}
+        </Link>{" "}
       </MenuItem>
-      {props.user && props.user?.roles.every((x) => x.name !== 'Manager') && (
+      {props.user && props.user?.roles.every((x) => x.name !== "Manager") && (
         <MenuItem onClick={() => setProfileMenu(null)}>
-          {' '}
+          {" "}
           <Link href="/partner">
-            <a style={{ textDecoration: 'none' }} className={classes.label}>
-              {t['Open a Shop']}
+            <a style={{ textDecoration: "none" }} className={classes.label}>
+              {t["Open a Shop"]}
             </a>
-          </Link>{' '}
+          </Link>{" "}
         </MenuItem>
       )}
-      {props.user && props.user.roles?.some((x) => x.name === 'Manager') && (
+      {props.user && props.user.roles?.some((x) => x.name === "Manager") && (
         <>
           <MenuItem onClick={() => setProfileMenu(null)}>
-            {' '}
+            {" "}
             <Link href="/shop/myShop">
-              <a style={{ textDecoration: 'none' }} className={classes.label}>
-                {t['My Shop']}
+              <a style={{ textDecoration: "none" }} className={classes.label}>
+                {t["My Shop"]}
               </a>
-            </Link>{' '}
+            </Link>{" "}
           </MenuItem>
           <MenuItem onClick={() => setProfileMenu(null)}>
-            {' '}
+            {" "}
             <Link href="/createProduct">
-              <a style={{ textDecoration: 'none' }} className={classes.label}>
-                {t['Add Products']}
+              <a style={{ textDecoration: "none" }} className={classes.label}>
+                {t["Add Products"]}
               </a>
-            </Link>{' '}
+            </Link>{" "}
           </MenuItem>
         </>
       )}
       <Divider />
       <MenuItem onClick={logoutHandler}>
-        {' '}
+        {" "}
         <p className={classes.label} style={{ margin: 0 }}>
-          {t['Logout']}
-        </p>{' '}
+          {t["Logout"]}
+        </p>{" "}
       </MenuItem>
     </Menu>
   );
@@ -213,18 +213,18 @@ export default function PrimarySearchAppBar(props) {
     <Grid
       container
       direction="column"
-      style={{ padding: '32px 24px', width: '100vw' }}
+      style={{ padding: "32px 24px", width: "100vw" }}
     >
       <Grid item>
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             <Typography className={classes.listText}>
-              {t['Product Categories']}
+              {t["Product Categories"]}
             </Typography>
           </Grid>
           <Grid item>
             <IconButton onClick={() => setDrawer(false)}>
-              <CloseIcon style={{ fontWeight: '700' }} />
+              <CloseIcon style={{ fontWeight: "700" }} />
             </IconButton>
           </Grid>
         </Grid>
@@ -232,27 +232,30 @@ export default function PrimarySearchAppBar(props) {
       <Grid item>
         <List component="nav" aria-labelledby="nested-list-subheader">
           {headerList.map((ele) => (
-            <ListItem
-              button
-              style={{ padding: '8px 15px' }}
-              key={ele.name}
-              onClick={() =>
-                setHeaderList((l1) =>
-                  l1.map((list) => {
-                    if (list.name === ele.name) list.popup = !list.popup;
-                    return list;
-                  })
-                )
-              }
-            >
-              <ListItemText
-                primary={ele.name}
-                classes={{
-                  primary: classes.listText,
-                }}
-              />
-              {/* {list1 ? <ExpandLess /> : <ExpandMore />} */}
-            </ListItem>
+            <Link href={`/category/${ele.name}`}>
+              <ListItem
+                button
+                style={{ padding: "8px 15px" }}
+                key={ele.name}
+                // onClick={() =>
+                //   setHeaderList((l1) =>
+                //     l1.map((list) => {
+                //       if (list.name === ele.name) list.popup = !list.popup;
+                //       return list;
+                //     })
+                //   )
+                // }
+                onClick={() => setDrawer(false)}
+              >
+                <ListItemText
+                  primary={ele.name}
+                  classes={{
+                    primary: classes.listText,
+                  }}
+                />
+                {/* {list1 ? <ExpandLess /> : <ExpandMore />} */}
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Grid>
@@ -264,7 +267,7 @@ export default function PrimarySearchAppBar(props) {
       item
       className={classes.grow}
       md={9}
-      style={{ borderBottom: '3px solid #000' }}
+      style={{ borderBottom: "3px solid #000" }}
     >
       <Grid container spacing={2}>
         <Hidden xsDown>
@@ -277,15 +280,15 @@ export default function PrimarySearchAppBar(props) {
               onChange={(e) => setSearchOption(e.target.value)}
               SelectProps={{
                 IconComponent: (props) => (
-                  <div style={{ marginRight: '0.5em' }}>
-                    {' '}
+                  <div style={{ marginRight: "0.5em" }}>
+                    {" "}
                     <KeyboardArrowDownIcon {...props} />
                   </div>
                 ),
                 MenuProps: {
                   anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: "bottom",
+                    horizontal: "left",
                   },
                   getContentAnchorEl: null,
                 },
@@ -318,10 +321,10 @@ export default function PrimarySearchAppBar(props) {
               classes: {
                 input: classes.inputRoot,
               },
-              startAdornment: <SearchIcon style={{ marginRight: '0.3em' }} />,
+              startAdornment: <SearchIcon style={{ marginRight: "0.3em" }} />,
             }}
             style={{ border: 0 }}
-            placeholder={t['Search for watercolor, script fonts, procreate']}
+            placeholder={t["Search for watercolor, script fonts, procreate"]}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -336,7 +339,7 @@ export default function PrimarySearchAppBar(props) {
           key={ele.name}
           item
           className={classes.desktopItemPadding}
-          style={{ paddingLeft: ind === 0 ? 0 : '16px' }}
+          style={{ paddingLeft: ind === 0 ? 0 : "16px" }}
         >
           <Link href={`/category/${ele.name}`}>
             <Typography className={classes.desktopItem}>{ele.name}</Typography>
@@ -351,25 +354,25 @@ export default function PrimarySearchAppBar(props) {
         <Grid item>
           <IconButton
             disableTouchRipple={true}
-            style={{ paddingLeft: 0, backgroundColor: 'transparent' }}
+            style={{ paddingLeft: 0, backgroundColor: "transparent" }}
             onClick={() => setDrawer(true)}
           >
             <MenuIcon
               style={{
                 fill: theme.palette.common.darkBlack,
-                fontSize: '1.7rem',
+                fontSize: "1.7rem",
               }}
             />
           </IconButton>
         </Grid>
       )}
-      <Grid item component={Link} href="/" style={{ cursor: 'pointer' }}>
+      <Grid item component={Link} href="/" style={{ cursor: "pointer" }}>
         <Typography variant="h6" noWrap>
           <img
             src="/dev/logo.png"
             style={{
-              width: matchesSM ? '65px' : '150px',
-              height: matchesSM ? '26px' : '50px',
+              width: matchesSM ? "65px" : "150px",
+              height: matchesSM ? "26px" : "50px",
             }}
             alt="logo"
           />
@@ -384,14 +387,19 @@ export default function PrimarySearchAppBar(props) {
         elevation={0}
         position="static"
         style={{
-          paddingTop: '1em',
-          paddingBottom: matchesSM ? '1em' : 0,
+          paddingTop: "1em",
+          paddingBottom: matchesSM ? "1em" : 0,
           backgroundColor: theme.palette.common.light,
-          borderBottom: '1px solid rgb(0 0 0 / 12%)',
+          borderBottom: "1px solid rgb(0 0 0 / 12%)",
         }}
         className={classes.root}
       >
-        <Grid container alignItems="center" justifyContent="space-between">
+        <Grid
+          container
+          wrap="nowrap"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           {!matchesSM && (
             <Grid item xs={2}>
               {logoContainer}
@@ -419,13 +427,13 @@ export default function PrimarySearchAppBar(props) {
                 >
                   {props.userToken !== null &&
                     props.user &&
-                    props.user?.roles.some((x) => x.name === 'Manager') && (
+                    props.user?.roles.some((x) => x.name === "Manager") && (
                       <>
                         <Grid
                           item
                           style={{
-                            alignSelf: 'flex-end',
-                            marginTop: '0.3em',
+                            alignSelf: "flex-end",
+                            marginTop: "0.3em",
                           }}
                         >
                           <Link href="/dashboard">
@@ -433,7 +441,7 @@ export default function PrimarySearchAppBar(props) {
                               <StorefrontIcon
                                 style={{
                                   color: theme.palette.common.primary,
-                                  fontSize: '2rem',
+                                  fontSize: "2rem",
                                 }}
                               />
                             </a>
@@ -446,13 +454,13 @@ export default function PrimarySearchAppBar(props) {
 
                   {props.userToken !== null &&
                     props.user &&
-                    props.user?.roles.some((x) => x.name === 'Admin') && (
+                    props.user?.roles.some((x) => x.name === "Admin") && (
                       <>
                         <Grid
                           item
                           style={{
-                            alignSelf: 'flex-end',
-                            marginTop: '0.3em',
+                            alignSelf: "flex-end",
+                            marginTop: "0.3em",
                           }}
                         >
                           <Link href="/adminDashboard">
@@ -460,7 +468,7 @@ export default function PrimarySearchAppBar(props) {
                               <StorefrontIcon
                                 style={{
                                   color: theme.palette.common.primary,
-                                  fontSize: '2rem',
+                                  fontSize: "2rem",
                                 }}
                               />
                             </a>
@@ -480,8 +488,8 @@ export default function PrimarySearchAppBar(props) {
                         onClick={(e) => setProfileMenu(e.currentTarget)}
                         color="inherit"
                         style={{
-                          padding: '0px 5px',
-                          backgroundColor: 'transparent',
+                          padding: "0px 5px",
+                          backgroundColor: "transparent",
                         }}
                       >
                         {props.user?.photo ? (
@@ -493,7 +501,7 @@ export default function PrimarySearchAppBar(props) {
                           <AccountCircle
                             style={{
                               color: theme.palette.common.primary,
-                              fontSize: '2rem',
+                              fontSize: "2rem",
                             }}
                           />
                         )}
@@ -510,17 +518,17 @@ export default function PrimarySearchAppBar(props) {
                           <Link href="/login">
                             <a
                               style={{
-                                textDecoration: 'none',
+                                textDecoration: "none",
                                 color: theme.palette.common.primary,
                               }}
                             >
-                              {t['Log In']}
+                              {t["Log In"]}
                             </a>
                           </Link>
                           <span
                             style={{
-                              marginLeft: '0.7em',
-                              marginRight: '0.7em',
+                              marginLeft: "0.7em",
+                              marginRight: "0.7em",
                             }}
                           >
                             /
@@ -528,11 +536,11 @@ export default function PrimarySearchAppBar(props) {
                           <Link href="/signup">
                             <a
                               style={{
-                                textDecoration: 'none',
+                                textDecoration: "none",
                                 color: theme.palette.common.primary,
                               }}
                             >
-                              {t['Sign Up']}
+                              {t["Sign Up"]}
                             </a>
                           </Link>
                         </>
@@ -545,15 +553,15 @@ export default function PrimarySearchAppBar(props) {
                   <Grid
                     item
                     style={{
-                      alignSelf: 'flex-end',
-                      marginTop: '0.3em',
+                      alignSelf: "flex-end",
+                      marginTop: "0.3em",
                     }}
                   >
                     <Link href="/cart">
-                      <a style={{ textDecoration: 'none' }}>
+                      <a style={{ textDecoration: "none" }}>
                         <img
                           src="/dev/cart.svg"
-                          style={{ width: '2em', height: '2em' }}
+                          style={{ width: "2em", height: "2em" }}
                         />
                       </a>
                     </Link>

@@ -28,8 +28,6 @@ export const login = async (email, password) => {
     password,
   });
 
-  console.log(publicRuntimeConfig.backend, "test");
-
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
