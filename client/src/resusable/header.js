@@ -369,9 +369,9 @@ export default function PrimarySearchAppBar(props) {
       <Grid item component={Link} href="/" style={{ cursor: "pointer" }}>
         <Typography variant="h6" noWrap>
           <img
-            src="/dev/logo.png"
+            src="/dev/logo.jpeg"
             style={{
-              width: matchesSM ? "65px" : "150px",
+              width: matchesSM ? "65px" : "200px",
               height: matchesSM ? "26px" : "50px",
             }}
             alt="logo"
