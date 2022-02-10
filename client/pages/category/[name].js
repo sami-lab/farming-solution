@@ -170,8 +170,8 @@ export default function Category(props) {
       <Grid item style={{ marginTop: "2em" }} className={classes.root}>
         <Grid container justify="space-between">
           <Grid item>
+            variant="outlined"
             <Button
-              variant="outlined"
               style={{
                 backgroundColor: "transparent",
                 borderColor: theme.palette.common.primary,
