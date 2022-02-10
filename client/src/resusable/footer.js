@@ -167,15 +167,18 @@ export default function Footer(props) {
                 }}
               >
                 <img
-                  src="dev/logo.png"
+                  src="dev/logo.jpeg"
                   style={{
-                    width: "100px",
+                    width: "200px",
                     height: "60px",
-                    marginLeft: "2em",
                   }}
                 />
               </div>
-              <Typography component="h4" className={classes.copyRightText}>
+              <Typography
+                component="h4"
+                style={{ marginLeft: "0.8em" }}
+                className={classes.copyRightText}
+              >
                 © Copyright 2015-2022
               </Typography>
 
