@@ -66,11 +66,11 @@ export default function Login(props) {
                 </Typography>
               </Grid>
               {/* for Image */}
-              <Grid item>
+              <Grid item style={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src="/dev/login.png"
                   alt="login"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "60%", height: "50%" }}
                 />
               </Grid>
             </Grid>
@@ -85,9 +85,7 @@ export default function Login(props) {
           <Grid container direction="column">
             {/* For heading  */}
             <Grid item>
-              <Typography variant="subtitle1">
-                {t["Log in to Creative "]}
-              </Typography>
+              <Typography variant="subtitle1">Log in to Hello Farm</Typography>
             </Grid>
             {/* for form */}
             <Grid item>
@@ -128,9 +126,9 @@ export default function Login(props) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container style={{ marginTop: "5em" }}>
+      {/* <Grid container style={{ marginTop: "10em" }}>
         <AuthFooter languageJson={t} />
-      </Grid>
+      </Grid> */}
     </>
   );
 }

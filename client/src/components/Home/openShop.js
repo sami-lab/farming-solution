@@ -49,7 +49,7 @@ export default function OpenShop(props) {
               fontWeight: "700",
             }}
           >
-            {t["Share Farming Solutions & Earn Cash"]}
+            {t["Share Hello Farm & Earn Cash"]}
           </Typography>
           <Typography className={classes.label} align="center">
             {t["Start sharing to earn 15% on all new customer orders."]}

@@ -85,7 +85,7 @@ export default function Perks(props) {
                 >
                   {
                     t[
-                      "Farming Solutions is a platform to get your products in front of over 7 million members wherever they are."
+                      "Hello Farm is a platform to get your products in front of over 7 million members wherever they are."
                     ]
                   }
                 </p>

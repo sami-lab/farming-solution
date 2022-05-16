@@ -194,7 +194,7 @@ export default function Create(props) {
                     notchedOutline: classes.inputOutline,
                   },
                 }}
-                placeholder={t["Add Product Title For Farming Solutions"]}
+                placeholder={t["Add Product Title For Hello Farm"]}
                 required
                 value={product.title}
                 onChange={(e) =>
@@ -454,7 +454,7 @@ export default function Create(props) {
                     notchedOutline: classes.inputOutline,
                   },
                 }}
-                placeholder={t["Add Product Description For Farming Solutions"]}
+                placeholder={t["Add Product Description For Hello Farm"]}
                 required
                 value={product.description}
                 onChange={(e) =>
@@ -866,7 +866,7 @@ export default function Create(props) {
               {product.title.length > 0
                 ? product.title
                 : t["Your Product Name"]}{" "}
-              | {t["Farming Solutions"]}
+              | {t["Hello Farm"]}
             </Typography>
             <Typography className={classes.label}>
               https://creativemarket.com/{shop.shopName.replace(" ", "-")}/

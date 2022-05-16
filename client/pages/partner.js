@@ -294,7 +294,7 @@ export default function CreateShop(props) {
               >
                 {
                   t[
-                    "Our community of producers share their stories about how Farming Solutions helps them spend more time doing what they love."
+                    "Our community of producers share their stories about how Hello Farm helps them spend more time doing what they love."
                   ]
                 }
               </Typography>

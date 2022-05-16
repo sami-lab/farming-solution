@@ -168,7 +168,7 @@ export default function OpenShopDialog(props) {
           </Grid>
           <Grid item xs={12} container direction="column">
             <label className={classes.label}>
-              {t["Why do you want to open a shop on Farming Solutions?"]}
+              {t["Why do you want to open a shop on Hello Farm?"]}
             </label>
             <textarea
               className={classes.input}

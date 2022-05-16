@@ -88,7 +88,7 @@ export default function SignUp(props) {
             {/* For heading  */}
             <Grid item>
               <Typography variant="subtitle1">
-                {t["Sign up for Farming Solutions"]}
+                {t["Sign up for Hello Farm"]}
               </Typography>
             </Grid>
             {/* for form */}
@@ -142,9 +142,9 @@ export default function SignUp(props) {
           </Grid>
         </Grid>
       </Grid>
-      <div style={{ marginTop: "2em" }}>
+      {/* <div style={{ marginTop: "2em" }}>
         <AuthFooter languageJson={t} />
-      </div>
+      </div> */}
     </>
   );
 }

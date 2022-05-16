@@ -81,7 +81,7 @@ const sample = {
       name: "Jem Thamos",
       profile: "/dev/empty.jpg", //if there is no photo use any sample user photo
       message:
-        "Wow! SO many amazing elements!! Easily one of my best purchases on Farming Solutions!",
+        "Wow! SO many amazing elements!! Easily one of my best purchases on Hello Farm!",
       rating: 5,
       date: new Date(), //should be in format 1 min ago
     },
