@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   Grid,
   Typography,
   Hidden,
   useMediaQuery,
   useTheme,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import AuthHeader from '../../src/resusable/authHeader';
-import AuthFooter from '../../src/resusable/footer';
-import ResetPassword from '../../src/components/authentication/resetPassword';
+import AuthHeader from "../../src/resusable/authHeader";
+import AuthFooter from "../../src/resusable/footer";
+import ResetPassword from "../../src/components/authentication/resetPassword";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: '3.5em',
-    paddingLeft: '10em',
-    paddingRight: '10em',
+    paddingTop: "3.5em",
+    paddingLeft: "10em",
+    paddingRight: "10em",
 
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '1em',
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "1em",
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
 }));
@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const t = props.languageJson;
   const router = useRouter();
-  if (props.user !== null && props.userToken !== null) router.push('/');
+  if (props.user !== null && props.userToken !== null) router.push("/");
 
   const classes = useStyles();
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function Login(props) {
                 <Typography variant="h4">
                   {
                     t[
-                      'Welcome to the marketplace built to support amazing Farm to Home producers like you.'
+                      "Welcome to the marketplace built to support amazing Farm to Home producers like you."
                     ]
                   }
                 </Typography>
@@ -63,7 +63,7 @@ export default function Login(props) {
                 <img
                   src="/dev/helpline.png"
                   alt="login"
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ width: "100%", height: "100%" }}
                 />
               </Grid>
             </Grid>
@@ -73,24 +73,24 @@ export default function Login(props) {
           item
           md={5}
           xs={12}
-          style={{ paddingLeft: matchesSM ? 0 : '4em' }}
+          style={{ paddingLeft: matchesSM ? 0 : "4em" }}
         >
           <Grid container direction="column">
             {/* For heading  */}
             <Grid item>
-              <Typography variant="subtitle1">{t['Reset password']}</Typography>
+              <Typography variant="subtitle1">{t["Reset password"]}</Typography>
             </Grid>
             {/* for form */}
             <Grid item>
-              {' '}
+              {" "}
               <ResetPassword {...props} languageJson={t} />
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <div style={{ marginTop: '2em' }}>
+      {/* <div style={{ marginTop: '2em' }}>
         <AuthFooter languageJson={t} />
-      </div>
+      </div> */}
     </>
   );
 }

@@ -118,7 +118,14 @@ export default function Category(props) {
       let response = await getProductByCategory(category);
       let result = await response.json();
       if (result.status === "success") {
-        setCategoryProducts(result.data.doc);
+        setCategoryProducts(
+          result.data.doc.map((x) => {
+            return {
+              ...x,
+              shop: x.shopId,
+            };
+          })
+        );
       }
     } catch (e) {
       console.log(e.message);
@@ -133,7 +140,7 @@ export default function Category(props) {
   useEffect(() => {
     setCategory(cat.filter((x) => x.name === router.query.name)[0]);
     getProducts(router.query.name);
-  }, [router.query.name]);
+  }, [router.query.name, props.categories]);
   if (!category) {
     return <Error message={t["Category not found"]} />;
   }
@@ -170,7 +177,6 @@ export default function Category(props) {
       <Grid item style={{ marginTop: "2em" }} className={classes.root}>
         <Grid container justify="space-between">
           <Grid item>
-            variant="outlined"
             <Button
               style={{
                 backgroundColor: "transparent",

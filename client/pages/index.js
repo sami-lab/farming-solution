@@ -51,7 +51,10 @@ export default function Home(props) {
         style={{ marginTop: matchesSM ? "1em" : "5em" }}
         className={classes.root}
       >
-        <TopBanner languageJson={props.languageJson} />
+        <TopBanner
+          languageJson={props.languageJson}
+          categories={props.categories.slice(0, 6)}
+        />
       </Grid>
 
       <Grid item style={{ marginTop: "5em" }} className={classes.root}>

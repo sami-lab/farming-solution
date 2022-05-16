@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 import {
   Grid,
@@ -8,15 +8,15 @@ import {
   IconButton,
   CircularProgress,
   Typography,
-} from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
-import { signUp } from '../../../api/authentication/login';
+import { signUp } from "../../../api/authentication/login";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -24,18 +24,18 @@ const useStyles = makeStyles((theme) => ({
   }, //this is for label
   input: {
     ...theme.typography.input,
-    borderRadius: '3px',
-    background: '#fbfbfd',
-    boxShadow: 'none',
-    marginTop: '3px',
+    borderRadius: "3px",
+    background: "#fbfbfd",
+    boxShadow: "none",
+    marginTop: "3px",
   },
   inputOutline: {
-    border: '1px solid #899298',
+    border: "1px solid #899298",
   },
   forgetPassword: {
-    cursor: 'pointer',
+    cursor: "pointer",
     color: theme.palette.common.primary,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.common.darkBlack,
     },
   },
@@ -53,82 +53,82 @@ export default function Signup(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     status: false,
-    message: '',
+    message: "",
   });
   const [user, setUser] = useState({
     firstName: {
-      value: '',
+      value: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     },
     lastName: {
-      value: '',
+      value: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     },
     email: {
-      value: '',
+      value: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     },
     userName: {
-      value: '',
+      value: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     },
     password: {
-      value: '',
+      value: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     },
   });
 
   const submitData = async () => {
     setError({
       status: false,
-      message: '',
+      message: "",
     });
-    if (user.firstName.value == '') {
+    if (user.firstName.value == "") {
       setUser({
         ...user,
         userName: {
           value: user.firstName.value,
           error: true,
-          errorMessage: t['First Name cannot be empty'],
+          errorMessage: t["First Name cannot be empty"],
         },
       });
       return;
     }
 
-    if (user.email.value == '') {
+    if (user.email.value == "") {
       setUser({
         ...user,
         userName: {
           value: user.email.value,
           error: true,
-          errorMessage: t['Email cannot be empty'],
+          errorMessage: t["Email cannot be empty"],
         },
       });
       return;
     }
-    if (user.userName.value == '') {
+    if (user.userName.value == "") {
       setUser({
         ...user,
         userName: {
           value: user.userName.value,
           error: true,
-          errorMessage: t['Username cannot be empty'],
+          errorMessage: t["Username cannot be empty"],
         },
       });
       return;
     }
-    if (user.password.value == '') {
+    if (user.password.value == "") {
       setUser({
         ...user,
         userName: {
           value: user.password.value,
           error: true,
-          errorMessage: t['Password cannot be empty'],
+          errorMessage: t["Password cannot be empty"],
         },
       });
       return;
@@ -143,12 +143,12 @@ export default function Signup(props) {
         user.password.value
       );
       const result = await response.json();
-      if (result.status === 'success') {
+      if (result.status === "success") {
         console.log(result.data.user, result.token);
-        localStorage.setItem('farmingToken', result.token);
+        localStorage.setItem("farmingToken", result.token);
         props.setUser(result.data.user);
         props.setUserToken(result.token);
-        router.push('/');
+        router.push("/");
       } else {
         setError({
           status: true,
@@ -169,12 +169,12 @@ export default function Signup(props) {
   return (
     <Grid container direction="column">
       {/* Name */}
-      <Grid item style={{ marginTop: '1em' }}>
+      <Grid item style={{ marginTop: "1em" }}>
         <Grid container spacing={2}>
           {/* FirstName */}
           <Grid item xs={6}>
             <label htmlFor="firstname" className={classes.label}>
-              {t['First Name*']}
+              {t["First Name*"]}
             </label>
             <TextField
               id="firstname"
@@ -190,7 +190,7 @@ export default function Signup(props) {
               required
               error={user.firstName.error}
               helperText={
-                user.firstName.error ? user.firstName.errorMessage : ''
+                user.firstName.error ? user.firstName.errorMessage : ""
               }
               value={user.firstName.value}
               onChange={(e) =>
@@ -199,7 +199,7 @@ export default function Signup(props) {
                   firstName: {
                     value: e.target.value,
                     error: false,
-                    errorMessage: '',
+                    errorMessage: "",
                   },
                 })
               }
@@ -208,7 +208,7 @@ export default function Signup(props) {
           {/* Lastname */}
           <Grid item xs={6}>
             <label htmlFor="lastname" className={classes.label}>
-              {t['Last Name']}
+              {t["Last Name"]}
             </label>
             <TextField
               id="lastname"
@@ -223,7 +223,7 @@ export default function Signup(props) {
               }}
               required
               error={user.lastName.error}
-              helperText={user.lastName.error ? user.lastName.errorMessage : ''}
+              helperText={user.lastName.error ? user.lastName.errorMessage : ""}
               value={user.lastName.value}
               onChange={(e) =>
                 setUser({
@@ -231,7 +231,7 @@ export default function Signup(props) {
                   lastName: {
                     value: e.target.value,
                     error: false,
-                    errorMessage: '',
+                    errorMessage: "",
                   },
                 })
               }
@@ -240,9 +240,9 @@ export default function Signup(props) {
         </Grid>
       </Grid>
       {/* Email */}
-      <Grid item style={{ marginTop: '1.25em' }}>
+      <Grid item style={{ marginTop: "1.25em" }}>
         <label htmlFor="email" className={classes.label}>
-          {t['Email*']}
+          {t["Email*"]}
         </label>
         <TextField
           id="email"
@@ -257,7 +257,7 @@ export default function Signup(props) {
           }}
           required
           error={user.email.error}
-          helperText={user.email.error ? user.email.errorMessage : ''}
+          helperText={user.email.error ? user.email.errorMessage : ""}
           value={user.email.value}
           onChange={(e) =>
             setUser({
@@ -265,16 +265,16 @@ export default function Signup(props) {
               email: {
                 value: e.target.value,
                 error: false,
-                errorMessage: '',
+                errorMessage: "",
               },
             })
           }
         />
       </Grid>
       {/* username */}
-      <Grid item style={{ marginTop: '1.25em' }}>
+      <Grid item style={{ marginTop: "1.25em" }}>
         <label htmlFor="username" className={classes.label}>
-          {t['Username*']}
+          {t["Username*"]}
         </label>
 
         <TextField
@@ -290,7 +290,7 @@ export default function Signup(props) {
           }}
           required
           error={user.userName.error}
-          helperText={user.userName.error ? user.userName.errorMessage : ''}
+          helperText={user.userName.error ? user.userName.errorMessage : ""}
           value={user.userName.value}
           onChange={(e) =>
             setUser({
@@ -298,16 +298,16 @@ export default function Signup(props) {
               userName: {
                 value: e.target.value,
                 error: false,
-                errorMessage: '',
+                errorMessage: "",
               },
             })
           }
         />
       </Grid>
       {/* Password */}
-      <Grid item style={{ marginTop: '1.25em' }}>
+      <Grid item style={{ marginTop: "1.25em" }}>
         <label htmlFor="password" className={classes.label}>
-          {t['Password*']}
+          {t["Password*"]}
         </label>
 
         <TextField
@@ -315,8 +315,8 @@ export default function Signup(props) {
           variant="outlined"
           fullWidth
           size="small"
-          placeholder="8+ characters"
-          type={showPassword ? 'text' : 'password'}
+          placeholder="5+ characters"
+          type={showPassword ? "text" : "password"}
           InputProps={{
             classes: {
               root: classes.input,
@@ -330,7 +330,7 @@ export default function Signup(props) {
           }}
           required
           error={user.password.error}
-          helperText={user.password.error ? user.password.errorMessage : ''}
+          helperText={user.password.error ? user.password.errorMessage : ""}
           value={user.password.value}
           onChange={(e) =>
             setUser({
@@ -338,34 +338,34 @@ export default function Signup(props) {
               password: {
                 value: e.target.value,
                 error: false,
-                errorMessage: '',
+                errorMessage: "",
               },
             })
           }
         />
       </Grid>
       {error.status && (
-        <Grid item style={{ marginTop: '1em' }}>
+        <Grid item style={{ marginTop: "1em" }}>
           <Typography
             variant="subtitle2"
-            style={{ display: 'flex', alignItems: 'center' }}
+            style={{ display: "flex", alignItems: "center" }}
           >
-            {' '}
+            {" "}
             <ErrorOutlineIcon
-              style={{ fill: 'red', marginRight: '4px' }}
-            />{' '}
+              style={{ fill: "red", marginRight: "4px" }}
+            />{" "}
             {error.message}
           </Typography>
         </Grid>
       )}
-      <Grid item style={{ marginTop: '1.5em' }}>
+      <Grid item style={{ marginTop: "1.5em" }}>
         <Button
           fullWidth
           className={classes.button}
           disabled={loading}
           onClick={submitData}
         >
-          {loading ? <CircularProgress /> : t['Create Account']}
+          {loading ? <CircularProgress /> : t["Create Account"]}
         </Button>
       </Grid>
     </Grid>
