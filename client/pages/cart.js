@@ -192,15 +192,14 @@ export default function Cart(props) {
         action: "addToCart",
       });
       const response = await deleteCart(props.userToken, id);
-      const result = await response.json();
-      console.log(id, cartItems, "-----------------------");
+
       setShowToast({
         active: true,
         message: "Item deleted Successfully",
         severity: "success",
       });
 
-      setCartItems(cartItems.filter((x) => x._id !== id));
+      setCartItems((c) => c.filter((x) => x._id !== id));
 
       setLoading({
         active: false,

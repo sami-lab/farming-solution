@@ -513,7 +513,7 @@ export default function Shopsetup(props) {
                   <Typography className={classes.label}>
                     $
                     {parseFloat(product.deliveryPrice) +
-                      parseFloat(product.price)}
+                      parseFloat(product.price) * quantity}
                   </Typography>
                 </Grid>
               </Grid>
@@ -540,8 +540,7 @@ export default function Shopsetup(props) {
               {/* buy now */}
               <Grid
                 item
-                style={{ width: "100%" }}
-                style={{ marginTop: "1em", marginBottom: "1em" }}
+                style={{ width: "100%", marginTop: "1em", marginBottom: "1em" }}
               >
                 <Button
                   fullWidth={true}

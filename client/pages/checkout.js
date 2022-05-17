@@ -96,7 +96,6 @@ export default function CheckoutProduct(props) {
             userToken={props.userToken}
             //checkoutHandler={checkoutHandler}
             languageJson={t}
-            user={props.user}
           />
         </Grid>
 

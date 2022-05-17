@@ -167,7 +167,7 @@ export default function Footer(props) {
                 }}
               >
                 <img
-                  src="dev/logo.jpeg"
+                  src="/dev/logo.jpeg"
                   style={{
                     width: "200px",
                     height: "60px",

@@ -28,12 +28,9 @@ exports.buyNow = catchAsync(async (req, res, next) => {
           ///source: stripeToken.card.id,
           customer: customer.id, // set the customer id
           amount:
-            (product.price +
-              product.deliveryPrice +
-              parseFloat(process.env.platformFee + process.env.gst)) *
-            100 *
-            quantity,
-
+            product.price * quantity +
+            parseFloat(product.deliveryPrice) +
+            parseFloat(process.env.platformFee + process.env.gst) * 100,
           currency: "usd",
           description: `Product ${product.title} Purchased `,
           receipt_email: stripeToken.email,
@@ -140,11 +137,12 @@ exports.checkout = catchAsync(async (req, res, next) => {
     (cartItems.reduce((total, item) => {
       let pr = products.find((x) => x._id == item.id);
 
-      return total + (pr.price + pr.deliveryPrice) * item.quantity;
+      return total + pr.price * item.quantity + pr.deliveryPrice;
     }, 0) +
       parseFloat(process.env.platformFee + process.env.gst)) *
     100;
 
+  console.log(total);
   const fakeKey = uuidv4();
   return stripe.customers
     .create({
@@ -156,7 +154,7 @@ exports.checkout = catchAsync(async (req, res, next) => {
         {
           ///source: stripeToken.card.id,
           customer: customer.id, // set the customer id
-          amount: total, // 25
+          amount: Math.ceil(total), // 25
           currency: "usd",
           description: `${products.length} Products Purchased `,
           receipt_email: req.user.email,

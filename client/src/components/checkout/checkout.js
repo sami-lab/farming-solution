@@ -185,7 +185,7 @@ export default function Checkout(props) {
                     {/* for Price */}
                     <Grid item>
                       <Typography variant="h6" align="right">
-                        ${(item.price + item.deliveryPrice) * item.quantity}
+                        ${item.price * item.quantity + item.deliveryPrice}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -243,8 +243,8 @@ export default function Checkout(props) {
                 {props.products.reduce((total, item) => {
                   return (
                     total +
-                    parseFloat(item.price + item.deliveryPrice) *
-                      parseInt(item.quantity)
+                    parseFloat(item.price) * parseInt(item.quantity) +
+                    parseFloat(item.deliveryPrice)
                   );
                 }, 0)}{" "}
                 USD
@@ -299,8 +299,8 @@ export default function Checkout(props) {
                 {props.products.reduce((total, item) => {
                   return (
                     total +
-                    parseFloat(item.price + item.deliveryPrice) *
-                      parseInt(item.quantity)
+                    parseFloat(item.price) * parseInt(item.quantity) +
+                    parseFloat(item.deliveryPrice)
                   );
                 }, 0) +
                   parseFloat(publicRuntimeConfig.gst) +

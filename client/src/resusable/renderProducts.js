@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Grid,
   Card,
@@ -10,10 +10,10 @@ import {
   Button,
   useTheme,
   Link,
-} from '@material-ui/core';
-import getConfig from 'next/config';
+} from "@material-ui/core";
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -43,15 +43,15 @@ export default function RenderProducts(props) {
                 alt={item.title}
                 image={
                   item.images
-                    ? publicRuntimeConfig.backend + '/files/' + item.images[0]
+                    ? publicRuntimeConfig.backend + "/files/" + item.images[0]
                     : item.image
                 }
                 title={item.title}
                 style={{
-                  height: 'calc(100% + 2px)',
+                  height: "calc(100% + 2px)",
 
-                  width: 'calc(100% + 2px)',
-                  margin: '-1px',
+                  width: "calc(100% + 2px)",
+                  margin: "-1px",
                   zIndex: 1,
                 }}
               />
@@ -64,29 +64,29 @@ export default function RenderProducts(props) {
                     <Typography
                       variant="h1"
                       component="h1"
-                      style={{ fontSize: '1rem', fontFamily: 'Averta' }}
+                      style={{ fontSize: "1rem", fontFamily: "Averta" }}
                     >
                       {item.title?.length > 15
-                        ? item.title?.toString().slice(0, 15) + '...'
+                        ? item.title?.toString().slice(0, 15) + "..."
                         : item.title}
                     </Typography>
                     <Typography
                       style={{
-                        fontSize: '0.66rem',
-                        fontFamily: 'Averta',
-                        color: '#949291',
-                        textOverflow: 'ellipsis',
+                        fontSize: "0.66rem",
+                        fontFamily: "Averta",
+                        color: "#949291",
+                        textOverflow: "ellipsis",
                         lineHeight: 1.3,
                       }}
                     >
-                      by{' '}
+                      by{" "}
                       <Link href={`/shop/${item.shop?._id}`}>
-                        <a style={{ textDecoration: 'none', color: '#615f5c' }}>
+                        <a style={{ textDecoration: "none", color: "#615f5c" }}>
                           {item.shop?.shopName}
                         </a>
-                      </Link>{' '}
-                      in{' '}
-                      <a style={{ textDecoration: 'none', color: '#615f5c' }}>
+                      </Link>{" "}
+                      in{" "}
+                      <a style={{ textDecoration: "none", color: "#615f5c" }}>
                         {item.productCategory}
                       </a>
                     </Typography>
@@ -95,20 +95,17 @@ export default function RenderProducts(props) {
                     <div
                       style={{
                         fontWeight: 700,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: '6px 5px',
-                        minWidth: '40px',
-                        minHeight: '25px',
-                        borderRadius: '3px',
-                        backgroundColor: '#dff8f6',
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "6px 5px",
+                        minWidth: "40px",
+                        minHeight: "25px",
+                        borderRadius: "3px",
+                        backgroundColor: "#dff8f6",
                       }}
                     >
-                      <label className={classes.label}>
-                        {' '}
-                        {item.price + item.deliveryPrice}$
-                      </label>
+                      <label className={classes.label}> {item.price}$</label>
                     </div>
                   </Grid>
                 </Grid>
@@ -123,10 +120,10 @@ export default function RenderProducts(props) {
                     fullWidth
                     onClick={() => props.cartHandler(item._id)}
                     style={{
-                      backgroundColor: 'transparent',
+                      backgroundColor: "transparent",
                       color: theme.palette.common.primary,
                       borderColor: theme.palette.common.primary,
-                      marginTop: '0.3em',
+                      marginTop: "0.3em",
                     }}
                   >
                     Add to Cart

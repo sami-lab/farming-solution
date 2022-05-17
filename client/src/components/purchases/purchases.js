@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import getConfig from 'next/config';
+import React, { useState } from "react";
+import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
 
-import Link from 'next/link';
+import Link from "next/link";
 import {
   Button,
   Grid,
@@ -12,39 +12,39 @@ import {
   TextField,
   MenuItem,
   IconButton,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '2em',
-    paddingRight: '2em',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '1em',
-      paddingRight: '1em',
+    paddingLeft: "2em",
+    paddingRight: "2em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
     },
   },
   alert: {
-    padding: '4px 16px',
+    padding: "4px 16px",
   },
   label: {
     ...theme.typography.label,
   },
   input: {
     ...theme.typography.input,
-    borderRadius: '3px',
-    background: '#fbfbfd',
-    boxShadow: 'none',
-    marginTop: '3px',
-    '&::placeholder': {
-      fontFamily: 'Averta',
+    borderRadius: "3px",
+    background: "#fbfbfd",
+    boxShadow: "none",
+    marginTop: "3px",
+    "&::placeholder": {
+      fontFamily: "Averta",
       fontWeight: 400,
-      fontSize: '1.1rem',
+      fontSize: "1.1rem",
     },
   },
   inputOutline: {
-    border: '1px solid #899298',
+    border: "1px solid #899298",
   },
 }));
 
@@ -59,12 +59,12 @@ export default function Purchases(props) {
       <Grid
         item
         container
-        style={{ marginTop: '2em' }}
+        style={{ marginTop: "2em" }}
         className={classes.root}
         alignItems="center"
       >
         <Grid item>
-          <Typography variant="subtitle1">{t['Your Products']}</Typography>
+          <Typography variant="subtitle1">{t["Your Products"]}</Typography>
         </Grid>
       </Grid>
       {/* products Items */}
@@ -72,7 +72,7 @@ export default function Purchases(props) {
       <Grid
         container
         direction="column"
-        style={{ borderTop: '1px solid #d5d5d8' }}
+        style={{ borderTop: "1px solid #d5d5d8" }}
         className={classes.root}
         spacing={2}
       >
@@ -81,8 +81,8 @@ export default function Purchases(props) {
             <Grid
               item
               style={{
-                borderBottom: '1px solid #d5d5d8',
-                padding: '24px 0',
+                borderBottom: "1px solid #d5d5d8",
+                padding: "24px 0",
               }}
             >
               <Grid container alignItems="center">
@@ -91,13 +91,13 @@ export default function Purchases(props) {
                   <img
                     src={
                       publicRuntimeConfig.backend +
-                      '/files/' +
+                      "/files/" +
                       item.productId.images[0]
                     }
                     style={{
-                      width: '125px',
-                      height: '76px',
-                      marginRight: '0.4em',
+                      width: "125px",
+                      height: "76px",
+                      marginRight: "0.4em",
                     }}
                   />
                 </Grid>
@@ -108,21 +108,21 @@ export default function Purchases(props) {
                   direction="column"
                   style={{
                     flex: 1,
-                    marginLeft: '0.5em',
-                    alignSelf: 'flex-start',
+                    marginLeft: "0.5em",
+                    alignSelf: "flex-start",
                   }}
                 >
                   {/* for title */}
                   <Grid item>
                     <Typography variant="subtitle2">
                       <span style={{ color: theme.palette.common.primary }}>
-                        {' '}
+                        {" "}
                         {item.productId.title}
                       </span>
                     </Typography>
                   </Grid>
                   {/* for description */}
-                  <Grid item style={{ marginTop: '0.3em' }}>
+                  <Grid item style={{ marginTop: "0.3em" }}>
                     <Typography variant="subtitle2">
                       {item.productId.description}
                     </Typography>
@@ -136,20 +136,20 @@ export default function Purchases(props) {
                   alignItems="center"
                   style={{
                     flex: 1,
-                    marginLeft: '0.5em',
+                    marginLeft: "0.5em",
                   }}
                 >
                   {/* for title */}
                   <Grid item>
                     <Typography variant="subtitle2">
                       <span style={{ color: theme.palette.common.primary }}>
-                        {' '}
+                        {" "}
                         {new Date(item.Date).toDateString()}
                       </span>
                     </Typography>
                   </Grid>
                   {/* for description */}
-                  <Grid item style={{ marginTop: '0.3em' }}>
+                  <Grid item style={{ marginTop: "0.3em" }}>
                     Quantity :
                     <Typography component="span" variant="subtitle2">
                       {item.quantity}
@@ -160,9 +160,8 @@ export default function Purchases(props) {
                 <Grid item>
                   <Typography variant="h6" align="right">
                     $
-                    {item.productId.price *
-                      item.productId.deliveryPrice *
-                      item.quantity}
+                    {item.productId.price * item.quantity +
+                      item.productId.deliveryPrice}
                   </Typography>
                 </Grid>
               </Grid>
