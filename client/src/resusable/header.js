@@ -408,7 +408,7 @@ export default function PrimarySearchAppBar(props) {
           <Grid item md={10} xs={12}>
             <Grid container alignItems="center" justify="space-between">
               {matchesSM && (
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                   {logoContainer}
                 </Grid>
               )}
@@ -418,7 +418,7 @@ export default function PrimarySearchAppBar(props) {
                   {desktopList}
                 </Grid>
               )}
-              <Grid item md={3} xs={6}>
+              <Grid item md={3} xs={7}>
                 <Grid
                   container
                   spacing={props.userToken !== null ? 2 : 1}
