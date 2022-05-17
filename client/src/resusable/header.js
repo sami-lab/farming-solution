@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Button,
@@ -113,6 +113,16 @@ export default function PrimarySearchAppBar(props) {
       };
     })
   );
+  useEffect(() => {
+    setHeaderList(
+      props.categories.map((x) => {
+        return {
+          ...x,
+          popup: false,
+        };
+      })
+    );
+  }, [props.categories]);
   const [search, setSearch] = React.useState("");
   const [searchOption, setSearchOption] = React.useState("allProducts");
   const searchOptions = [
