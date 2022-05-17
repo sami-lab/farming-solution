@@ -753,7 +753,7 @@ export default function Shopsetup(props) {
       </Grid>
 
       {/* footer */}
-      <Grid item>
+      <Grid item container>
         <Footer {...props} languageJson={t} />
       </Grid>
     </Grid>

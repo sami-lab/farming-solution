@@ -283,7 +283,7 @@ export default function Shopsetup(props) {
   };
 
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" style={{ overflowX: "hidden" }}>
       <Grid item container>
         <Header {...props} languageJson={t} />
       </Grid>
@@ -481,7 +481,7 @@ export default function Shopsetup(props) {
       >
         <RenderProducts products={products} />
       </Grid>
-      <Grid item>
+      <Grid item container>
         <Footer languageJson={t} />
       </Grid>
     </Grid>

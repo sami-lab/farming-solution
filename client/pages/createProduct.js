@@ -226,7 +226,7 @@ export default function CreateShop(props) {
             languageJson={t}
           />
         </Grid>
-        <Grid item>
+        <Grid item container>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>

@@ -24,7 +24,7 @@ export default function RenderProducts(props) {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <Grid container justifyContent="center" spacing={2}>
+    <Grid container alignItems="flex-end" justifyContent="center" spacing={2}>
       {props.products.map((item, i) => (
         <Grid
           item

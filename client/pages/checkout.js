@@ -99,7 +99,7 @@ export default function CheckoutProduct(props) {
           />
         </Grid>
 
-        <Grid item style={{ marginTop: "2em" }}>
+        <Grid item container style={{ marginTop: "2em" }}>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>

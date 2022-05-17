@@ -631,7 +631,7 @@ export default function Manager(props) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item style={{ marginTop: "2em" }}>
+        <Grid item container style={{ marginTop: "2em" }}>
           <Footer {...props} languageJson={props.languageJson} />
         </Grid>
       </Grid>

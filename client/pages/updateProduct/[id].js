@@ -268,7 +268,7 @@ export default function UpdateProductPage(props) {
             languageJson={t}
           />
         </Grid>
-        <Grid item>
+        <Grid item container>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>

@@ -153,15 +153,16 @@ export default function Category(props) {
       {/* category name cober */}
       <Grid
         item
+        container={matchesSM}
         style={{
-          backgroundImage: "url(/dev/category.webp)",
-          backgroundSize: "cover",
-          display: "flex",
-          justifyContent: "center",
-          padding: "40px 0",
+          backgroundImage: matchesSM ? "unset" : "url(/dev/category.webp)",
+          backgroundSize: matchesSM ? "unset" : "cover",
+          display: matchesSM ? "unset" : "flex",
+          justifyContent: matchesSM ? "unset" : "center",
+          padding: matchesSM ? "0" : "40px 0",
         }}
       >
-        <div style={{ width: "60%" }}>
+        <div style={{ width: "100%" }}>
           <Typography
             variant="h1"
             style={{ marginBottom: "0.35em", textAlign: "center" }}
@@ -243,7 +244,7 @@ export default function Category(props) {
       <Grid item container direction="column" style={{ marginTop: "2em" }}>
         <OpenShop languageJson={t} />
       </Grid>
-      <Grid item>
+      <Grid item container>
         <Footer {...props} languageJson={t} />
       </Grid>
     </Grid>

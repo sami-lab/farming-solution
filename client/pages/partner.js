@@ -138,7 +138,7 @@ export default function CreateShop(props) {
 
   return (
     <CheckAuth {...props}>
-      <Grid container direction="column">
+      <Grid container direction="column" style={{ overflowX: "hidden" }}>
         <Grid item container>
           <OpenShop
             open={openShopModal}
@@ -336,7 +336,7 @@ export default function CreateShop(props) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item style={{ marginTop: "3em" }}>
+        <Grid item container style={{ marginTop: "3em" }}>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>

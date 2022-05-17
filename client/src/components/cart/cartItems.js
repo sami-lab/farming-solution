@@ -279,6 +279,7 @@ export default function Cart(props) {
         <Grid
           item
           md={4}
+          xs={12}
           style={{
             borderRadius: "3px",
             boxShadow: "0 10px 5px -5px rg",

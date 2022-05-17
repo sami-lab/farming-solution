@@ -263,7 +263,7 @@ export default function Profile(props) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item container>
           <Footer {...props} languageJson={t} />
         </Grid>
       </Grid>
