@@ -869,7 +869,7 @@ export default function Create(props) {
               | {t["Hello Farm"]}
             </Typography>
             <Typography className={classes.label}>
-              https://hellofarm.com/{shop.shopName.replace(" ", "-")}/
+              https://hellofarm.com/{shop?.shopName.replace(" ", "-")}/
               {product.title.length > 0
                 ? product.title
                 : t["your-product-name"]}
