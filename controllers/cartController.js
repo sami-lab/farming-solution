@@ -1,16 +1,16 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
-const Cart = require('../Models/cart');
+const Cart = require("../Models/cart");
 
 exports.delete = catchAsync(async (req, res, next) => {
   const doc = await Cart.findByIdAndDelete(req.params.id);
   if (!doc) {
-    return next(new AppError('Requested Id not found', 404));
+    return next(new AppError("Requested Id not found", 404));
   }
   res.status(204).json({
-    status: 'success',
-    data: 'deleted Successfully',
+    status: "success",
+    data: "deleted Successfully",
   });
 });
 exports.update = catchAsync(async (req, res, next) => {
@@ -24,10 +24,10 @@ exports.update = catchAsync(async (req, res, next) => {
     }
   );
   if (!doc) {
-    return next(new AppError('requested Id not found', 404));
+    return next(new AppError("requested Id not found", 404));
   }
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       doc,
     },
@@ -41,7 +41,7 @@ exports.createOne = catchAsync(async (req, res, next) => {
     userId: req.user.id,
   });
   res.status(201).json({
-    status: 'success',
+    status: "success",
     data: {
       doc,
     },
@@ -49,32 +49,32 @@ exports.createOne = catchAsync(async (req, res, next) => {
 });
 exports.getOne = catchAsync(async (req, res, next) => {
   let doc = await Cart.findById(req.params.id).populate({
-    path: 'product',
-    model: 'Product',
+    path: "product",
+    model: "Product",
     populate: {
-      path: 'shopId',
-      model: 'Shop',
+      path: "shopId",
+      model: "Shop",
     },
   });
-  if (!doc) return next(new AppError('requested Id not found', 404));
+  if (!doc) return next(new AppError("requested Id not found", 404));
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: { doc },
   });
 });
 exports.getAll = catchAsync(async (req, res, next) => {
   const doc = await Cart.find().populate({
-    path: 'product',
-    model: 'Product',
+    path: "product",
+    model: "Product",
     populate: {
-      path: 'shopId',
-      model: 'Shop',
+      path: "shopId",
+      model: "Shop",
     },
   });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     result: doc.length,
     data: { doc },
   });
@@ -86,16 +86,16 @@ exports.myCart = catchAsync(async (req, res, next) => {
 });
 exports.userCart = catchAsync(async (req, res, next) => {
   const doc = await Cart.find({ userId: req.params.userId }).populate({
-    path: 'product',
-    model: 'Product',
+    path: "product",
+    model: "Product",
     populate: {
-      path: 'shopId',
-      model: 'Shop',
+      path: "shopId",
+      model: "Shop",
     },
   });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     result: doc.length,
     data: { doc },
   });

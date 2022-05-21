@@ -243,7 +243,7 @@ export default function Checkout(props) {
                 {props.products.reduce((total, item) => {
                   return (
                     total +
-                    parseFloat(item.price) * parseInt(item.quantity) +
+                    parseFloat(item.price) * item.quantity +
                     parseFloat(item.deliveryPrice)
                   );
                 }, 0)}{" "}
@@ -299,7 +299,7 @@ export default function Checkout(props) {
                 {props.products.reduce((total, item) => {
                   return (
                     total +
-                    parseFloat(item.price) * parseInt(item.quantity) +
+                    parseFloat(item.price) * item.quantity +
                     parseFloat(item.deliveryPrice)
                   );
                 }, 0) +

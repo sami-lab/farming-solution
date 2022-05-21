@@ -61,8 +61,7 @@ export default function Home(props) {
       <Grid
         item
         container
-        justifyContent="center"
-        alignItems="center"
+        className={classes.root}
         style={{ margin: "4em 0px" }}
       >
         <Weather />

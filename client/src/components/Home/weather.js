@@ -1,9 +1,21 @@
-import { CircularProgress } from "@material-ui/core";
+import {
+  CircularProgress,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  TextField,
+} from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { useEffect, useState } from "react";
 import ReactWeather, { useOpenWeather } from "react-open-weather";
-
+import cities from "./cities.json";
 export default function Weather() {
   const [locData, setLocData] = useState();
+  //const [city, setCity] = useState("");
+
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const fetchLocation = () => {
     fetch("https://api.ipregistry.co/?key=wmz3h4w5kfomh9kb")
@@ -54,15 +66,61 @@ export default function Weather() {
     );
   }
   return (
-    <ReactWeather
-      isLoading={isLoading}
-      errorMessage={errorMessage}
-      data={data}
-      lang="en"
-      locationLabel={locData.city}
-      unitsLabels={{ temperature: "C", windSpeed: "Km/h" }}
-      showForecast
-      theme={{}}
-    />
+    <Grid container justifyContent="center" alignItems="center">
+      <Grid item md={6} xs={12}>
+        <Grid container direction="column" spacing={2}>
+          {/* For text  */}
+          <Grid item>
+            <Typography variant="h1" align={matchesSM ? "center" : "left"}>
+              Live Weather Update
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h2" align={matchesSM ? "center" : "left"}>
+              {locData.city}, {locData.country.name} Weather
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Autocomplete
+              id="location"
+              onChange={(event, newValue) => {
+                setLocData({
+                  city: newValue.name,
+                  latitude: newValue?.lat,
+                  longitude: newValue?.lng,
+                  country: {
+                    name: newValue.country,
+                  },
+                });
+              }}
+              //onInput={(e) => setCity(e.target.value)}
+              options={cities}
+              getOptionLabel={(option) => option.name}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  id="locationTextSidebar"
+                  label="Cities"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <ReactWeather
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+          data={data}
+          lang="en"
+          locationLabel={locData.city}
+          unitsLabels={{ temperature: "C", windSpeed: "Km/h" }}
+          showForecast
+          theme={{}}
+        />
+      </Grid>
+    </Grid>
   );
 }

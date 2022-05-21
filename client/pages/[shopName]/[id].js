@@ -112,7 +112,7 @@ export default function Shopsetup(props) {
   const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0.5);
   const [license, setLicense] = useState("personalLicence");
   const [product, setProduct] = useState({});
 
@@ -388,10 +388,10 @@ export default function Shopsetup(props) {
                 {/* Quantity */}
                 <Grid item>
                   <Grid container alignItems="center" spacing={2}>
-                    {quantity > 1 && (
+                    {quantity > 0.5 && (
                       <Grid item>
                         <IconButton
-                          onClick={() => setQuantity((q) => q - 1)}
+                          onClick={() => setQuantity((q) => q - 0.5)}
                           style={{
                             backgroundColor: "transparent",
                             padding: 0,
@@ -413,7 +413,7 @@ export default function Shopsetup(props) {
                     </Grid>
                     <Grid item>
                       <IconButton
-                        onClick={() => setQuantity((q) => q + 1)}
+                        onClick={() => setQuantity((q) => q + 0.5)}
                         style={{ backgroundColor: "transparent", padding: 0 }}
                       >
                         <AddIcon

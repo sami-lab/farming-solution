@@ -83,6 +83,7 @@ export default function Cart(props) {
       },
     });
   };
+
   return (
     <Grid container direction="column">
       {/* heading Your Cart*/}
@@ -188,14 +189,14 @@ export default function Cart(props) {
                                 style={{
                                   padding: 0,
                                   backgroundColor: "transparent",
-                                  opacity: item.quantity === 1 ? 0.3 : 1,
+                                  opacity: item.quantity === 0.5 ? 0.3 : 1,
                                 }}
-                                disabled={item.quantity === 1}
+                                disabled={item.quantity === 0.5}
                                 onClick={() => {
                                   setCartItems(() => {
                                     return cartItems.map((x) => {
                                       if (x._id == item._id) {
-                                        x.quantity = x.quantity - 1;
+                                        x.quantity = x.quantity - 0.5;
                                       }
                                       return x;
                                     });
@@ -217,7 +218,8 @@ export default function Cart(props) {
                                 }}
                               >
                                 {" "}
-                                {item.quantity} seat
+                                {item.quantity}{" "}
+                                {item.product.unit ? item.product.unit : "seat"}
                                 {item.quantity === 1 ? "" : "s"}
                               </Typography>
                               <IconButton
@@ -230,7 +232,7 @@ export default function Cart(props) {
                                   setCartItems(() => {
                                     return cartItems.map((x) => {
                                       if (x._id === item._id) {
-                                        x.quantity = x.quantity + 1;
+                                        x.quantity = x.quantity + 0.5;
                                       }
                                       return x;
                                     });

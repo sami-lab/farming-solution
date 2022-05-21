@@ -60,7 +60,6 @@ export default function TopBanner(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  console.log(props.categories);
   const trending = props.categories && props.categories.length > 0 && (
     <>
       <Grid item>
