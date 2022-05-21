@@ -68,7 +68,13 @@ export default function Weather() {
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item md={6} xs={12}>
-        <Grid container direction="column" spacing={2}>
+        <Grid
+          container
+          direction="column"
+          alignItems={matchesSM ? "center" : "flex-start"}
+          justifyContent={matchesSM ? "center" : "flex-start"}
+          spacing={2}
+        >
           {/* For text  */}
           <Grid item>
             <Typography variant="h1" align={matchesSM ? "center" : "left"}>
@@ -80,7 +86,7 @@ export default function Weather() {
               {locData.city}, {locData.country.name} Weather
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item style={{ marginBottom: matchesSM ? "1em" : 0 }}>
             <Autocomplete
               id="location"
               onChange={(event, newValue) => {

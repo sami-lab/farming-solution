@@ -15,7 +15,6 @@
     "html-react-parser": "^1.2.7",
     "material-ui-dropzone": "^3.5.0",
     "next": "latest",
-    "nprogress": "^0.2.0",
     "prop-types": "latest",
     "react": "latest",
     "react-beautiful-dnd": "^13.1.0",
