@@ -16,6 +16,7 @@ import TrendingCategories from "../src/components/Home/trendingCategories";
 import Footer from "../src/resusable/footer";
 import Header from "../src/resusable/header";
 import OpenShop from "../src/components/Home/openShop";
+import Weather from "../src/components/Home/weather";
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: "10em",
@@ -45,6 +46,7 @@ export default function Home(props) {
       <Grid item container>
         <Header {...props} languageJson={props.languageJson} />
       </Grid>
+
       {/* For Home Banner */}
       <Grid
         item
@@ -56,7 +58,15 @@ export default function Home(props) {
           categories={props.categories.slice(0, 6)}
         />
       </Grid>
-
+      <Grid
+        item
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ margin: "4em 0px" }}
+      >
+        <Weather />
+      </Grid>
       <Grid item style={{ marginTop: "5em" }} className={classes.root}>
         <PopularProducts
           languageJson={props.languageJson}

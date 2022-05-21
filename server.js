@@ -1,24 +1,24 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
-const app = require('./app');
-const { createDefaultRoles } = require('./controllers/rolesController');
-const { signUpAdmin } = require('./controllers/authController');
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
+const app = require("./app");
+const { createDefaultRoles } = require("./controllers/rolesController");
+const { signUpAdmin } = require("./controllers/authController");
 
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
   console.log(err);
-  console.log('UNHANDLED Exception.. SHUTTING DOWN');
+  console.log("UNHANDLED Exception.. SHUTTING DOWN");
   process.exit(1); //1 MEANS REJECTION
 });
 //var bodyParser = require("body-parser");
 
 //app.use(bodyParser.urlencoded({ extended: false }))
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
-
+// const DB = process.env.DATABASE.replace(
+//   '<PASSWORD>',
+//   process.env.DATABASE_PASSWORD
+// );
+const DB = `mongodb://localhost:27017/farmingApp`;
 //mongoose.connect(process.env.LOCAL_DB,...)
 mongoose
   .connect(DB, {
@@ -28,10 +28,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(async () => {
-    console.log('DB connection Success');
-    await createDefaultRoles(['Admin', 'User']);
+    console.log("DB connection Success");
+    await createDefaultRoles(["Admin", "User", "Manager"]);
     await signUpAdmin();
-    console.log('Default data success');
+    console.log("Default data success");
   })
   .catch((err) => console.log(err));
 
@@ -40,19 +40,19 @@ const server = app.listen(port, () => {
   console.log(`listening to port ${port}`);
 });
 
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
   console.log(err.name, err.message);
-  console.log('UNHANDLED REJECTION.. SHUTTING DOWN');
+  console.log("UNHANDLED REJECTION.. SHUTTING DOWN");
   server.close(() => {
     //wew r giving server a time to finish it process that are still pending
     process.exit(1); //1 MEANS REJECTION
   });
 });
 
-process.on('SIGTERM', () => {
-  console.log('SIGTERM RECIEVED.. SHUTTING DOWN');
+process.on("SIGTERM", () => {
+  console.log("SIGTERM RECIEVED.. SHUTTING DOWN");
   server.close(() => {
     //Sigterm itself cause the server shutDown
-    console.log('Process Terminated');
+    console.log("Process Terminated");
   });
 });

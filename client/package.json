@@ -19,6 +19,7 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "latest",
     "react-image-gallery": "^1.2.6",
+    "react-open-weather": "^1.2.0",
     "react-stripe-checkout": "^2.6.3",
     "slate": "^0.63.0",
     "slate-history": "^0.62.0",
