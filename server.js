@@ -18,7 +18,11 @@ process.on("uncaughtException", (err) => {
 //   '<PASSWORD>',
 //   process.env.DATABASE_PASSWORD
 // );
-const DB = `mongodb://localhost:27017/farmingApp`;
+
+const DB =
+  process.env.NODE_ENV === "development"
+    ? `mongodb://localhost:27017/farmingApp`
+    : process.env.DATABASE.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
 //mongoose.connect(process.env.LOCAL_DB,...)
 mongoose
   .connect(DB, {
