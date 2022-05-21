@@ -29,8 +29,8 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "SET NODE_OPTIONS=--openssl-legacy-provider&& next build",
-    "start": "SET NODE_OPTIONS=--openssl-legacy-provider&&  next start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider next start",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   }
 }
