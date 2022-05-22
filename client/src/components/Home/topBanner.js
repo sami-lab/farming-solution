@@ -122,11 +122,13 @@ export default function TopBanner(props) {
           {/* For text  */}
           <Grid item>
             <label className={classes.label}>
-              {
-                t[
-                  "Empowering Growers and AgriFood Value Chain with Real-Time Insights."
-                ]
-              }{" "}
+              <Link href={`/prediction`} style={{ textDecoration: "none" }}>
+                {
+                  t[
+                    "Empowering Growers and AgriFood Value Chain with Real-Time Insights."
+                  ]
+                }
+              </Link>
               {/* <a
                 href="#"
                 style={{

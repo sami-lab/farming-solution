@@ -247,6 +247,11 @@ export default function Footer(props) {
                     Partner
                   </Typography>
                 </Link>
+                <Link href="/prediction" style={{ textDecoration: "none" }}>
+                  <Typography className={classes.nestedColumnContent}>
+                    Insights
+                  </Typography>
+                </Link>
               </div>
             </Grid>
             {/* third services */}
