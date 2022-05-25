@@ -252,6 +252,11 @@ export default function Footer(props) {
                     Insights
                   </Typography>
                 </Link>
+                <Link href="/chat" style={{ textDecoration: "none" }}>
+                  <Typography className={classes.nestedColumnContent}>
+                    Chat with Bot
+                  </Typography>
+                </Link>
               </div>
             </Grid>
             {/* third services */}

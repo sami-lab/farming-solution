@@ -209,6 +209,22 @@ export default function PrimarySearchAppBar(props) {
           </MenuItem>
         </>
       )}
+      <MenuItem onClick={() => setProfileMenu(null)}>
+        {" "}
+        <Link href="/prediction">
+          <a style={{ textDecoration: "none" }} className={classes.label}>
+            Insights
+          </a>
+        </Link>{" "}
+      </MenuItem>
+      <MenuItem onClick={() => setProfileMenu(null)}>
+        {" "}
+        <Link href="/chat">
+          <a style={{ textDecoration: "none" }} className={classes.label}>
+            Chat with Bot
+          </a>
+        </Link>{" "}
+      </MenuItem>
       <Divider />
       <MenuItem onClick={logoutHandler}>
         {" "}
