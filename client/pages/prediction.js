@@ -10,6 +10,8 @@ import {
 
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
+import Header from "../src/resusable/header";
+import Footer from "../src/resusable/footer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -119,8 +121,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function Prediction() {
+export default function Prediction(props) {
   const classes = useStyles();
+  const t = props.languageJson;
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -174,236 +177,244 @@ export default function Prediction() {
       });
   };
   return (
-    <Grid container className={classes.container}>
-      <div className={classes.overlay}></div>
-      <Grid style={{ zIndex: 2 }} item xs={11}>
-        <Paper className={classes.paper}>
-          <Typography variant="subtitle1" className={classes.formHeading}>
-            Crop Field Prediction
-          </Typography>
-          <form className={classes.form}>
-            {/*Nitrogen */}
-            <TextField
-              type="number"
-              name="Nitrogen"
-              placeholder="Nitrogen"
-              required
-              value={data.nitrogen}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              inputProps={{
-                min: 0,
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  nitrogen: e.target.value,
-                })
-              }
-            />
-            <TextField
-              name="Phosphorus"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="Phosphorus"
-              required
-              value={data.phos}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  phos: e.target.value,
-                })
-              }
-            />
-            <TextField
-              name="Potassium"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="Potassium"
-              required
-              value={data.pot}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  pot: e.target.value,
-                })
-              }
-            />
+    <Grid container direction="column">
+      <Grid item container>
+        <Header {...props} languageJson={t} />
+      </Grid>
+      <Grid item container className={classes.container}>
+        <div className={classes.overlay}></div>
+        <Grid style={{ zIndex: 2 }} item xs={11}>
+          <Paper className={classes.paper}>
+            <Typography variant="subtitle1" className={classes.formHeading}>
+              Crop Field Prediction
+            </Typography>
+            <form className={classes.form}>
+              {/*Nitrogen */}
+              <TextField
+                type="number"
+                name="Nitrogen"
+                placeholder="Nitrogen"
+                required
+                value={data.nitrogen}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                inputProps={{
+                  min: 0,
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    nitrogen: e.target.value,
+                  })
+                }
+              />
+              <TextField
+                name="Phosphorus"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="Phosphorus"
+                required
+                value={data.phos}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    phos: e.target.value,
+                  })
+                }
+              />
+              <TextField
+                name="Potassium"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="Potassium"
+                required
+                value={data.pot}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    pot: e.target.value,
+                  })
+                }
+              />
 
-            <TextField
-              name="Temperature"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="Temperature"
-              required
-              value={data.temp}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  temp: e.target.value,
-                })
-              }
-            />
+              <TextField
+                name="Temperature"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="Temperature"
+                required
+                value={data.temp}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    temp: e.target.value,
+                  })
+                }
+              />
 
-            <TextField
-              name="Humadity"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="Humadity"
-              required
-              value={data.hum}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  hum: e.target.value,
-                })
-              }
-            />
+              <TextField
+                name="Humadity"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="Humadity"
+                required
+                value={data.hum}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    hum: e.target.value,
+                  })
+                }
+              />
 
-            <TextField
-              name="pH"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="pH"
-              required
-              value={data.pH}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  pH: e.target.value,
-                })
-              }
-            />
+              <TextField
+                name="pH"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="pH"
+                required
+                value={data.pH}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    pH: e.target.value,
+                  })
+                }
+              />
 
-            <TextField
-              name="rainfall"
-              type="number"
-              inputProps={{
-                min: 0,
-              }}
-              placeholder="Rainfall"
-              required
-              value={data.rainfall}
-              fullWidth
-              size="small"
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  root: classes.textboxRoot,
-                  input: classes.input,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  rainfall: e.target.value,
-                })
-              }
-            />
-            {error.status && (
-              <Grid item container>
-                <Typography
-                  style={{
-                    marginBottom: "10px",
-                    color: "#fff",
-                    textAlign: "left",
-                  }}
-                  variant="subtitle1"
-                  className={classes.formHeading}
-                >
-                  {error.message}
-                </Typography>
-              </Grid>
-            )}
-            <Button
-              onClick={submitHandler}
-              disabled={loading}
-              className={classes.formButton}
-            >
-              {loading ? (
-                <CircularProgress style={{ color: "#fff" }} />
-              ) : (
-                "SUBMIT"
+              <TextField
+                name="rainfall"
+                type="number"
+                inputProps={{
+                  min: 0,
+                }}
+                placeholder="Rainfall"
+                required
+                value={data.rainfall}
+                fullWidth
+                size="small"
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    root: classes.textboxRoot,
+                    input: classes.input,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    rainfall: e.target.value,
+                  })
+                }
+              />
+              {error.status && (
+                <Grid item container>
+                  <Typography
+                    style={{
+                      marginBottom: "10px",
+                      color: "#fff",
+                      textAlign: "left",
+                    }}
+                    variant="subtitle1"
+                    className={classes.formHeading}
+                  >
+                    {error.message}
+                  </Typography>
+                </Grid>
               )}
-            </Button>
-          </form>
-        </Paper>
+              <Button
+                onClick={submitHandler}
+                disabled={loading}
+                className={classes.formButton}
+              >
+                {loading ? (
+                  <CircularProgress style={{ color: "#fff" }} />
+                ) : (
+                  "SUBMIT"
+                )}
+              </Button>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+      <Grid item container>
+        <Footer {...props} languageJson={t} />
       </Grid>
     </Grid>
   );
