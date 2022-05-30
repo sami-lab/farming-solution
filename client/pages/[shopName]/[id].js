@@ -21,6 +21,7 @@ import {
   IconButton,
   Snackbar,
   CircularProgress,
+  TextField,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -156,6 +157,15 @@ export default function Shopsetup(props) {
   }, [router.query.id]);
 
   const cartHandler = async () => {
+    if (quantity === "" || quantity <= 0) {
+      setShowToast({
+        active: true,
+        message: "Quantity cannot be zero or empty",
+        severity: "error",
+      });
+      return;
+    }
+
     try {
       setLoading({
         active: true,
@@ -202,6 +212,15 @@ export default function Shopsetup(props) {
   };
 
   const redirectToCheckout = () => {
+    if (quantity === "" || quantity <= 0) {
+      setShowToast({
+        active: true,
+        message: "Quantity cannot be zero or empty",
+        severity: "error",
+      });
+      return;
+    }
+
     const query = [
       {
         id: product._id,
@@ -368,7 +387,12 @@ export default function Shopsetup(props) {
                 <Divider />
               </Grid>
               {/* Quantity */}
-              <Grid item container justifyContent="space-between">
+              <Grid
+                item
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 {/* Text */}
                 <Grid item>
                   <Typography variant="subtitle2">
@@ -388,7 +412,7 @@ export default function Shopsetup(props) {
                 {/* Quantity */}
                 <Grid item>
                   <Grid container alignItems="center" spacing={2}>
-                    {quantity > 0.5 && (
+                    {/* {quantity > 0.5 && (
                       <Grid item>
                         <IconButton
                           onClick={() => setQuantity((q) => q - 0.5)}
@@ -405,13 +429,33 @@ export default function Shopsetup(props) {
                           />
                         </IconButton>
                       </Grid>
-                    )}
+                    )} */}
                     <Grid item>
-                      <Typography variant="body2">
+                      <TextField
+                        type="number"
+                        inputProps={{
+                          min: 0,
+                        }}
+                        InputProps={{
+                          endAdornment: (
+                            <Typography variant="subtitle2">
+                              {product.unit ? product.unit : ""}
+                            </Typography>
+                          ),
+                        }}
+                        style={{
+                          width: "6em",
+                          fontFamily: "Averta",
+                          fontSize: "1rem",
+                        }}
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                      />
+                      {/* <Typography variant="body2">
                         {quantity} {product.unit ? product.unit : ""}{" "}
-                      </Typography>
+                      </Typography> */}
                     </Grid>
-                    <Grid item>
+                    {/* <Grid item>
                       <IconButton
                         onClick={() => setQuantity((q) => q + 0.5)}
                         style={{ backgroundColor: "transparent", padding: 0 }}
@@ -423,7 +467,7 @@ export default function Shopsetup(props) {
                           }}
                         />
                       </IconButton>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
               </Grid>

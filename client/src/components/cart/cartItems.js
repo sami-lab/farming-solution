@@ -12,8 +12,10 @@ import {
   TextField,
   MenuItem,
   IconButton,
+  Snackbar,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { Alert } from "@material-ui/lab";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
@@ -58,11 +60,24 @@ export default function Cart(props) {
   const router = useRouter();
   const theme = useTheme();
   const classes = useStyles();
+  const [showToast, setShowToast] = useState({
+    active: false,
+    message: "",
+    severity: "",
+  });
   const [cartItems, setCartItems] = useState(props.cartItems);
   useEffect(() => {
     setCartItems(props.cartItems);
   }, [props.cartItems]);
   const redirectToCheckout = () => {
+    if (cartItems.some((item) => item.quantity <= 0 || item.quantity === "")) {
+      setShowToast({
+        active: true,
+        message: "Quantity cannot be zero or empty",
+        severity: "error",
+      });
+      return;
+    }
     const query = cartItems.map((item) => {
       return {
         id: item.product._id,
@@ -84,8 +99,28 @@ export default function Cart(props) {
     });
   };
 
+  const handleToastClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowToast({
+      active: false,
+      message: "",
+      severity: "",
+    });
+  };
   return (
     <Grid container direction="column">
+      <Snackbar
+        open={showToast.active}
+        autoHideDuration={4000}
+        onClose={handleToastClose}
+      >
+        <Alert onClose={handleToastClose} severity={showToast.severity}>
+          {showToast.message}
+        </Alert>
+      </Snackbar>
       {/* heading Your Cart*/}
       <Grid
         item
@@ -184,7 +219,7 @@ export default function Cart(props) {
                           {/* quantity */}
                           <Grid item style={{ alignSelf: "flex-end" }}>
                             <Grid container alignItems="center">
-                              <IconButton
+                              {/* <IconButton
                                 disableTouchRipple={true}
                                 style={{
                                   padding: 0,
@@ -209,8 +244,8 @@ export default function Cart(props) {
                                     fontSize: "1.7rem",
                                   }}
                                 />
-                              </IconButton>
-                              <Typography
+                              </IconButton> */}
+                              {/* <Typography
                                 className={classes.label}
                                 style={{
                                   marginLeft: "0.5em",
@@ -221,8 +256,42 @@ export default function Cart(props) {
                                 {item.quantity}{" "}
                                 {item.product.unit ? item.product.unit : "seat"}
                                 {item.quantity === 1 ? "" : "s"}
-                              </Typography>
-                              <IconButton
+                              </Typography> */}
+                              <TextField
+                                type="number"
+                                inputProps={{
+                                  min: 0.1,
+                                }}
+                                InputProps={{
+                                  classes: {
+                                    input: classes.input,
+                                  },
+                                  endAdornment: (
+                                    <Typography variant="subtitle2">
+                                      {item.product.unit
+                                        ? item.product.unit
+                                        : "seat"}
+                                    </Typography>
+                                  ),
+                                }}
+                                style={{
+                                  width: "6em",
+                                  textAlign: "right",
+                                }}
+                                className={classes.label}
+                                value={item.quantity}
+                                onChange={(e) => {
+                                  setCartItems(() => {
+                                    return cartItems.map((x) => {
+                                      if (x._id === item._id) {
+                                        x.quantity = e.target.value;
+                                      }
+                                      return x;
+                                    });
+                                  });
+                                }}
+                              />
+                              {/* <IconButton
                                 disableTouchRipple={true}
                                 style={{
                                   padding: 0,
@@ -245,7 +314,7 @@ export default function Cart(props) {
                                     fontSize: "1.7rem",
                                   }}
                                 />
-                              </IconButton>
+                              </IconButton> */}
                             </Grid>
                           </Grid>
                         </Grid>
@@ -254,9 +323,15 @@ export default function Cart(props) {
                     {/* for Price */}
                     <Grid item>
                       <Typography variant="h6" align="right">
-                        $
-                        {item.product.price * item.quantity +
-                          item.product.deliveryPrice}
+                        {cartItems.some(
+                          (item) => item.quantity <= 0 || item.quantity === ""
+                        )
+                          ? "Invalid"
+                          : `$
+                        ${Math.ceil(
+                          item.product.price * item.quantity +
+                            item.product.deliveryPrice
+                        )}`}
                       </Typography>
 
                       <span
@@ -291,23 +366,43 @@ export default function Cart(props) {
         >
           <label className={classes.label}>Items</label>
           <Grid container justify="space-between">
-            <Typography className={classes.label} style={{ fontWeight: 300 }}>
-              {cartItems.length} Product{cartItems.length > 1 && "s"} x{" "}
-              {cartItems.reduce((total, item) => {
-                return total + parseInt(item.quantity);
-              }, 0)}{" "}
-              items
-            </Typography>
-            <Typography className={classes.label} style={{ fontWeight: 300 }}>
-              $
-              {cartItems.reduce((total, item) => {
-                return (
-                  total +
-                  item.product.price * item.quantity +
-                  item.product.deliveryPrice
-                );
-              }, 0)}
-            </Typography>
+            {cartItems.some(
+              (item) => item.quantity <= 0 || item.quantity === ""
+            ) ? (
+              <Typography className={classes.label} style={{ fontWeight: 300 }}>
+                Invalid
+              </Typography>
+            ) : (
+              <Typography className={classes.label} style={{ fontWeight: 300 }}>
+                {cartItems.length} Product{cartItems.length > 1 && "s"} x{" "}
+                {cartItems
+                  .reduce((total, item) => {
+                    return parseFloat(total + item.quantity);
+                  }, 0)
+                  .toFixed(2)}{" "}
+                item
+              </Typography>
+            )}
+            {cartItems.some(
+              (item) => item.quantity <= 0 || item.quantity === ""
+            ) ? (
+              <Typography className={classes.label} style={{ fontWeight: 300 }}>
+                Invalid
+              </Typography>
+            ) : (
+              <Typography className={classes.label} style={{ fontWeight: 300 }}>
+                $
+                {Math.ceil(
+                  cartItems.reduce((total, item) => {
+                    return (
+                      total +
+                      item.product.price * item.quantity +
+                      item.product.deliveryPrice
+                    );
+                  }, 0)
+                )}
+              </Typography>
+            )}
           </Grid>
           <Typography
             className={classes.label}
