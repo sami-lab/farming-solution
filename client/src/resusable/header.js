@@ -359,7 +359,7 @@ export default function PrimarySearchAppBar(props) {
     </Grid>
   );
   const desktopList = (
-    <Grid container>
+    <Grid container justifyContent="center">
       {headerList.map((ele, ind) => (
         <Grid
           key={ele.name}

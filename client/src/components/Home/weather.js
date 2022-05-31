@@ -6,7 +6,9 @@ import {
   useTheme,
   TextField,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 import React, { useEffect, useState } from "react";
 import ReactWeather, { useOpenWeather } from "react-open-weather";
 import cities from "./cities.json";
@@ -65,6 +67,12 @@ export default function Weather() {
       </div>
     );
   }
+
+  const filterOptions = createFilterOptions({
+    matchFrom: "any",
+    limit: 500,
+  });
+
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item md={6} xs={12}>
@@ -89,6 +97,7 @@ export default function Weather() {
           <Grid item style={{ marginBottom: matchesSM ? "1em" : 0 }}>
             <Autocomplete
               id="location"
+              filterOptions={filterOptions}
               onChange={(event, newValue) => {
                 setLocData({
                   city: newValue.name,
