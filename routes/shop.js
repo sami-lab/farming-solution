@@ -16,7 +16,7 @@ router.route("/").post(shopController.createOne);
 
 router
   .route("/updateShop")
-  .patch(restrictTo(["Manager"]), shopController.update);
+  .post(restrictTo(["Manager"]), shopController.update);
 router
   .route("/updateProfile")
   .patch(

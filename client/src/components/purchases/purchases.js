@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#fbfbfd",
     boxShadow: "none",
     marginTop: "3px",
+    textAlign: "right",
     "&::placeholder": {
       fontFamily: "Averta",
       fontWeight: 400,
@@ -48,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const orderStatus = [
+  { value: "pending", label: "Pending" },
+  { value: "process", label: "In Process" },
+  { value: "completed", label: "Completed" },
+  { value: "rejected", label: "Rejected" },
+];
 export default function Purchases(props) {
   const t = props.languageJson;
   const theme = useTheme();
@@ -127,6 +134,18 @@ export default function Purchases(props) {
                       {item.productId.description}
                     </Typography>
                   </Grid>
+                  {/* for title */}
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      <span style={{ color: theme.palette.common.primary }}>
+                        {" "}
+                        {
+                          orderStatus.find((x) => x.value === item.orderStatus)
+                            ?.label
+                        }
+                      </span>
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid
                   item
@@ -158,11 +177,24 @@ export default function Purchases(props) {
                 </Grid>
                 {/* for Price */}
                 <Grid item>
-                  <Typography variant="h6" align="right">
-                    $
-                    {item.productId.price * item.quantity +
-                      item.productId.deliveryPrice}
-                  </Typography>
+                  <Grid container direction="column" spacing={2}>
+                    <Grid item>
+                      <Typography variant="subtitle2">
+                        <span style={{ color: theme.palette.common.primary }}>
+                          {item?.paymentMethod === "cashOnDelievery"
+                            ? "Cash on Delivery"
+                            : item?.paymentMethod === "stripe"
+                            ? "Stripe"
+                            : "-"}
+                        </span>
+                      </Typography>
+                      <Typography variant="h6" align="right">
+                        $
+                        {item.productId.price * item.quantity +
+                          item.productId.deliveryPrice}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

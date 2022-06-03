@@ -323,7 +323,7 @@ export default function Shopsetup(props) {
         </Grid>
         <Grid item>
           <Typography variant="h2">
-            {t["Starting At $"]}
+            {t["Starting At RS"]}
             {product.price}
           </Typography>
         </Grid>
@@ -432,6 +432,7 @@ export default function Shopsetup(props) {
                     )} */}
                     <Grid item>
                       <TextField
+                        size="small"
                         type="number"
                         inputProps={{
                           min: 0,
@@ -497,7 +498,7 @@ export default function Shopsetup(props) {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    ${product.price}
+                    RS {product.price}
                   </Typography>
                 </Grid>
               </Grid>
@@ -526,7 +527,7 @@ export default function Shopsetup(props) {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    ${product.deliveryPrice}
+                    RS {product.deliveryPrice}
                   </Typography>
                 </Grid>
               </Grid>
@@ -555,7 +556,7 @@ export default function Shopsetup(props) {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    $
+                    RS
                     {parseFloat(product.deliveryPrice) +
                       parseFloat(product.price) * quantity}
                   </Typography>

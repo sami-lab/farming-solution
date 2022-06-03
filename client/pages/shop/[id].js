@@ -72,10 +72,11 @@ export default function Shopsetup(props) {
         await findShopData(props.userToken);
         await getProducts(props.user.shop._id);
       } else {
-        console.log(router.query.id, "--------------");
         await findShopData(router.query.id);
         await getProducts(router.query.id);
       }
+    } else {
+      setShop(props.user.shop);
     }
   }, [router.query.id]);
   const bannerImageChangeHandler = async (e) => {
@@ -180,7 +181,7 @@ export default function Shopsetup(props) {
         action: "shopData",
       });
       const response = await updateShopData(props.userToken, shop);
-      const result = response.data;
+      const result = await response.json();
       if (result.status === "success") {
         setShowToast({
           active: true,

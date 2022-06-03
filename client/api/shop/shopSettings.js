@@ -1,16 +1,16 @@
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import axios from 'axios';
+import axios from "axios";
 
 export const updateShopCover = async (token, file) => {
   var raw = new FormData();
-  raw.append('shopCover', file);
+  raw.append("shopCover", file);
   const response = await axios.patch(
     `${publicRuntimeConfig.backend}/api/shops/updateCover`,
     raw,
     {
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: "Bearer " + token,
       },
     }
   );
@@ -20,13 +20,13 @@ export const updateShopCover = async (token, file) => {
 
 export const updateShopProfile = async (token, file) => {
   var raw = new FormData();
-  raw.append('shopProfile', file);
+  raw.append("shopProfile", file);
   const response = await axios.patch(
     `${publicRuntimeConfig.backend}/api/shops/updateProfile`,
     raw,
     {
       headers: {
-        authorization: 'Bearer ' + token,
+        authorization: "Bearer " + token,
       },
     }
   );
@@ -35,14 +35,21 @@ export const updateShopProfile = async (token, file) => {
 };
 
 export const updateShopData = async (token, data) => {
-  const response = await axios.patch(
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
+
+  var raw = JSON.stringify(data);
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const response = await fetch(
     `${publicRuntimeConfig.backend}/api/shops/updateShop`,
-    data,
-    {
-      headers: {
-        authorization: 'Bearer ' + token,
-      },
-    }
+    requestOptions
   );
 
   return response;

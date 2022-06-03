@@ -472,7 +472,7 @@ export default function Manager(props) {
                     Category
                   </TableCell>
                   <TableCell className={classes.header} align="center">
-                    Username
+                    Email
                   </TableCell>
 
                   <TableCell className={classes.header} align="center">
@@ -496,7 +496,7 @@ export default function Manager(props) {
                       {item.productId?.productCategory}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
-                      {item.userId?.name}
+                      {item.userId?.email}
                     </TableCell>
 
                     <TableCell className={classes.tableItem} align="center">

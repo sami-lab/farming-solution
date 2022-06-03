@@ -158,6 +158,12 @@ export default function Manager(props) {
           message: "Status Updated Successfully",
           severity: "success",
         });
+      } else {
+        setShowToast({
+          active: true,
+          message: result.data.message,
+          severity: "error",
+        });
       }
       setLoading({
         active: false,
@@ -322,7 +328,9 @@ export default function Manager(props) {
                         }}
                       >
                         {orderStatus.map((s) => (
-                          <option key={s.value}>{s.label}</option>
+                          <option value={s.value} key={s.value}>
+                            {s.label}
+                          </option>
                         ))}
                       </TextField>
                     </TableCell>

@@ -51,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const orderStatus = [
+  { value: "pending", label: "Pending" },
+  { value: "process", label: "In Process" },
+  { value: "completed", label: "Completed" },
+  { value: "rejected", label: "Rejected" },
+];
 export default function Purchase(props) {
   const t = props.languageJson;
   const classes = useStyles();
@@ -181,21 +187,38 @@ export default function Purchase(props) {
             </Grid>
             <Grid item>
               <TextField
+                select
                 variant="outlined"
                 fullWidth
                 size="small"
                 placeholder="Search"
                 InputProps={{
                   classes: {
-                    input: classes.input,
+                    root: classes.input,
                   },
                   startAdornment: (
-                    <Search style={{ fill: "gray", fontSize: "1.1rem" }} />
+                    <Search
+                      style={{
+                        fill: "gray",
+                        paddingRight: "2em",
+                        fontSize: "1.1rem",
+                      }}
+                    />
                   ),
                 }}
                 value={searchPurchase}
                 onChange={(e) => setSearchPurchase(e.target.value)}
-              />
+                SelectProps={{
+                  native: true,
+                }}
+              >
+                <option value={""}>All</option>
+                {orderStatus.map((s) => (
+                  <option value={s.value} key={s.value}>
+                    {s.label}
+                  </option>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
         </Grid>
@@ -203,7 +226,7 @@ export default function Purchase(props) {
           {purchasings.length > 0 ? (
             <Purchases
               purchasings={purchasings.filter((x) =>
-                x.productId.title.toLowerCase().includes(searchPurchase)
+                searchPurchase === "" ? x : x.orderStatus === searchPurchase
               )}
               languageJson={t}
             />

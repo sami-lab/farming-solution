@@ -139,7 +139,7 @@ export const updateOrderStatus = async (token, orderId, value) => {
   };
 
   const response = await fetch(
-    `${publicRuntimeConfig.backend}/api/shops/updateStatus/${orderId}`,
+    `${publicRuntimeConfig.backend}/api/order/updateStatus/${orderId}`,
     requestOptions
   );
 
