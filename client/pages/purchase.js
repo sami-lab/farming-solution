@@ -196,15 +196,6 @@ export default function Purchase(props) {
                   classes: {
                     root: classes.input,
                   },
-                  startAdornment: (
-                    <Search
-                      style={{
-                        fill: "gray",
-                        paddingRight: "2em",
-                        fontSize: "1.1rem",
-                      }}
-                    />
-                  ),
                 }}
                 value={searchPurchase}
                 onChange={(e) => setSearchPurchase(e.target.value)}
