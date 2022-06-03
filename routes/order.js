@@ -21,6 +21,11 @@ router
     paymentController.getAllOrderofShopManager,
     paymentController.getAllOrderofShop
   );
+router.post(
+  "/updateStatus/:id",
+  restrictTo(["Manager"]),
+  paymentController.updateOrderStatus
+);
 
 // router
 //   .route("/:id")

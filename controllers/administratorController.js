@@ -175,7 +175,7 @@ exports.getShopDashboardData = catchAsync(async (req, res, next) => {
   let recentSales = await Order.find({ shopId: req.user.shop._id })
     .sort({ _id: -1 })
     .populate("productId", "productId title productCategory")
-    .populate("userId", "name")
+    .populate("userId", "email")
     .limit(5);
   finalData.recentSales = recentSales;
 

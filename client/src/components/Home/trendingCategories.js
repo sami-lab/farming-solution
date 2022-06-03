@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Grid,
   Typography,
@@ -6,24 +6,24 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   label: {
     ...theme.typography.label,
   },
   card: {
-    backgroundColor: '#f4f8fb',
-    height: '180px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    padding: '1em',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: '#fff',
+    backgroundColor: "#f4f8fb",
+    height: "180px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: "1em",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#fff",
     },
   },
 }));
@@ -35,7 +35,7 @@ export default function TrendingCategories(props) {
       <Grid item>
         <Grid container justify="space-between">
           <Grid item>
-            <Typography variant="h2" style={{ fontWeight: '500' }}>
+            <Typography variant="h2" style={{ fontWeight: "500" }}>
               Browse Trending Categories
             </Typography>
           </Grid>
@@ -50,13 +50,14 @@ export default function TrendingCategories(props) {
                   alt={item.title}
                   src={item.image}
                   style={{
-                    width: '120px',
-                    marginBottom: '1em',
+                    width: "130px",
+                    height: "110px",
+                    marginBottom: "1em",
                   }}
                 />
                 <label
                   className={classes.label}
-                  style={{ textAlign: 'center' }}
+                  style={{ textAlign: "center" }}
                 >
                   {item.title}
                 </label>

@@ -1,10 +1,10 @@
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 export const createShop = async (token, data) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
   var raw = JSON.stringify({
     what: data.what,
     where: data.where,
@@ -12,10 +12,10 @@ export const createShop = async (token, data) => {
   });
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -28,14 +28,14 @@ export const createShop = async (token, data) => {
 
 export const approveShop = async (token, shopId) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -48,14 +48,14 @@ export const approveShop = async (token, shopId) => {
 
 export const deleteShop = async (token, shopId) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'delete',
+    method: "delete",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -67,14 +67,14 @@ export const deleteShop = async (token, shopId) => {
 };
 export const getMyShop = async (token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'get',
+    method: "get",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -87,13 +87,13 @@ export const getMyShop = async (token) => {
 export const getShopById = async (id) => {
   console.log(id);
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
 
   var requestOptions = {
-    method: 'get',
+    method: "get",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
@@ -106,18 +106,40 @@ export const getShopById = async (id) => {
 
 export const getShops = async (token) => {
   var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('authorization', 'Bearer ' + token);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
 
   var requestOptions = {
-    method: 'get',
+    method: "get",
     headers: myHeaders,
     body: null,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const response = await fetch(
     `${publicRuntimeConfig.backend}/api/shops/`,
+    requestOptions
+  );
+
+  return response;
+};
+export const updateOrderStatus = async (token, orderId, value) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("authorization", "Bearer " + token);
+
+  var raw = JSON.stringify({
+    orderStatus: value,
+  });
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const response = await fetch(
+    `${publicRuntimeConfig.backend}/api/shops/updateStatus/${orderId}`,
     requestOptions
   );
 

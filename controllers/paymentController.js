@@ -117,7 +117,10 @@ exports.getAllOrderofShop = catchAsync(async (req, res, next) => {
   //All Products with
   const doc = await Order.find({
     shopId: req.params.shopId,
-  }).populate("shopId");
+  })
+    .populate("shopId")
+    .populate("userId")
+    .populate("productId");
 
   res.status(200).json({
     status: "success",
@@ -126,6 +129,17 @@ exports.getAllOrderofShop = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateOrderStatus = catchAsync(async (req, res, next) => {
+  const o = await Order.findByIdAndUpdate(req.params.id, {
+    orderStatus: req.body.orderStatus,
+  });
+  if (!o) return next(new AppError("No Order Exist with this id", 404));
+
+  res.status(200).json({
+    status: "success",
+    message: "Order Updated Successfully",
+  });
+});
 exports.checkout = catchAsync(async (req, res, next) => {
   const { cartItems, stripeToken, name, zipCode, address } = req.body;
 

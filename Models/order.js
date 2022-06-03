@@ -6,12 +6,18 @@ var OrderSchema = mongoose.Schema({
     default: Date.now(),
   },
 
-  // paymentMethod: {
-  //     type:String,
-  //     enum: ['CashOnDelievery'],
-  //     default: 'CashOnDelievery',
-  //     require: [true, "Order must have Payment method"]
-  // },
+  paymentMethod: {
+    type: String,
+    enum: ["cashOnDelievery", "stripe"],
+    default: "cashOnDelievery",
+    require: [true, "Order must have Payment method"],
+  },
+  orderStatus: {
+    type: String,
+    enum: ["pending", "process", "completed", "rejected"],
+    default: "pending",
+    require: [true, "Order must have Status"],
+  },
   totalAmount: {
     type: Number,
     min: [1, "Amount must be above 0"],

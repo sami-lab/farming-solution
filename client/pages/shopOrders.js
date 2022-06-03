@@ -14,6 +14,7 @@ import {
   Typography,
   Button,
   useMediaQuery,
+  TextField,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -23,6 +24,7 @@ import Header from "../src/resusable/header";
 import Footer from "../src/resusable/footer";
 import { getAllShopOrder } from "../api/admin/admin";
 import dynamic from "next/dynamic";
+import { updateOrderStatus } from "../api/shop/shop";
 const Chart = dynamic(() => import("../src/components/dashboard/chart"), {
   ssr: false,
 });
@@ -58,12 +60,17 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.label,
     fontWeight: 300,
   },
+  inputRoot: {
+    ...theme.typography.label,
+    fontWeight: 300,
+  },
 }));
 
-const licenseType = [
-  { value: "personalLicence", label: "Personal" },
-  { value: "commercialLicence", label: "Commercial" },
-  { value: "extendedCommercialLicence", label: "Extended Commercial" },
+const orderStatus = [
+  { value: "pending", label: "Pending" },
+  { value: "process", label: "In Process" },
+  { value: "completed", label: "Completed" },
+  { value: "rejected", label: "Rejected" },
 ];
 export default function Manager(props) {
   const t = props.languageJson;
@@ -93,6 +100,7 @@ export default function Manager(props) {
       let result = await response.json();
       if (result.status === "success") {
         setData(result.data.doc);
+        console.log(result.data.doc);
       }
       setLoading({
         active: false,
@@ -128,6 +136,46 @@ export default function Manager(props) {
     fetchData();
   }, []);
 
+  const handleStatusChange = async (orderId, value) => {
+    try {
+      setLoading({
+        active: true,
+        action: "status",
+      });
+      let response = await updateOrderStatus(props.userToken, orderId, value);
+      let result = await response.json();
+      if (result.status === "success") {
+        setData(
+          data.map((x) => {
+            if (x._id === orderId) {
+              x.orderStatus = value;
+            }
+            return x;
+          })
+        );
+        setShowToast({
+          active: true,
+          message: "Status Updated Successfully",
+          severity: "success",
+        });
+      }
+      setLoading({
+        active: false,
+        action: "",
+      });
+    } catch (e) {
+      console.log(e.message);
+      setLoading({
+        active: false,
+        action: "",
+      });
+      setShowToast({
+        active: true,
+        message: "Failed to Update Order",
+        severity: "error",
+      });
+    }
+  };
   const handleToastClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -165,6 +213,7 @@ export default function Manager(props) {
           container
           justifyContent="space-between"
           className={classes.root}
+          style={{ marginTop: "20px" }}
         >
           <Typography variant="h4">Shop Orders</Typography>
           <Link href="/dashboard" style={{ textDecoration: "none" }}>
@@ -203,14 +252,21 @@ export default function Manager(props) {
                   <TableCell className={classes.header} align="center">
                     Username
                   </TableCell>
-                  <TableCell className={classes.header} align="center">
-                    License
-                  </TableCell>
+
                   <TableCell className={classes.header} align="center">
                     Amount
                   </TableCell>
                   <TableCell className={classes.header} align="center">
                     Quantity
+                  </TableCell>
+                  <TableCell className={classes.header} align="center">
+                    Adress + Zip
+                  </TableCell>
+                  <TableCell className={classes.header} align="center">
+                    Payment Method
+                  </TableCell>
+                  <TableCell className={classes.header} align="center">
+                    Status
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -227,16 +283,48 @@ export default function Manager(props) {
                       {item.productId?.productCategory}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
-                      {item.userId?.name}
+                      {item.userId?.firstName} {item.userId?.firstName} -{" "}
+                      {item.userId?.email}
                     </TableCell>
-                    <TableCell className={classes.tableItem} align="center">
-                      {licenseType.find((x) => x.value === item.license).label}
-                    </TableCell>
+
                     <TableCell className={classes.tableItem} align="center">
                       {item.totalAmount}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
                       {item.quantity}
+                    </TableCell>
+                    <TableCell className={classes.tableItem} align="center">
+                      {item?.zipCode}, {item?.address}
+                    </TableCell>
+                    <TableCell className={classes.tableItem} align="center">
+                      {item?.paymentMethod === "cashOnDelievery"
+                        ? "Cash on Delivery"
+                        : item?.paymentMethod === "stripe"
+                        ? "Stripe"
+                        : "-"}
+                    </TableCell>
+                    <TableCell className={classes.tableItem} align="center">
+                      <TextField
+                        size="small"
+                        variant="outlined"
+                        select
+                        value={item.orderStatus}
+                        onChange={(e) =>
+                          handleStatusChange(item._id, e.target.value)
+                        }
+                        SelectProps={{
+                          native: true,
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.inputRoot,
+                          },
+                        }}
+                      >
+                        {orderStatus.map((s) => (
+                          <option key={s.value}>{s.label}</option>
+                        ))}
+                      </TextField>
                     </TableCell>
                   </TableRow>
                 ))}
