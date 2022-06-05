@@ -105,7 +105,7 @@ export default function RenderProducts(props) {
                         backgroundColor: "#dff8f6",
                       }}
                     >
-                      <label className={classes.label}> {item.price}$</label>
+                      <label className={classes.label}> RS {item.price}</label>
                     </div>
                   </Grid>
                 </Grid>

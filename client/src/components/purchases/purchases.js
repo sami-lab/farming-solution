@@ -189,7 +189,7 @@ export default function Purchases(props) {
                         </span>
                       </Typography>
                       <Typography variant="h6" align="right">
-                        $
+                        RS{" "}
                         {item.productId.price * item.quantity +
                           item.productId.deliveryPrice}
                       </Typography>

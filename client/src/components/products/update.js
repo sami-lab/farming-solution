@@ -535,7 +535,7 @@ export default function Create(props) {
                       },
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Typography className={classes.label}>$</Typography>
+                          <Typography className={classes.label}>RS </Typography>
                         </InputAdornment>
                       ),
                     }}
@@ -570,7 +570,7 @@ export default function Create(props) {
                       },
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Typography className={classes.label}>$</Typography>
+                          <Typography className={classes.label}>RS </Typography>
                         </InputAdornment>
                       ),
                     }}
@@ -609,7 +609,7 @@ export default function Create(props) {
                             style={{ visibility: "hidden" }}
                             className={classes.label}
                           >
-                            $
+                            RS
                           </Typography>
                         </InputAdornment>
                       ),

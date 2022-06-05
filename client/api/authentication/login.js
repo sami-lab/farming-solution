@@ -136,7 +136,7 @@ export const updateProfile = async (token, data) => {
   Object.keys(data).map((key) => {
     raw.append(key, data[key]);
   });
-  const response = await axios.patch(
+  const response = await axios.post(
     `${publicRuntimeConfig.backend}/api/users/updateMe`,
     raw,
     {

@@ -327,7 +327,7 @@ export default function Cart(props) {
                           (item) => item.quantity <= 0 || item.quantity === ""
                         )
                           ? "Invalid"
-                          : `$
+                          : `RS 
                         ${Math.ceil(
                           item.product.price * item.quantity +
                             item.product.deliveryPrice
@@ -391,7 +391,7 @@ export default function Cart(props) {
               </Typography>
             ) : (
               <Typography className={classes.label} style={{ fontWeight: 300 }}>
-                $
+                RS{" "}
                 {Math.ceil(
                   cartItems.reduce((total, item) => {
                     return (

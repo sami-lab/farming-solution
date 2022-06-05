@@ -322,10 +322,7 @@ export default function Shopsetup(props) {
           </Breadcrumbs>
         </Grid>
         <Grid item>
-          <Typography variant="h2">
-            {t["Starting At RS"]}
-            {product.price}
-          </Typography>
+          <Typography variant="h2">Starting At RS {product.price}</Typography>
         </Grid>
       </Grid>
       {/* Images and Detials card */}
@@ -556,7 +553,7 @@ export default function Shopsetup(props) {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.label}>
-                    RS
+                    RS{" "}
                     {parseFloat(product.deliveryPrice) +
                       parseFloat(product.price) * quantity}
                   </Typography>

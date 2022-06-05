@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import getConfig from 'next/config';
+import React, { useState } from "react";
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import {
   Grid,
@@ -9,11 +9,11 @@ import {
   TextField,
   Snackbar,
   CircularProgress,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/styles';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { makeStyles } from "@material-ui/styles";
 
-import { updateProfile } from '../../../api/authentication/login';
+import { updateProfile } from "../../../api/authentication/login";
 const useStyles = makeStyles((theme) => ({
   label: {
     ...theme.typography.label,
@@ -21,18 +21,18 @@ const useStyles = makeStyles((theme) => ({
 
   input: {
     ...theme.typography.input,
-    borderRadius: '3px',
-    background: '#fbfbfd',
-    boxShadow: 'none',
-    marginTop: '3px',
-    '&::placeholder': {
-      fontFamily: 'Averta',
+    borderRadius: "3px",
+    background: "#fbfbfd",
+    boxShadow: "none",
+    marginTop: "3px",
+    "&::placeholder": {
+      fontFamily: "Averta",
       fontWeight: 400,
-      fontSize: '1.1rem',
+      fontSize: "1.1rem",
     },
   },
   inputOutline: {
-    border: '1px solid #899298',
+    border: "1px solid #899298",
   },
 }));
 export default function Profile(props) {
@@ -42,27 +42,29 @@ export default function Profile(props) {
   const classes = useStyles();
 
   const [user, setUser] = useState({
-    firstName: props.user.firstName ? props.user.firstName : '',
-    lastName: props.user.lastName ? props.user.lastName : '',
-    image: props.user.image ? props.user.image : '',
-    email: props.user.email ? props.user.email : '',
-    userName: props.user.userName ? props.user.userName : '',
-    zipCode: props.user.zipCode ? props.user.zipCode : '',
-    address: props.user.address ? props.user.address : '',
-    twitter: props.user.twitter ? props.user.twitter : '',
-    instagram: props.user.instagram ? props.user.instagram : '',
-    facebook: props.user.facebook ? props.user.facebook : '',
+    firstName: props.user.firstName ? props.user.firstName : "",
+    lastName: props.user.lastName ? props.user.lastName : "",
+    image: props.user.image ? props.user.image : "",
+    phone: props.user.phone ? props.user.phone : "",
+
+    email: props.user.email ? props.user.email : "",
+    userName: props.user.userName ? props.user.userName : "",
+    zipCode: props.user.zipCode ? props.user.zipCode : "",
+    address: props.user.address ? props.user.address : "",
+    twitter: props.user.twitter ? props.user.twitter : "",
+    instagram: props.user.instagram ? props.user.instagram : "",
+    facebook: props.user.facebook ? props.user.facebook : "",
   });
   const [file, setFile] = useState(null);
 
   const [loading, setLoading] = useState({
     active: false,
-    action: '',
+    action: "",
   });
   const [showToast, setShowToast] = useState({
     active: false,
-    message: '',
-    severity: '',
+    message: "",
+    severity: "",
   });
 
   const updateImageHandler = (e) => {
@@ -73,14 +75,14 @@ export default function Profile(props) {
   };
   const removeImageHandler = () => {
     setFile(null);
-    setUser({ ...user, image: '' });
+    setUser({ ...user, image: "" });
   };
 
   const submitHandler = async () => {
     try {
       setLoading({
         active: true,
-        action: 'submit',
+        action: "submit",
       });
       let o = {
         ...user,
@@ -90,47 +92,47 @@ export default function Profile(props) {
       }
       const response = await updateProfile(props.userToken, o);
       const result = response.data;
-      if (result.status === 'success') {
+      if (result.status === "success") {
         props.setUser(result.data.updatedUser);
         setShowToast({
           active: true,
-          message: t['Profile Updated Successfully'],
-          severity: 'success',
+          message: t["Profile Updated Successfully"],
+          severity: "success",
         });
       } else {
         setShowToast({
           active: true,
-          message: t['Failed to Create Product'],
-          severity: 'error',
+          message: t["Failed to Create Product"],
+          severity: "error",
         });
       }
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
     } catch (err) {
       console.log(err);
       setLoading({
         active: false,
-        action: '',
+        action: "",
       });
       setShowToast({
         active: true,
-        message: t['Something went wrong'],
-        severity: 'error',
+        message: t["Something went wrong"],
+        severity: "error",
       });
     }
   };
 
   const handleToastClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     setShowToast({
       active: false,
-      message: '',
-      severity: '',
+      message: "",
+      severity: "",
     });
   };
 
@@ -152,20 +154,20 @@ export default function Profile(props) {
             {/* typography */}
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-                {t['My Profile']}
+                {t["My Profile"]}
               </Typography>
             </Grid>
             {/* Profile */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Avatar*']}
+                {t["Avatar*"]}
               </label>
 
               <Grid
                 container
                 spacing={2}
                 alignItems="center"
-                style={{ marginTop: '3px' }}
+                style={{ marginTop: "3px" }}
               >
                 <Grid item>
                   <img
@@ -174,15 +176,15 @@ export default function Profile(props) {
                         ? URL.createObjectURL(file)
                         : user.image
                         ? `${publicRuntimeConfig.backend}/files/${user.image}`
-                        : '/dev/empty.jpg'
+                        : "/dev/empty.jpg"
                     }
-                    style={{ width: '75px', height: '75px' }}
+                    style={{ width: "75px", height: "75px" }}
                   />
                 </Grid>
                 <Grid item>
                   <input
                     accept="image/*"
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                     id="contained-button-file"
                     type="file"
                     onChange={updateImageHandler}
@@ -197,21 +199,21 @@ export default function Profile(props) {
                         color: theme.palette.common.light,
                       }}
                     >
-                      {t['Update']}
+                      {t["Update"]}
                     </Button>
                   </label>
                   <Button
                     variant="outlined"
                     size="small"
                     style={{
-                      backgroundColor: 'transparent',
+                      backgroundColor: "transparent",
                       color: theme.palette.common.primary,
                       borderColor: theme.palette.common.primary,
-                      marginLeft: '0.5em',
+                      marginLeft: "0.5em",
                     }}
                     onClick={removeImageHandler}
                   >
-                    {t['Delete']}
+                    {t["Delete"]}
                   </Button>
                 </Grid>
               </Grid>
@@ -222,7 +224,7 @@ export default function Profile(props) {
                 {/* FirstName */}
                 <Grid item xs={6}>
                   <label htmlFor="firstname" className={classes.label}>
-                    {t['First Name*']}
+                    {t["First Name*"]}
                   </label>
                   <TextField
                     id="firstname"
@@ -248,7 +250,7 @@ export default function Profile(props) {
                 {/* Lastname */}
                 <Grid item xs={6}>
                   <label htmlFor="lastname" className={classes.label}>
-                    {t['Last Name']}
+                    {t["Last Name"]}
                   </label>
                   <TextField
                     id="lastname"
@@ -273,10 +275,36 @@ export default function Profile(props) {
                 </Grid>
               </Grid>
             </Grid>
+            {/* Phone */}
+            <Grid item>
+              <label htmlFor="phone" className={classes.label}>
+                Phone
+              </label>
+              <TextField
+                id="phone"
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                required
+                value={user.phone}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    phone: e.target.value,
+                  })
+                }
+              />
+            </Grid>
             {/* Email */}
             <Grid item>
               <label htmlFor="email" className={classes.label}>
-                {t['Email*']}
+                {t["Email*"]}
               </label>
               <TextField
                 id="email"
@@ -302,7 +330,7 @@ export default function Profile(props) {
             {/* username */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Username*']}
+                {t["Username*"]}
               </label>
 
               <TextField
@@ -329,7 +357,7 @@ export default function Profile(props) {
             {/* zip code */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Zip Code']}
+                {t["Zip Code"]}
               </label>
 
               <TextField
@@ -355,11 +383,11 @@ export default function Profile(props) {
             {/* adress */}
             <Grid item>
               <label htmlFor="username" className={classes.label}>
-                {t['Address']}
+                {t["Address"]}
               </label>
               <textarea
                 className={classes.input}
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 rows={3}
                 value={user.address}
                 onChange={(e) =>
@@ -377,13 +405,13 @@ export default function Profile(props) {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-                {t['Social Profiles (Optional)']}
+                {t["Social Profiles (Optional)"]}
               </Typography>
             </Grid>
             {/* facebook */}
             <Grid item>
               <label htmlFor="Pinterest" className={classes.label}>
-                {t['Facebook']}
+                {t["Facebook"]}
               </label>
               <TextField
                 variant="outlined"
@@ -407,7 +435,7 @@ export default function Profile(props) {
             {/* Twiiter */}
             <Grid item>
               <label htmlFor="Twitter" className={classes.label}>
-                {t['Twitter']}
+                {t["Twitter"]}
               </label>
               <TextField
                 id="Twitter"
@@ -428,11 +456,11 @@ export default function Profile(props) {
                   })
                 }
               />
-            </Grid>{' '}
+            </Grid>{" "}
             {/* Instagram */}
             <Grid item>
               <label htmlFor="Instagram" className={classes.label}>
-                {t['Instagram']}
+                {t["Instagram"]}
               </label>
               <TextField
                 id="Instagram"
@@ -458,23 +486,23 @@ export default function Profile(props) {
         </Grid>
       </Grid>
       {/* Submit */}
-      <Grid item style={{ marginTop: '2em', marginBottom: '2em' }}>
+      <Grid item style={{ marginTop: "2em", marginBottom: "2em" }}>
         <Button
           variant="contained"
           style={{
             backgroundColor: theme.palette.common.primary,
           }}
           onClick={submitHandler}
-          disabled={loading.active && loading.action === 'submit'}
+          disabled={loading.active && loading.action === "submit"}
         >
           <label
             className={classes.label}
-            style={{ color: theme.palette.common.light, cursor: 'pointer' }}
+            style={{ color: theme.palette.common.light, cursor: "pointer" }}
           >
-            {loading.active && loading.action === 'submit' ? (
+            {loading.active && loading.action === "submit" ? (
               <CircularProgress />
             ) : (
-              t['Update Settings']
+              t["Update Settings"]
             )}
           </label>
         </Button>

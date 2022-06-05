@@ -64,7 +64,9 @@ export const checkout = async (
   cartItems,
   name,
   address,
-  zipCode
+  zipCode,
+  phone,
+  paymentMethod
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -75,6 +77,8 @@ export const checkout = async (
     name,
     address,
     zipCode,
+    phone,
+    paymentMethod,
   });
 
   var requestOptions = {

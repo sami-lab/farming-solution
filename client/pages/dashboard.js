@@ -350,7 +350,7 @@ export default function Manager(props) {
                 </Grid>
                 <Grid item>
                   <Typography variant="h4">Total Earning</Typography>
-                  <Typography variant="h5">${data.totalSales}</Typography>
+                  <Typography variant="h5">RS {data.totalSales}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -368,7 +368,7 @@ export default function Manager(props) {
                 </Grid>
                 <Grid item>
                   <Typography variant="h4">Monthly Sales</Typography>
-                  <Typography variant="h5">${data.lastMonthSales}</Typography>
+                  <Typography variant="h5">RS {data.lastMonthSales}</Typography>
                 </Grid>
               </Grid>
             </Grid>

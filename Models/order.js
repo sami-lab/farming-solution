@@ -48,6 +48,10 @@ var OrderSchema = mongoose.Schema({
     type: String,
     require: [true, "Order Must belong to any person"],
   },
+  phone: {
+    type: String,
+    require: [true, "Order Must belong to any person"],
+  },
   zipCode: {
     type: String,
     require: [true, "zipcode cannot be empty"],

@@ -33,6 +33,10 @@ var UserSchema = mongoose.Schema(
       type: String,
       // validate: [validator.isURL, 'Please Provide a Valid Website URL'],
     },
+    phone: {
+      type: String,
+      // validate: [validator.isURL, 'Please Provide a Valid Website URL'],
+    },
     address: {
       type: String,
       trim: true,

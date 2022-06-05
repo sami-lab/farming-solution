@@ -73,6 +73,11 @@ export default function Checkout(props) {
       error: false,
       errorMessage: "",
     },
+    phone: {
+      value: props.user.phone || "",
+      error: false,
+      errorMessage: "",
+    },
     zipCode: {
       value: props.user.zipCode || "",
       error: false,
@@ -83,7 +88,13 @@ export default function Checkout(props) {
       error: false,
       errorMessage: "",
     },
+    paymentMethod: {
+      value: "cashOnDelievery",
+      error: false,
+      errorMessage: "",
+    },
   });
+
   return (
     <Grid container direction="column">
       {/* heading checkout*/}
@@ -185,7 +196,7 @@ export default function Checkout(props) {
                     {/* for Price */}
                     <Grid item>
                       <Typography variant="h6" align="right">
-                        ${item.price * item.quantity + item.deliveryPrice}
+                        RS {item.price * item.quantity + item.deliveryPrice}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -221,7 +232,7 @@ export default function Checkout(props) {
             ></Grid>
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
-                ${publicRuntimeConfig.platformFee} USD
+                RS {publicRuntimeConfig.platformFee}
               </Typography>
             </Grid>
           </Grid>
@@ -239,7 +250,7 @@ export default function Checkout(props) {
 
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
-                $
+                RS{" "}
                 {props.products.reduce((total, item) => {
                   return (
                     total +
@@ -247,7 +258,6 @@ export default function Checkout(props) {
                     parseFloat(item.deliveryPrice)
                   );
                 }, 0)}{" "}
-                USD
               </Typography>
             </Grid>
           </Grid>
@@ -270,7 +280,7 @@ export default function Checkout(props) {
             ></Grid>
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
-                ${publicRuntimeConfig.gst} USD
+                RS {publicRuntimeConfig.gst}
               </Typography>
             </Grid>
           </Grid>
@@ -295,7 +305,7 @@ export default function Checkout(props) {
 
             <Grid item>
               <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
-                $
+                RS{" "}
                 {props.products.reduce((total, item) => {
                   return (
                     total +
@@ -305,7 +315,6 @@ export default function Checkout(props) {
                 }, 0) +
                   parseFloat(publicRuntimeConfig.gst) +
                   parseFloat(publicRuntimeConfig.platformFee)}{" "}
-                USD
               </Typography>
             </Grid>
           </Grid>
@@ -336,6 +345,38 @@ export default function Checkout(props) {
                   setUser({
                     ...user,
                     name: {
+                      value: e.target.value,
+                      error: false,
+                      errorMessage: "",
+                    },
+                  })
+                }
+              />
+            </Grid>
+            <Grid item style={{ marginTop: "1em" }}>
+              <label htmlFor="phone" className={classes.label}>
+                Phone
+              </label>
+              <TextField
+                id="phone"
+                placeholder={"Phone"}
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputProps={{
+                  classes: {
+                    root: classes.input,
+                    notchedOutline: classes.inputOutline,
+                  },
+                }}
+                required
+                error={user.phone.error}
+                helperText={user.phone.error ? user.phone.errorMessage : ""}
+                value={user.phone.value}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    phone: {
                       value: e.target.value,
                       error: false,
                       errorMessage: "",
@@ -424,16 +465,61 @@ export default function Checkout(props) {
               {t["Select a Payment Type:"]}
             </Typography>
             <Grid container alignItems="center" style={{ marginTop: "0.5em" }}>
-              <Radio checked={true} color="success" />{" "}
-              <img
-                src="/dev/Stripe.png"
-                style={{ width: "8em", height: "3.5em" }}
-              />
+              <Radio
+                name="paymentMethod"
+                id="cashOnDelievery"
+                checked={user.paymentMethod.value === "cashOnDelievery"}
+                onChange={() =>
+                  setUser({
+                    ...user,
+                    paymentMethod: {
+                      value: "cashOnDelievery",
+                      error: false,
+                      errorMessage: "",
+                    },
+                  })
+                }
+                color="success"
+              />{" "}
+              <label htmlFor="cashOnDelievery">
+                <img
+                  src="/dev/cashondelivery.jpg"
+                  style={{ width: "7em", height: "2.5em", cursor: "pointer" }}
+                />
+              </label>
             </Grid>
-            <Divider style={{ marginTop: "1em", marginBottom: "1em" }} />
-            <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
-              {t["Card Number"]}
-            </Typography>
+            <Grid container alignItems="center" style={{ marginTop: "0.5em" }}>
+              <Radio
+                name="paymentMethod"
+                id="stripe"
+                checked={user.paymentMethod.value === "stripe"}
+                onChange={() =>
+                  setUser({
+                    ...user,
+                    paymentMethod: {
+                      value: "stripe",
+                      error: false,
+                      errorMessage: "",
+                    },
+                  })
+                }
+                color="success"
+              />{" "}
+              <label htmlFor="stripe">
+                <img
+                  src="/dev/Stripe.png"
+                  style={{ width: "8em", height: "3.5em", cursor: "pointer" }}
+                />
+              </label>
+            </Grid>
+            {user.paymentMethod.value === "stripe" && (
+              <>
+                <Divider style={{ marginTop: "1em", marginBottom: "1em" }} />
+                <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
+                  {t["Card Number"]}
+                </Typography>
+              </>
+            )}
             <Elements stripe={promise}>
               <ElementsConsumer>
                 {({ elements, stripe }) => (
@@ -443,7 +529,9 @@ export default function Checkout(props) {
                     user={props.user}
                     userToken={props.userToken}
                     name={user.name.value}
+                    phone={user.phone.value}
                     zipCode={user.zipCode.value}
+                    paymentMethod={user.paymentMethod.value}
                     address={user.address.value}
                     products={props.products}
                     elements={elements}

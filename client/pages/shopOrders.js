@@ -266,7 +266,7 @@ export default function Manager(props) {
                     Quantity
                   </TableCell>
                   <TableCell className={classes.header} align="center">
-                    Adress + Zip
+                    Customer
                   </TableCell>
                   <TableCell className={classes.header} align="center">
                     Payment Method
@@ -300,7 +300,8 @@ export default function Manager(props) {
                       {item.quantity}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
-                      {item?.zipCode}, {item?.address}
+                      {item?.phone ? item?.phone + "," : ""} {item?.zipCode},{" "}
+                      {item?.address}
                     </TableCell>
                     <TableCell className={classes.tableItem} align="center">
                       {item?.paymentMethod === "cashOnDelievery"
