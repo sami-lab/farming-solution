@@ -102,6 +102,11 @@ exports.buyNow = catchAsync(async (req, res, next) => {
         return next(new AppError(message, 500));
       });
   } else {
+    console.log(
+      (product.price + product.deliveryPrice) * quantity +
+        parseFloat(process.env.platformFee + process.env.gst)
+    );
+
     const doc = await Order.create({
       name,
       address,
@@ -189,14 +194,24 @@ exports.checkout = catchAsync(async (req, res, next) => {
     _id: { $in: cartItems.map((x) => x.id) },
   });
   if (!products) return next(new AppError("requested Products not found", 404));
-  let total =
-    (cartItems.reduce((total, item) => {
-      let pr = products.find((x) => x._id == item.id);
+  let total = 0;
+  if (paymentMethod === "stripe") {
+    total =
+      (cartItems.reduce((total, item) => {
+        let pr = products.find((x) => x._id == item.id);
 
-      return total + pr.price * item.quantity + pr.deliveryPrice;
-    }, 0) +
-      parseFloat(process.env.platformFee + process.env.gst)) *
-    100;
+        return total + pr.price * item.quantity + pr.deliveryPrice;
+      }, 0) +
+        parseFloat(process.env.platformFee + process.env.gst)) *
+      100;
+  } else {
+    total =
+      cartItems.reduce((total, item) => {
+        let pr = products.find((x) => x._id == item.id);
+
+        return total + pr.price * item.quantity + pr.deliveryPrice;
+      }, 0) + parseFloat(process.env.platformFee + process.env.gst);
+  }
 
   if (paymentMethod === "stripe") {
     const fakeKey = uuidv4();

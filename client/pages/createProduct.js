@@ -106,7 +106,7 @@ export default function CreateShop(props) {
           message: "Done",
           severity: "success",
         });
-        router.push(props.user.shop?.shopName + "/" + result.data.doc.title);
+        router.push(props.user.shop?.shopName + "/" + result.data.doc._id);
       } else {
         setShowToast({
           active: true,

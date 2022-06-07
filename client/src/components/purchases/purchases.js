@@ -99,7 +99,7 @@ export default function Purchases(props) {
                     src={
                       publicRuntimeConfig.backend +
                       "/files/" +
-                      item.productId.images[0]
+                      item.productId?.images[0]
                     }
                     style={{
                       width: "125px",
@@ -124,14 +124,14 @@ export default function Purchases(props) {
                     <Typography variant="subtitle2">
                       <span style={{ color: theme.palette.common.primary }}>
                         {" "}
-                        {item.productId.title}
+                        {item.productId?.title}
                       </span>
                     </Typography>
                   </Grid>
                   {/* for description */}
                   <Grid item style={{ marginTop: "0.3em" }}>
                     <Typography variant="subtitle2">
-                      {item.productId.description}
+                      {item.productId?.description}
                     </Typography>
                   </Grid>
                   {/* for title */}
@@ -190,8 +190,8 @@ export default function Purchases(props) {
                       </Typography>
                       <Typography variant="h6" align="right">
                         RS{" "}
-                        {item.productId.price * item.quantity +
-                          item.productId.deliveryPrice}
+                        {item.productId?.price * item.quantity +
+                          item.productId?.deliveryPrice}
                       </Typography>
                     </Grid>
                   </Grid>
